@@ -3,7 +3,7 @@
 ## Project title: Outty
 
 ### Team members:
-  *Vidya
+  * Vidya
   *Zach
   *Gurhar
   *Sam
