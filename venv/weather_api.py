@@ -1,12 +1,33 @@
 # feel free to make structural changes to api call functions add parameters etc
 # as needed
 
-# might be helpful for populating the hmtl template to 
+# might be helpful for populating the hmtl template to
 # return the data in easily usable format, eg an array or object
+import requests
+from flask import Flask, request
 
 def get_weather_data():
     """ Make api call, and return data to populate index.html """
+    API_KEY = 'e214e1f69f2707da1c0697f68fd0c977'  # initialize API key here
+    city = 'Boulder' # city name hardcoded as Boulder
 
-    return "NO WEATHER DATA YET"
+    # call API and convert response into Python dictionary
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&APPID={API_KEY}'
+    response = requests.get(url).json()
+
+    # error like unknown city name, inavalid api key
+    if response.get('cod') != 200:
+        message = response.get('message', '')
+        return f'Error getting temperature for {city.title()}. Error message = {message}'
+
+    # get current temperature and convert it into Celsius
+    current_temperature = response.get('main', {}).get('temp')
+
+    if current_temperature:
+        current_temperature_celsius = round(current_temperature - 273.15, 2)
+        return f'Current temperature of {city.title()} is {current_temperature_celsius}°C'
+    else:
+        return f'Error getting temperature for {city.title()}'
 
 
+    return
