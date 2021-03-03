@@ -12,7 +12,8 @@
           <ul class="menu">
             <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="{{ url_for('index') }}">Login/Profile</a></li>
+            <!--if username is not default, should say profile, else login-->
+            <li><a href="{{ url_for('login') }}">Login/Profile</a></li>
           </ul>
         </nav></strong>
       </div>
