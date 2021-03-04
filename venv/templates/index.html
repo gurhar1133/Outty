@@ -1,9 +1,10 @@
-<!doctype html>
-<!-- TODO: populate with weather_data and map_data
-    May need to parse json data etc. And change below HTML as you
-    see fit of course
--->
-<h1>Outty</h1>
+{% extends "base.html" %}
+{% block content %}
+{% if username %}
+  <h3>Hello {{ username }}!</h3>
+{% else %}
+  <h3>Hello, World!</h3>
+{% endif %}
 <h3>{{ weather_data }}</h3>
 <h3><iframe
   width="600"
@@ -14,3 +15,6 @@
   src="https://www.google.com/maps/embed/v1/search?key=AIzaSyB0cZ2tB22Gxc5c-IX8JDE3mTbvBBSEWnY
     &q=hiking+trails,Boulder+CO">
 </iframe></h3>
+
+{% endblock %}
+

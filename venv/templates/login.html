@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Please login</h1>
+    <br>
+    <form action="/login" method="POST">
+      <input type="text" placeholder="Username" name="username" value="{{
+        request.form.username }}">
+      <input class="btn btn-default" type="submit" value="Login">
+    </form>
+
+{% endblock %}
