@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-text">
+    <p>{{greeting}}, {{username}}</p>
+    <p>{{city}}, {{state}}</p>
+    <p>{{ weather_data }}</p>
+    {% for your_list_element in interests %}
+      <p>{{ your_list_element }} </p>
+  {% endfor %}
+  <div>
+  <div class="suggestion-card">
+
+    <p>{{suggestions}}</p>
+
+    <p>test element: {{interests[0]}}</p>
+  </div>
+
+
+{% endblock %}

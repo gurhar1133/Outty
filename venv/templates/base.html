@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Outty App</title>
+    <title>Outty</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Inter:400|Zilla Slab:400,800" rel="stylesheet">
+
   </head>
   <body>
     <header>
       <div class="container">
-        <h1 class="logo">Outty: Your Outdoor Adventure Hub</h1>
-        <strong><nav>
+        <h1 class="logo">Outty</h1>
+        <nav>
           <ul class="menu">
             <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('dash') }}">Dashboard</a></li>
+
             <li><a href="{{ url_for('about') }}">About</a></li>
             <!--if username is not default, should say profile, else login-->
             <li><a href="{{ url_for('login') }}">Login/Profile</a></li>
+            <li><a href="{{ url_for('settings') }}">Settings</a></li>
+
           </ul>
-        </nav></strong>
+        </nav>
       </div>
     </header>
     <div class="container">

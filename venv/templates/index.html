@@ -1,11 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-{% if username %}
-  <h3>Hello {{ username }}!</h3>
-{% else %}
-  <h3>Hello, World!</h3>
-{% endif %}
-<h3>{{ weather_data }}</h3>
+  <h3>{{greeting}}, {{username}}</h3>
+  <h3>{{city}}, {{state}}</h3>
+  <h3>{{ weather_data }}</h3>
 <h3><iframe
   width="600"
   height="450"
@@ -17,4 +14,3 @@
 </iframe></h3>
 
 {% endblock %}
-
