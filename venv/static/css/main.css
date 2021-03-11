@@ -11,6 +11,9 @@ body {
   color: #7C7468;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
 }
 
 /*
@@ -48,6 +51,12 @@ header h1.logo:hover {
   margin: auto auto;
 }
 
+.dashboard-container{
+  display:flex;
+  flex-direction: row;
+
+}
+
 div.home {
   padding: 10px 0 30px 0;
   background-color: #f2ebb8;
@@ -67,72 +76,28 @@ div.about {
   border-radius: 20px;
 }
 
-.dashboard-text {
-  float: left;
-}
-
-.card {
-  /* padding: 10px 0 30px 0;
-  background-color: #f2ebb8;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px; */
-  color: #7C7468;
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  /* padding-left: 2vw;
-          padding-right: 2vw;
-          padding-top: 0.4vh;
-          padding-bottom: 0.4vh; */
-  padding: 1em 2em 1em 2em;
-  margin: 2vh;
-  background: #FFFFFF;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
-}
-
-.suggestion-card {
-  /* padding: 10px 0 30px 0;
-  background-color: #f2ebb8;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px; */
-  position: absolute;
-  width: 282px;
-  height: 463px;
-  left: 458px;
-  top: 77px;
-  color: #7C7468;
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  /* padding-left: 2vw;
-          padding-right: 2vw;
-          padding-top: 0.4vh;
-          padding-bottom: 0.4vh; */
-  padding: 1em 2em 1em 2em;
-  margin: 2vh;
-  background: #FFFFFF;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
-}
 
 h2 {
   font-family: 'Zilla Slab', serif;
   font-weight: normal;
-  font-size: 3em;
+  font-size: 25px;
   margin-top: 40px;
   text-align: center;
-  letter-spacing: -2px;
 }
 
 h3 {
   font-weight: normal;
-  font-size: 1.7em;
+  font-size: 22px;
   margin-top: 30px;
   text-align: center;
-  letter-spacing: -1px;
-  color: #999;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
 }
+
+
 
 .menu {
   float: right;
@@ -150,6 +115,82 @@ h3 {
 }
 
 .menu li a {
-  color: #444;
+  color: #7C7468;
   text-decoration: none;
+}
+
+.item {
+  flex-grow: 1;
+  height: 100px;
+}
+
+.item + .item {
+  margin-left: 2%;
+}
+
+.dashboard-text {
+  float: left;
+}
+input[type=text] {
+  /* width: 100%; */
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border-width: thin;
+  border-color: #7C7468;
+}
+
+.card {
+
+  color: #7C7468;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  padding: 1em 2em 1em 2em;
+  margin: 2vh;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.suggestion-card {
+
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  width: 300px;
+  height: 510px;
+  color: #7C7468;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+.suggestion-card .card-body{
+  padding: 1.75em 1.75em 1.75em 1.75em;
+}
+
+.suggestion-card .card-body .card-title{
+  padding-right: 1em;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.suggestion-card .card-body .card-text{
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.suggestion-card .card-body .buttonholder{
+  text-align: center;
+}
+
+
+.suggestion-card .content img{
+  width: 300px;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 20px 20px 0px 0px;
+
 }

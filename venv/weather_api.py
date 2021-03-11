@@ -23,7 +23,7 @@ def get_weather_data(city):
 
     if current_temperature:
         current_temperature_f = round((current_temperature - 273.15)* 9/5 + 32, 1)
-        return f'{int(current_temperature_f)}°C'
+        return f'{int(current_temperature_f)}°F'
     else:
         return f'Error getting temperature for {city.title()}'
 

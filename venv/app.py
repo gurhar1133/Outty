@@ -37,13 +37,13 @@ def dash(username=None):
     map_data = get_map_data()
     greeting = getGreeting()
     username = request.args.get("username")
-    interests = ['hiking','biking','water']
+    interests = {'Hiking': True, 'Mountain Biking': True, 'Camping': True, 'Caving': False , 'Trail Running': False , 'Snow Sports': False, 'ATV': False , 'Horseback Riding': False}
     radius = 30
     # // suggestion card information
     # // status of card- none, liked, disliked, saved
-    card1 = {'title':'First and Second Flatirons Loop', 'activity':'hiking', 'distance':2.2, 'image':'', 'status':''}
-    card2 = {'title':'Emerald Lake Hiking Trail, Estes Park', 'activity':'hiking', 'distance':22.5, 'image':'', 'status':''}
-    card3 = {'title':'City of Boulder Bike Path', 'activity':'biking', 'distance':5.3, 'image':'', 'status':''}
+    card1 = {'title':'First and Second Flatirons Loop', 'activity':'Hiking', 'distance':2.2, 'image':url_for('static', filename='img/flatirons.jpg'), 'description': 'Something something something.','directions-url':'www.google.com','more-info-url':'www.google.com','status':''}
+    card2 = {'title':'Emerald Lake Hiking Trail, Estes Park', 'activity':'Hiking', 'distance':22.5, 'image':url_for('static', filename='img/estes.jpg'), 'status':''}
+    card3 = {'title':'City of Boulder Bike Path', 'activity':'Biking', 'distance':5.3, 'image':url_for('static', filename='img/park.jpg'), 'status':''}
 
     suggestions=[card1,card2,card3]
 
