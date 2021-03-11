@@ -6,11 +6,9 @@
 import requests
 from flask import Flask, request
 
-def get_weather_data():
+def get_weather_data(city):
     """ Make api call, and return data to populate index.html """
     API_KEY = 'e214e1f69f2707da1c0697f68fd0c977'  # initialize API key here
-    city = 'Boulder' # city name hardcoded as Boulder
-
     # call API and convert response into Python dictionary
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&APPID={API_KEY}'
     response = requests.get(url).json()
@@ -24,8 +22,8 @@ def get_weather_data():
     current_temperature = response.get('main', {}).get('temp')
 
     if current_temperature:
-        current_temperature_celsius = round(current_temperature - 273.15, 2)
-        return f'Current temperature of {city.title()} is {current_temperature_celsius}°C'
+        current_temperature_f = round((current_temperature - 273.15)* 9/5 + 32, 1)
+        return f'{int(current_temperature_f)}°F'
     else:
         return f'Error getting temperature for {city.title()}'
 
