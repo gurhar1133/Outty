@@ -26,6 +26,11 @@ header {
   margin-bottom: 30px;
   padding-top: 25px;
 }
+a {
+
+  text-decoration: none;
+
+}
 
 header h1.logo {
   margin: 0;
@@ -35,12 +40,15 @@ header h1.logo {
   float: left;
   font-family: 'Zilla Slab', serif;
   color: #8CAB7D;
+  transition: all 0.2s ease;
+  transition-property: color;
 }
 
 header h1.logo:hover {
   color: #8CAB7D;
   opacity: 50%;
   text-decoration: none;
+
 }
 
 /*
@@ -54,7 +62,6 @@ header h1.logo:hover {
 .dashboard-container{
   display:flex;
   flex-direction: row;
-
 }
 
 div.home {
@@ -81,15 +88,15 @@ h2 {
   font-family: 'Zilla Slab', serif;
   font-weight: normal;
   font-size: 25px;
-  margin-top: 40px;
+  /* margin-top: 40px; */
   text-align: center;
 }
 
 h3 {
   font-weight: normal;
   font-size: 22px;
-  margin-top: 30px;
-  text-align: center;
+  /* margin-top: 30px; */
+  /* text-align: center; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-border-radius: 6px;
@@ -110,6 +117,8 @@ h3 {
   text-transform: lowercase;
 }
 
+
+
 .menu li+li {
   margin-left: 35px;
 }
@@ -117,6 +126,15 @@ h3 {
 .menu li a {
   color: #7C7468;
   text-decoration: none;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+          transition-property: color;
+}
+
+.menu li a:hover {
+  color: #b5afa7;
 }
 
 .item {
@@ -131,10 +149,16 @@ h3 {
 .dashboard-text {
   float: left;
 }
+
+.dashboard-text .mdl-tooltip{
+  position:  sticky;
+}
+
+
 input[type=text] {
-  /* width: 100%; */
-  padding: 12px 20px;
-  margin: 8px 0;
+  /* width: 200px; */
+  /* padding: 12px 20px; */
+  /* margin: 8px 0; */
   box-sizing: border-box;
   border-radius: 20px;
   border-width: thin;
@@ -159,14 +183,25 @@ input[type=text] {
      -moz-border-radius: 6px;
           border-radius: 6px;
   width: 300px;
-  height: 510px;
+  height: 530px;
   color: #7C7468;
   font-family: 'Inter', sans-serif;
   font-size: 15px;
   background: #FFFFFF;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  transition-property: box-shadow, background;
+  margin-left: 20px;
 }
+.suggestion-card:hover{
+  /* transition: all 0.2s ease; */
+
+  background: rgba(100, 100, 100, 0.001);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25), 5px 7.5px 5px 1px rgba(201, 169, 122, 0.35);
+}
+
 .suggestion-card .card-body{
   padding: 1.75em 1.75em 1.75em 1.75em;
 }
@@ -186,11 +221,91 @@ input[type=text] {
   text-align: center;
 }
 
+.suggestion-card .expand-button{
+  float:right;
+}
+
 
 .suggestion-card .content img{
   width: 300px;
   height: 270px;
   object-fit: cover;
   border-radius: 20px 20px 0px 0px;
+}
+
+.close-button{
+  opacity: 0%;
+}
+
+.expanded-card {
+  opacity: 0%;
+  /* width: 1px; */
+
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  width: 630px;
+  height: 530px;
+  color: #7C7468;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  display: inline-block;
+  margin-left: 20px;
+}
+.expanded-card .content .map{
+  border-radius: 20px 20px 0px 0px;
+  /* width: 300px;
+  height: 530px; */
+  overflow: hidden;
+}
+
+.expanded-card .card-body{
+  padding: 1.75em 1.75em 1.75em 1.75em;
+  display:flex;
+  flex-direction: row;
+}
+
+.expanded-card .card-body .button-group{
+  width: 50em;
+  padding-right: 1.5em;
+  display:flex;
+  flex-direction: column;
+}
+
+.expanded-card .card-body .button-group .button{
+  /* width: 20em; */
+  padding-top: 0.7em;
+  padding-bottom: 0.3em;
+  padding-left: 1.0em;
+  padding-right: 1.0em;
+
+  /* margin-top: 0.5em; */
+  margin-bottom: 1.5em;
+
+  border-radius: 20px 20px 20px 20px;
+
+  /* flex-grow: 1; */
+  background-color: #DDEAD6;
+  opacity: 100%;
+  /* display:flex;
+  flex-direction: column; */
+  font-size: 12px;
+
+  transition: all 0.2s ease;
+  transition-property: background-color;
+}
+
+.expanded-card .card-body .button-group .button a{
+  color: #7C7468;
+}
+
+
+.expanded-card .card-body .button-group .button:hover{
+
+  background-color: #CEDCC8;
 
 }

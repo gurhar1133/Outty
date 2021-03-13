@@ -4,15 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Outty</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/main.css') }}>
     <link href="https://fonts.googleapis.com/css?family=Inter:400|Zilla Slab:400,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.teal-red.min.css" rel="stylesheet">
-
-    <script>https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js</script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
-    <!-- <script src="{{ url_for('static', filename='js/card-animations.js')}}"></script> -->
-  
   </head>
   <body>
     <header>
@@ -37,5 +32,12 @@
       {% block content %}
       {% endblock %}
     </div>
+
+    <script src = "https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>
+    <!-- <script src = "https://unpkg.com/animejs@2.2.0/anime.min.js"></script> -->
+
+    <script src={{ url_for('static', filename='js/anime.min.js')}}></script>
+    <script src={{ url_for('static', filename='js/card-animations.js')}}></script>
+
   </body>
 </html>

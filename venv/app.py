@@ -41,7 +41,7 @@ def dash(username=None):
     radius = 30
     # // suggestion card information
     # // status of card- none, liked, disliked, saved
-    card1 = {'title':'First and Second Flatirons Loop', 'activity':'Hiking', 'distance':2.2, 'image':url_for('static', filename='img/flatirons.jpg'), 'description': 'Something something something.','directions-url':'www.google.com','more-info-url':'www.google.com','status':''}
+    card1 = {'title':'First and Second Flatirons Loop', 'activity':'Hiking', 'distance':2.2, 'image':url_for('static', filename='img/flatirons.jpg'), 'description': 'is a 2.5 mile heavily trafficked loop trail located near Boulder, Colorado that features beautiful wild flowers and is rated as difficult. The trail is primarily used for hiking, running, rock climbing, and snowshoeing and is best used from April until October. Dogs are also able to use this trail.','directions-url':'https://www.google.com/maps/dir/Current+Location/39.99897,-105.28275?ref=trail-action-menu-directions','more-info-url':'https://www.trailforks.com/trails/flatirons-loop/','status':''}
     card2 = {'title':'Emerald Lake Hiking Trail, Estes Park', 'activity':'Hiking', 'distance':22.5, 'image':url_for('static', filename='img/estes.jpg'), 'status':''}
     card3 = {'title':'City of Boulder Bike Path', 'activity':'Biking', 'distance':5.3, 'image':url_for('static', filename='img/park.jpg'), 'status':''}
 
