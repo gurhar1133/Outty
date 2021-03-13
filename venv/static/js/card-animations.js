@@ -107,21 +107,21 @@ let closeButton = document.getElementById('close-button');
 dislikeButton.addEventListener('click', function(e) {
   dislikeAnimation.play();
   if (expandedCardGreetingAnimation.began) {
-    toggle();
+    toggle2();
 }
 });
 
 completedButton.addEventListener('click', function() {
   completedAnimation.play();
   if (expandedCardGreetingAnimation.began) {
-    toggle();
+    toggle2();
 }
 });
 
 likeButton.addEventListener('click', function() {
   likeAnimation.play();
   if (expandedCardGreetingAnimation.began) {
-    toggle();
+    toggle2();
 }
 });
 
@@ -146,6 +146,27 @@ function toggle() {
   }
 }
 
-expandButton.addEventListener('click', toggle);
+function toggle2() {
+  if (expandedCardGreetingAnimation.direction ==='normal') {
+    expandedCardGreetingAnimation.reverse()
+    expandedCardAnimation.reverse();
+    expandedCardSuggestionAnimation.reverse();
+    closeButtonAnimation.reverse();
 
+    if (expandedCardGreetingAnimation.progress === 100 && expandedCardGreetingAnimation.direction === 'reverse') {
+      expandedCardGreetingAnimation.completed = false
+    }
+
+    if (expandedCardGreetingAnimation.paused) {
+      expandedCardGreetingAnimation.play();
+      expandedCardAnimation.play();
+      expandedCardSuggestionAnimation.play();
+      closeButtonAnimation.play();
+    }
+  }
+
+
+}
+
+expandButton.addEventListener('click', toggle);
 closeButton.addEventListener('click', toggle);
