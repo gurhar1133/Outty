@@ -6,9 +6,10 @@
 import requests
 from flask import Flask, request
 
+import config
 def get_weather_data(city):
     """ Make api call, and return data to populate index.html """
-    API_KEY = 'e214e1f69f2707da1c0697f68fd0c977'  # initialize API key here
+    API_KEY = config.weather_api_key  # initialize API key here
     # call API and convert response into Python dictionary
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&APPID={API_KEY}'
     response = requests.get(url).json()
