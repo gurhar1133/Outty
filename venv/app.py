@@ -4,6 +4,7 @@ from map_api import get_map_data # could be moved into a single apis.py file, bu
 from weather_api import get_weather_data # might be simpler to keep separate files for people to
                                      # work separately on
 from getGreeting import getGreeting
+import config
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def index(username=None):
     username = request.args.get("username")
     if not username:
         username="Explorer"
-    return render_template("index.html", city = city, state=state, weather_data=weather_data, map_data=map_data, username=username, greeting = greeting)
+    return render_template("index.html", city = city, state=state, weather_data=weather_data, map_data=map_data, username=username, greeting = greeting, map_api_key=config.map_api_key)
 
 @app.route("/home")
 def home():
@@ -49,7 +50,7 @@ def dash(username=None):
 
     if not username:
         username="Explorer"
-    return render_template("dash.html", suggestions = suggestions, interests=interests, city = city, state=state, weather_data=weather_data, map_data=map_data, username=username, greeting = greeting)
+    return render_template("dash.html", suggestions = suggestions, interests=interests, city = city, state=state, weather_data=weather_data, map_data=map_data, map_api_key=config.map_api_key, username=username, greeting = greeting)
 
 @app.route("/settings")
 def settings():
