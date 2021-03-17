@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <h1>Please login</h1>
+<div class="card">
+    <h3>login</h3>
     <br>
+    <p>
     <form action="/login" method="POST">
       <label for="Username">Username</label>
       <input type="text" placeholder="userId" name="userId">
@@ -10,4 +11,8 @@
       <input type="password" placeholder="password" name="password">
       <input class="btn btn-default" type="submit" value="Login">
     </form>
+    </p>
+    </div>
+
 {% endblock %}
+
