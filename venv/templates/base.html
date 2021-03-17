@@ -20,15 +20,15 @@
         <h1 class="logo">Outty</h1>
         <nav>
           <ul class="menu">
-            <!-- <li><a href="{{ url_for('index') }}">Home</a></li> -->
+            <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('dash') }}">Dashboard</a></li>
-
-            <!-- <li><a href="{{ url_for('about') }}">About</a></li> -->
+            <li><a href="{{ url_for('about') }}">About</a></li>
             <!--if username is not default, should say profile, else login-->
-            <li><a href="{{ url_for('login') }}">Profile</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            <li><a href="#">Profile</a></li>
             <li><a href="{{ url_for('settings') }}">Settings</a></li>
             <li><a href="#">Log out</a></li>
-
           </ul>
         </nav>
       </div>

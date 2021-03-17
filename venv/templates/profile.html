@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+{% if userId %}
+  <h3>Hello {{ userId }}!</h3>
+{% else %}
+  <h3>Hello, World!</h3>
+{% endif %}
+<h3>{{ weather_data }}</h3>
+<h3><iframe
+  width="600"
+  height="450"
+  style="border:0"
+  loading="lazy"
+  allowfullscreen
+  src="https://www.google.com/maps/embed/v1/search?key=AIzaSyB0cZ2tB22Gxc5c-IX8JDE3mTbvBBSEWnY
+    &q=hiking+trails,Boulder+CO">
+</iframe></h3>
+
+{% endblock %}
+
