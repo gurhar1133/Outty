@@ -6,12 +6,14 @@ from map_api import get_map_data
 from weather_api import get_weather_data
 # work separately on
 from getGreeting import getGreeting
+import config
 
 app = Flask(__name__)
 
 
 @app.route("/")
-def index(username=None):
+@app.route("/home")
+def index(userId=None):
     # feel free to make structural changes to api call functions add parameters etc
     # as needed
     city = 'Boulder'
@@ -19,15 +21,10 @@ def index(username=None):
     weather_data = get_weather_data(city + ', ' + state)
     map_data = get_map_data()
     greeting = getGreeting()
-    username = request.args.get("username")
-    if not username:
-        username = "Explorer"
-    return render_template("index.html", city=city, state=state, weather_data=weather_data, map_data=map_data, username=username, greeting=greeting)
-
-
-@app.route("/home")
-def home():
-    return index()
+    userId = request.args.get("userId")
+    if not userId:
+        userId = "Explorer"
+    return render_template("index.html", city=city, state=state, weather_data=weather_data, map_data=map_data, userId=userId, greeting=greeting, map_api_key=config.map_api_key)
 
 
 @app.route("/about")
@@ -59,7 +56,7 @@ def dash(username=None):
 
     if not username:
         username = "Explorer"
-    return render_template("dash.html", suggestions=suggestions, interests=interests, city=city, state=state, weather_data=weather_data, map_data=map_data, username=username, greeting=greeting)
+    return render_template("dash.html", suggestions=suggestions, interests=interests, city=city, state=state, weather_data=weather_data, map_data=map_data, map_api_key=config.map_api_key, username=username, greeting=greeting)
 
 
 @app.route("/settings")
@@ -71,10 +68,41 @@ def settings():
 def login():
     error = None
     if request.method == 'POST':
-        # request.form['username']
-        return redirect(url_for('index', username=request.form['username']))
+        return redirect(url_for('index',
+                                userId=request.form['userId'],
+                                password=request.form['password'],
+                                ))  # request.form['userId']
     else:
         return render_template('login.html', error=error)
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    error = None
+    if request.method == 'POST':
+        """
+        write to database
+        password = request.form['password'],
+        emailAddress = request.form['emailAddress'],
+        userImage = request.form['userImage'],
+        hikes = request.form.get('hikes'),
+        mountainBikes = request.form.get['mountainBikes'],
+        roadBikes = request.form.get['roadBikes'],
+        camps = request.form.get['camps'],
+        userLocation = request.form['userLocation'],
+        """
+        return redirect(url_for('index',
+                                userId=request.form['userId'],
+                                ))
+        # request.form['userId']
+    else:
+        return render_template('signup.html', error=error)
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    # should read from the database to display info
+    return render_template('profile.html')
 
 
 if __name__ == '__main__':
