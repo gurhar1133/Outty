@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Please login</h1>
+    <h3>Please Sign Up or Click Login For Existing User</h3>
+    <br>
+    <form action="/login" method="POST">
+      <div>
+      <label for="userId">Enter a Username</label>
+      <input type="text" placeholder="userId" name="userId">
+      </div>
+
+      <div>
+        <label for="password">Enter a Password</label>
+        <input type="password" placeholder="password" name="password">
+      </div>
+      
+      <div>
+        <label for="email">Enter a Valid Email Address</label>
+        <input type="email" placeholder="" name="emailAddress">
+      </div>
+
+      <div>
+        <label for="userImage">Choose a profile picture:</label>
+        <input type="file" id="userImage" name="userImage" accept="image/png, image/jpeg">
+      </div>
+        
+      <div>
+        <label for="userLocation">Enter Your Zip Code</label>
+        <input type="text" placeholder="e.g. 00000" name="userLocation">
+      </div>
+      <!--checkbox-->
+      <p>Choose your outdoor interests:</p>
+
+      <div>
+        <input type="checkbox" id="hikes" name="hikes"
+              checked>
+        <label for="hikes">Hiking</label>
+      </div>
+
+      <div>
+        <input type="checkbox" id="mountainBikes" name="mountainBikes">
+        <label for="mountainBikes">Mountain Biking</label>
+      </div>
+
+      <div>
+        <input type="checkbox" id="roadBikes" name="roadBikes">
+        <label for="roadBikes">Road Biking</label>
+      </div>
+
+      <div>
+        <input type="checkbox" id="camps" name="camps"
+              checked>
+        <label for="camps">Camping</label>
+      </div>
+
+      <input class="btn btn-default" type="submit" value="Sign-Up">
+     
+    </form>
+{% endblock %}
