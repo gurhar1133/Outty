@@ -1,7 +1,7 @@
 let cardFadeIn = anime({
   targets: '.card',
   opacity: ['0%', '100%'],
-  translateY: [-20 , 0 ],
+  translateY: [-20, 0],
   duration: 900,
   easing: 'easeOutElastic'
 });
@@ -9,7 +9,7 @@ let cardFadeIn = anime({
 let suggestionEntrance = anime({
   targets: '.suggestion-card',
   opacity: ['0%', '100%'],
-  translateY: [-20 , 0 ],
+  translateY: [-20, 0],
   duration: 900,
   easing: 'easeOutElastic'
 });
@@ -18,7 +18,7 @@ let suggestionEntrance = anime({
 let dashTextFadeIn = anime({
   targets: '.dashboard-text',
   opacity: ['0%', '100%'],
-  translateX: [-40 , 0 ],
+  translateX: [-40, 0],
   duration: 900,
   easing: 'easeOutElastic'
 
@@ -27,8 +27,8 @@ let dashTextFadeIn = anime({
 let dislikeAnimation = anime({
   targets: '.suggestion-card',
   opacity: ['100%', '0%'],
-  translateY: [0 , 3 ],
-  rotate: [0 , -5 ],
+  translateY: [0, 3],
+  rotate: [0, -5],
   duration: 400,
   easing: 'easeOutCubic',
   autoplay: false
@@ -37,8 +37,8 @@ let dislikeAnimation = anime({
 let likeAnimation = anime({
   targets: '.suggestion-card',
   opacity: ['100%', '0%'],
-  translateY: [0 , 3 ],
-  rotate: [0 , 5 ],
+  translateY: [0, 3],
+  rotate: [0, 5],
   duration: 400,
   easing: 'easeOutCubic',
   autoplay: false
@@ -47,7 +47,7 @@ let likeAnimation = anime({
 let completedAnimation = anime({
   targets: '.suggestion-card',
   opacity: ['100%', '0%'],
-  translateY: [0 , -20 ],
+  translateY: [0, -20],
   duration: 400,
   easing: 'easeOutCubic',
   autoplay: false
@@ -56,45 +56,41 @@ let completedAnimation = anime({
 let expandedCardAnimation = anime({
   targets: '.expanded-card',
   opacity: ['0%', '100%'],
-  translateX: ['0em' , '-10em' ],
+  translateX: ['0em', '-10em'],
   duration: 500,
   easing: 'easeInOutCubic',
   autoplay: false,
   // direction:'alternate',
-}
-);
+});
 
 let expandedCardSuggestionAnimation = anime({
   targets: '.suggestion-card',
   // opacity: ['0%', '100%'],
-  translateX: ['0em' , '-10em' ],
+  translateX: ['0em', '-10em'],
   duration: 500,
   easing: 'easeInOutCubic',
   autoplay: false,
   // direction:'alternate',
-}
-);
+});
 
 let expandedCardGreetingAnimation = anime({
   targets: '.dashboard-text',
   opacity: ['100%', '0%'],
-  translateX: ['0em' , '-30em' ],
+  translateX: ['0em', '-30em'],
   duration: 500,
   easing: 'easeInOutCubic',
   autoplay: false,
   // direction:'alternate',
-}
-);
+});
 
 let closeButtonAnimation = anime({
   targets: '.close-button',
   opacity: ['0%', '100%'],
-  translateX: ['0em' , '-10em' ],
+  translateX: ['0em', '-10em'],
   duration: 500,
   easing: 'easeInOutCubic',
   autoplay: false,
-}
-);
+});
 
 
 
@@ -108,21 +104,21 @@ dislikeButton.addEventListener('click', function(e) {
   dislikeAnimation.play();
   if (expandedCardGreetingAnimation.began) {
     toggle2();
-}
+  }
 });
 
 completedButton.addEventListener('click', function() {
   completedAnimation.play();
   if (expandedCardGreetingAnimation.began) {
     toggle2();
-}
+  }
 });
 
 likeButton.addEventListener('click', function() {
   likeAnimation.play();
   if (expandedCardGreetingAnimation.began) {
     toggle2();
-}
+  }
 });
 
 
@@ -147,7 +143,7 @@ function toggle() {
 }
 
 function toggle2() {
-  if (expandedCardGreetingAnimation.direction ==='normal') {
+  if (expandedCardGreetingAnimation.direction === 'normal') {
     expandedCardGreetingAnimation.reverse()
     expandedCardAnimation.reverse();
     expandedCardSuggestionAnimation.reverse();
