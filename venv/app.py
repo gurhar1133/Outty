@@ -45,8 +45,8 @@ def dash(username=None):
     username = request.args.get("username")
     rec = Recommender(username)
 
-    # interests = {'Hiking': True, 'Mountain Biking': True, 'Camping': True, 'Caving': False,
-    #              'Trail Running': False, 'Snow Sports': False, 'ATV': False, 'Horseback Riding': False}
+    interests = {'Hiking': True, 'Mountain Biking': True, 'Camping': True, 'Caving': False,
+                 'Trail Running': False, 'Snow Sports': False, 'ATV': False, 'Horseback Riding': False}
     
     radius = 30
     recs = rec.recommend()
