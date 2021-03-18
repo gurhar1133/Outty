@@ -90,7 +90,7 @@
     <div class="content">
 
       <map><iframe width="300" height="270" loading="lazy" allowfullscreen src={{ "https://www.google.com/maps/embed/v1/search?key=" + map_api_key +
-      "&q=hiking+trails,Boulder+CO" }}>
+      "&q=hiking+trails,{{city}}+{{state}}" }}>
         </iframe></map>
 
     </div>
@@ -102,7 +102,7 @@
       <div>
         <p><b>{{suggestions[0]['title']}}</b> {{suggestions[0]['description']}}</p>
       </div>
-    </div </div>
+    </div>
 
   </div>
   {% endblock %}

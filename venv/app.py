@@ -6,6 +6,9 @@ from map_api import get_map_data
 from weather_api import get_weather_data
 # work separately on
 from getGreeting import getGreeting
+
+from recommend import Recommender
+
 import config
 
 app = Flask(__name__)
@@ -40,13 +43,24 @@ def dash(username=None):
     map_data = get_map_data()
     greeting = getGreeting()
     username = request.args.get("username")
+    rec = Recommender(username)
+
     interests = {'Hiking': True, 'Mountain Biking': True, 'Camping': True, 'Caving': False,
                  'Trail Running': False, 'Snow Sports': False, 'ATV': False, 'Horseback Riding': False}
+    
     radius = 30
-    # // suggestion card information
-    # // status of card- none, liked, disliked, saved
-    card1 = {'title': 'First and Second Flatirons Loop', 'activity': 'Hiking', 'distance': 2.2, 'image': url_for('static', filename='img/flatirons.jpg'), 'description': 'is a 2.5 mile heavily trafficked loop trail located near Boulder, Colorado that features beautiful wild flowers and is rated as difficult. The trail is primarily used for hiking, running, rock climbing, and snowshoeing and is best used from April until October. Dogs are also able to use this trail.',
-             'directions-url': 'https://www.google.com/maps/dir/Current+Location/39.99897,-105.28275?ref=trail-action-menu-directions', 'more-info-url': 'https://www.trailforks.com/trails/flatirons-loop/', 'status': ''}
+    recs = rec.recommend()
+    
+    card1 = {'title': recs[0]['activities'][0]['name'], 
+            'activity': recs[0]['activities'][0]['type'], 
+            'distance': recs[0]['activities'][0]['distance'], 
+            'image': recs[0]['activities'][0]['thumbnail'], 
+            'description': recs[0]['activities'][0]['description'],
+            'directions-url': 'https://www.google.com/maps/dir/Current+Location/' + str(recs[0]['coords'][0]) + ',' + str(recs[0]['coords'][1]) + '?ref=trail-action-menu-directions', 
+            'more-info-url': recs[0]['activities'][0]['url'], 
+            'status': ''
+            }
+    
     card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
              'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
     card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
