@@ -10,6 +10,7 @@ from getGreeting import getGreeting
 from recommend import Recommender
 
 import config
+import sqlite3
 
 app = Flask(__name__)
 
@@ -93,24 +94,37 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
+    #create/connect to database
+    db=sqlite3.connect('outty_database.db')
+    cursor=db.cursor()
+    cursor.execute('CREATE TABLE IF NOT EXISTS user_data(userID INTEGER unique, emailAddress VARCHAR(90),password VARCHAR(90),userImage VARCHAR(90),hikes BOOLEAN, mountainBikes BOOLEAN,roadBikes BOOLEAN,camps BOOLEAN, userLocation VARCHAR(90));')
+
+    if request.method=='GET':
+        return render_template('signup.html')
+
     if request.method == 'POST':
-        """
-        write to database
-        password = request.form['password'],
-        emailAddress = request.form['emailAddress'],
-        userImage = request.form['userImage'],
-        hikes = request.form.get('hikes'),
-        mountainBikes = request.form.get['mountainBikes'],
-        roadBikes = request.form.get['roadBikes'],
-        camps = request.form.get['camps'],
-        userLocation = request.form['userLocation'],
-        """
-        return redirect(url_for('index',
-                                userId=request.form['userId'],
-                                ))
+
+       # write to database
+        userId=request.form['userId']
+        password = request.form['password']
+        emailAddress = request.form['emailAddress']
+        userImage = request.form['userImage']
+        userLocation=request.form['userLocation']
+        hikes = 'hikes' in request.form
+        mountainBikes = 'mountainBikes' in request.form
+        roadBikes = 'roadBikes' in request.form
+        camps = 'camps' in request.form
+        
+        cursor.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',(userId,emailAddress,password,userImage,hikes,mountainBikes,roadBikes,camps,userLocation))
+
+        db.commit()
+        db.close()
+        return 'Outty Database = Success'#redirect(url_for('index',
+      #                          userId=request.form['userId'],
+       #                         ))
         # request.form['userId']
-    else:
-        return render_template('signup.html', error=error)
+    #else:
+     #   return render_template('signup.html', error=error)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
