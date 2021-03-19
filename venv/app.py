@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, g
 
 # could be moved into a single apis.py file, but for now
 from map_api import get_map_data
@@ -44,13 +44,15 @@ def dash(username=None):
     map_data = get_map_data()
     greeting = getGreeting()
     username = request.args.get("username")
+    
+    
     rec = Recommender(username)
-
+    print(username)
     interests = {'Hiking': True, 'Mountain Biking': True, 'Camping': True, 'Caving': False,
                  'Trail Running': False, 'Snow Sports': False, 'ATV': False, 'Horseback Riding': False}
     
     radius = 30
-    recs = rec.recommend()
+    recs = rec.recommend()[0]
     
     card1 = {'title': recs[0]['activities'][0]['name'], 
             'activity': recs[0]['activities'][0]['type'], 
@@ -119,9 +121,14 @@ def signup():
 
         db.commit()
         db.close()
-        return 'Outty Database = Success'#redirect(url_for('index',
-      #                          userId=request.form['userId'],
-       #                         ))
+        g.user = userId
+        # app_ctx = app.app_context()
+        # app_ctx.push()
+
+        #return 'Outty Database = Success'
+        return redirect(url_for('dash',
+                               username=request.form['userId'],
+                                ))
         # request.form['userId']
     #else:
      #   return render_template('signup.html', error=error)

@@ -2,6 +2,7 @@ import requests
 import http.client, urllib.parse
 import json
 import config
+import sqlite3
 
 class Recommender:
     def __init__(self, username):
@@ -14,48 +15,33 @@ class Recommender:
     def get_activities_from_db(self, username):
         # make database query
         # return unique activities
-        return "mountain biking"
+        db=sqlite3.connect('outty_database.db')
+        cursor=db.cursor()
+        print("username input into rec:",username)
+        if username == None:
+            username = 'test'
+        #TODO: dont hardcode username, get that from app state (if logged in ...)
+        cursor.execute(f"select hikes, mountainbikes, roadbikes, camps from user_data where userID='{username}';")
+        activity_tup = cursor.fetchall()[0]
+        activities = []
+        if activity_tup[0] == 1:
+            activities.append("hiking")
+        if activity_tup[1] == 1:
+            activities.append("mountain biking")
+        #TODO: no support for road biking yet
+        #if activity_tup[2] == 1:
+            
+            # activities.append("road biking") 
+        if activity_tup[3] == 1:
+            activities.append("camping")
+        print(activities)
+        return activities
     
     def get_user_location(self, username):
         # make database query? or its input in some other way?
         return ("Boulder", "Colorado")
     
-    def recommend(self):
-       
-        #unique_activities = self.fav_activities
-        activity_pref = self.fav_activities
-        city, state = self.location
-
-        # geoencoding for hiking trails api
-        data = None
-        geo_attempts = 0
-        while data == None: # WRITE TESTS FOR THIS
-            conn = http.client.HTTPConnection('api.positionstack.com')
-            params = urllib.parse.urlencode({
-                'access_key': self.geo_encode_key,
-                'query': city,
-                'region': state,
-                'limit': 1,
-                })
-
-            conn.request('GET', '/v1/forward?{}'.format(params))
-            res = conn.getresponse()
-            if not res.status == 200:
-                print ('Error')
-                return "Error getting geo encoding info"
-            else:
-                data = res.read()
-                data = json.loads(data.decode('utf-8'))
-                if data['data'] == [[]]: 
-                    data = None
-                    geo_attempts += 1
-                    if geo_attempts > 10:
-                        print ('Error')
-                        return "Error getting geo encoding info"
-        #print(geo_attemps)
-        lat = data['data'][0]['latitude']
-        lon = data['data'][0]['longitude']
-        
+    def trail_api_query(self, lat, lon, state, activity_pref):
         # lat and lon info to query trailapi
 
         url = "https://trailapi-trailapi.p.rapidapi.com/"
@@ -63,7 +49,7 @@ class Recommender:
         querystring = {"q-activities_activity_type_name_eq":activity_pref,
                         "q-state_cont":state,
                         "q-country_cont":"United States",
-                        "limit":"20",
+                        "limit":"5",
                         "lat":lat,
                         "lon":lon,
                         "radius":"20"
@@ -107,20 +93,54 @@ class Recommender:
         else:
             return "error fetching activity info"
 
+    def recommend(self):
+       
+        #unique_activities = self.fav_activities
+        activity_pref = self.fav_activities
+        city, state = self.location
+
+        # geoencoding for hiking trails api
+        data = None
+        geo_attempts = 0
+        while data == None: # WRITE TESTS FOR THIS
+            conn = http.client.HTTPConnection('api.positionstack.com')
+            params = urllib.parse.urlencode({
+                'access_key': self.geo_encode_key,
+                'query': city,
+                'region': state,
+                'limit': 1,
+                })
+
+            conn.request('GET', '/v1/forward?{}'.format(params))
+            res = conn.getresponse()
+            if not res.status == 200:
+                print ('Error')
+                return "Error getting geo encoding info"
+            else:
+                data = res.read()
+                data = json.loads(data.decode('utf-8'))
+                if data['data'] == [[]]: 
+                    data = None
+                    geo_attempts += 1
+                    if geo_attempts > 10:
+                        print ('Error')
+                        return "Error getting geo encoding info"
+        #print(geo_attemps)
+        lat = data['data'][0]['latitude']
+        lon = data['data'][0]['longitude']
+        
+        recs = [self.trail_api_query(lat, lon, state, act) for act in activity_pref]
+
+        return recs
+
         
 
 if __name__ == "__main__":
     test_rec = Recommender("user1")
-    recs = test_rec.recommend()
+    recs = test_rec.recommend()[0]
     for i, rec in enumerate(recs):
         print(f'{i}) \n', rec)
         print("-"*20)
-        
-    # for i in range(200):
-    #     test_rec.recommend()
-    # for rec in recs:
-    #     print("location:", rec.keys())
-    #     print("city:", rec['city'])
-    #     print("name:", rec['name'])
-    #     print("num activities = ", len(rec['activities']))
-    #     print("activity keys:", rec['activities'][0].keys())
+
+    
+
