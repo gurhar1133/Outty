@@ -121,11 +121,9 @@ def signup():
 
         db.commit()
         db.close()
-        g.user = userId
-        # app_ctx = app.app_context()
-        # app_ctx.push()
+      
 
-        #return 'Outty Database = Success'
+        # return 'Outty Database = Success'
         return redirect(url_for('dash',
                                username=request.form['userId'],
                                 ))
