@@ -80,6 +80,8 @@ class Recommender:
             filtered_recs = []
             for rec in rec_activities:
                 filtered_rec = {}
+                # print(rec['url'])
+                filtered_rec['directions'] = rec['directions']
                 filtered_rec['name'] = rec['name']
                 filtered_rec['city'] = rec['city']
                 filtered_rec['coords'] = (rec['lat'], rec['lon'])
@@ -95,6 +97,8 @@ class Recommender:
                         activity['url'] = act['url']
                         activity['distance'] = act['length']
                         activity['thumbnail'] = act['thumbnail']
+                        activity['description'] = act['description']
+                        
                         filtered_rec['activities'].append(activity)
 
                 filtered_recs.append(filtered_rec)
