@@ -123,7 +123,7 @@ def signup():
         db.close()
       
 
-        # return 'Outty Database = Success'
+        #return 'Outty Database = Success'
         return redirect(url_for('dash',
                                username=request.form['userId'],
                                 ))
