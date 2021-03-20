@@ -117,21 +117,6 @@ def signup():
         roadBikes = 'roadBikes' in request.form
         camps = 'camps' in request.form
         
-<<<<<<< HEAD
-        cursor.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',(userId,emailAddress,password,userImage,hikes,mountainBikes,roadBikes,camps,userLocation))
-
-        db.commit()
-        db.close()
-      
-
-        #return 'Outty Database = Success'
-        return redirect(url_for('dash',
-                               username=request.form['userId'],
-                                ))
-        # request.form['userId']
-    #else:
-     #   return render_template('signup.html', error=error)
-=======
         cursor.execute('SELECT userid from user_data where userid=?',(userId,))
         result = cursor.fetchone()
         
@@ -146,7 +131,6 @@ def signup():
             return redirect(url_for('index',
                                 userId=request.form['userId'],
                                 password=request.form['password'],))
->>>>>>> 09f0c2abd78da6bad6ba23ad0201aecef056af0b
 
 
 @app.route('/profile', methods=['GET', 'POST'])
