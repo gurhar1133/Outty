@@ -19,7 +19,7 @@ class Recommender:
         cursor=db.cursor()
         print("username input into rec:",username)
         if username == None:
-            username = 'test'
+            username = 'tgurhartest'
         #TODO: dont hardcode username, get that from app state (if logged in ...)
         cursor.execute(f"select hikes, mountainbikes, roadbikes, camps from user_data where userID='{username}';")
         activity_tup = cursor.fetchall()[0]
