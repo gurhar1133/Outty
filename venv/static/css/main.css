@@ -404,6 +404,6 @@ input[type=text], input[type=password], input[type=email] {
   display: flex;
 }
 .form-input-material input {
-    color: white;
+    color: rgb(8, 8, 8);
   }
 
