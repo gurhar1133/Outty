@@ -1,5 +1,9 @@
 html {
-  background: #F9F6EF;
+  background: #E5E5E5;
+  background-image: url(../img/bg.svg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  
 }
 
 body {
@@ -57,6 +61,45 @@ header h1.logo:hover {
   margin: auto auto;
 }
 
+.signup-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.nowrap  { 
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.signup-container-left img {
+    padding: none;
+    width: 200px;
+    height: 500px;
+    object-fit: cover;
+    margin: 0px;
+}
+
+.signup-container-right {
+    padding: none;
+    width: auto;
+    height: 500px;
+    margin: 0px;
+    background-color: #e0e0c4;
+    overflow: auto;
+    display: -webkit-flex;
+
+}
+
+
+
 .dashboard-container {
   display: flex;
   flex-direction: row;
@@ -64,7 +107,7 @@ header h1.logo:hover {
 
 div.home {
   padding: 10px 0 30px 0;
-  background-color: #f2ebb8;
+  background-color: #E5E5E5;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -298,30 +341,28 @@ input[type=text], input[type=password], input[type=email] {
   flex-direction: column;
   align-items: stretch;
   padding: 30px 20px;
-  color: white;
-  background: tan;
   border-radius: 10px;
   box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
     0 1px 1px rgba(128, 128, 128, 0.155),
     0 2.1px 2.1px rgba(128, 128, 128, 0.195),
     0 4.4px 4.4px rgba(128, 128, 128, 0.241),
     0 12px 12px rgba(128, 128, 128, 0.35);
+    overflow: hidden;
   }
   .login-form .form-input-material {
-    margin: 12px 0;
+    margin: 4px 0;
+    overflow: hidden;
   }
-
+  .login-form label {
+    margin-right: 10px;
+  }
   .login-form .btn {
     width: 100%;
     margin: 18px 0 9px 0;
   }
 
-  .login-form h1 { 
+  .login-form h3 { 
     text-align: center;
-    border-radius: 0px;
-    box-shadow: none;
-    text-decoration: underline;
-    text-underline-position: auto;
   }
 
 
@@ -360,6 +401,7 @@ input[type=text], input[type=password], input[type=email] {
   --input-default-border-color: white;
   --input-border-bottom-color: white;
   padding: 1%;
+  display: flex;
 }
 .form-input-material input {
     color: white;
