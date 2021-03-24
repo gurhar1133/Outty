@@ -5,16 +5,16 @@
 <div class="profile-container">
   <div class="profile-item">
     <!--read profile picture from db-->
-    <img id="profilepic" src="/static/img/zimg/IMG_1852.jpeg" alt="profile pic">
+    <img id="profilepic" src="/static/img/zimg/githubb.jpg" alt="profile pic">
   </div>
   <div class="profile-item">
     <p>
       <!--read username from db-->
-      <h3>Dora</h3><br>
+      <h3>Gio</h3><br>
       <!--read twitter handle or nickname from feed-->
-      <h6>@doratheexplorer</h6> <br>
+      <h6>@Giotheexplorer</h6> <br>
       <!--last location from db?-->
-      <h6><i class="material-icons">my_location</i>Boulder, CO</h6>
+      <h6><i id="locationicon" class="material-icons">my_location</i>Denver, CO</h6>
     </p>
   </div>
   <div class="profile-item">
@@ -34,10 +34,108 @@
   <div class="profile-item">
     <p>
       <h3>Top Interests</h3><br>
-      <h3>icons</h3>
+      <h3>
+        <span class="material-icons">
+          <!--fill based on db-->
+        hiking
+        </span>
+        <span class="material-icons">
+        kayaking
+        </span>
+        <span class="material-icons">
+          <!--fill based on db-->
+        snowboarding
+        </span>
+        <span class="material-icons">
+        snowshoeing
+        </span>
+      </h3>
     </p>
   </div>
 </div>
+<div>
+  <div>
+    <p>
+      Completed Activities:
+    </p>
+  </div>
+  <div class="dashboard-container">
+    <div class="item" style="width: 30%;">
+      <div id=card-click-area class="suggestion-card">
+        <div class="content">
+          <img class="card-img-top" src={{suggestions[0]['image']}} alt="activity image">
+        </div>
+        <div class="card-body">
+          <p class="card-title">{{suggestions[0]['title']}}</p>
+          <p class="card-text">
+            <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[0]['activity']}}
+            <br>
+            <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[0]['distance']}} miles
+          </p>
+          <div class="buttonholder">
+            <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
+            <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
+            <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
+          </div>
+          <div class="expand-button">
+            <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item" style="width: 30%;">
+      <div id=card-click-area class="suggestion-card">
+        <div class="content">
+          <img class="card-img-top" src={{suggestions[1]['image']}} alt="activity image">
+        </div>
+        <div class="card-body">
+          <p class="card-title">{{suggestions[1]['title']}}</p>
+          <p class="card-text">
+            <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[1]['activity']}}
+            <br>
+            <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[1]['distance']}} miles
+          </p>
+          <div class="buttonholder">
+            <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
+            <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
+            <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
+          </div>
+          <div class="expand-button">
+            <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item" style="width: 30%;">
+      <div id=card-click-area class="suggestion-card">
+        <div class="content">
+          <img class="card-img-top" src={{suggestions[2]['image']}} alt="activity image">
+        </div>
+        <div class="card-body">
+          <p class="card-title">{{suggestions[2]['title']}}</p>
+          <p class="card-text">
+            <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[2]['activity']}}
+            <br>
+            <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[2]['distance']}} miles
+          </p>
+          <div class="buttonholder">
+            <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
+            <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
+            <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
+          </div>
+          <div class="expand-button">
+            <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p>
+      <a href="#">See More</a>
+    </p>
+  </div>
   
+</div>
 </body>
 {% endblock %}
