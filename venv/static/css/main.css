@@ -81,7 +81,6 @@ header h1.logo:hover {
 
 .signup-container-left img {
     padding: none;
-    width: 200px;
     height: 500px;
     object-fit: cover;
     margin: 0px;
@@ -92,7 +91,7 @@ header h1.logo:hover {
     width: auto;
     height: 500px;
     margin: 0px;
-    background-color: #e0e0c4;
+    background-color: white;
     overflow: auto;
     display: -webkit-flex;
 
@@ -355,6 +354,9 @@ input[type=text], input[type=password], input[type=email] {
   }
   .login-form label {
     margin-right: 10px;
+    text-align: center;
+    vertical-align: center;
+    color: #7C7468;
   }
   .login-form .btn {
     width: 100%;
@@ -396,7 +398,7 @@ input[type=text], input[type=password], input[type=email] {
     .btn:hover::before {
       transform: translateX(100%);
     }
-
+ 
 .form-input-material {
   --input-default-border-color: white;
   --input-border-bottom-color: white;
@@ -407,3 +409,24 @@ input[type=text], input[type=password], input[type=email] {
     color: rgb(8, 8, 8);
   }
 
+  .profile-container {
+    color: #7C7468;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 1em 2em 1em 2em;
+    margin: 2vh;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .profile-item {
+    width: 20%;
+  }
+
+  #profilepic {
+    width: 75%;
+    border-radius: 100px;
+  }
