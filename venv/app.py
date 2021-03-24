@@ -52,7 +52,6 @@ def dash(username=None):
     interests = {'Hiking': False, 'Mountain Biking': False, 'Camping': False, 'Caving': False,
                  'Trail Running': False, 'Snow Sports': False, 'ATV': False, 'Horseback Riding': False}
 
-<<<<<<< HEAD
     for fav in favs:
         interests[fav] = True
     
@@ -69,21 +68,6 @@ def dash(username=None):
             'status': ''
             }
     
-=======
-    radius = 30
-    recs = rec.recommend()
-
-    card1 = {'title': recs[0]['activities'][0]['name'],
-             'activity': recs[0]['activities'][0]['type'],
-             'distance': recs[0]['activities'][0]['distance'],
-             'image': recs[0]['activities'][0]['thumbnail'],
-             'description': recs[0]['activities'][0]['description'],
-             'directions-url': 'https://www.google.com/maps/dir/Current+Location/' + str(recs[0]['coords'][0]) + ',' + str(recs[0]['coords'][1]) + '?ref=trail-action-menu-directions',
-             'more-info-url': recs[0]['activities'][0]['url'],
-             'status': ''
-             }
-
->>>>>>> 7d8c3941e5df2eb37772302f461ef0f118ae337b
     card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
              'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
     card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
@@ -150,17 +134,11 @@ def signup():
 
             db.commit()
             db.close()
-<<<<<<< HEAD
             return redirect(url_for('dash',
                                 username=request.form['userId'],
                                 # userId=request.form['userId'],
                                 # password=request.form['password'],
                                 ))
-=======
-            return redirect(url_for('index',
-                                    userId=request.form['userId'],
-                                    password=request.form['password'],))
->>>>>>> 7d8c3941e5df2eb37772302f461ef0f118ae337b
 
 
 @app.route('/profile', methods=['GET', 'POST'])
