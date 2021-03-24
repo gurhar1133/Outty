@@ -47,9 +47,13 @@ def dash(username=None):
     
     
     rec = Recommender(username)
-    print(username)
-    interests = {'Hiking': True, 'Mountain Biking': True, 'Camping': True, 'Caving': False,
+    favs = [activity.title() for activity in rec.fav_activities]
+
+    interests = {'Hiking': False, 'Mountain Biking': False, 'Camping': False, 'Caving': False,
                  'Trail Running': False, 'Snow Sports': False, 'ATV': False, 'Horseback Riding': False}
+
+    for fav in favs:
+        interests[fav] = True
     
     radius = 30
     recs = rec.recommend()[0]
@@ -128,9 +132,11 @@ def signup():
 
             db.commit()
             db.close()
-            return redirect(url_for('index',
-                                userId=request.form['userId'],
-                                password=request.form['password'],))
+            return redirect(url_for('dash',
+                                username=request.form['userId'],
+                                # userId=request.form['userId'],
+                                # password=request.form['password'],
+                                ))
 
 
 @app.route('/profile', methods=['GET', 'POST'])

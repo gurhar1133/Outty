@@ -13,14 +13,13 @@ class Recommender:
         self.location = self.get_user_location(self.username)
 
     def get_activities_from_db(self, username):
-        # make database query
-        # return unique activities
+        # returns user's activity preferences after fetching from the database
         db=sqlite3.connect('outty_database.db')
         cursor=db.cursor()
         print("username input into rec:",username)
         if username == None:
             username = 'tgurhartest'
-        #TODO: dont hardcode username, get that from app state (if logged in ...)
+        #TODO: get that from app state (if logged in ...)
         cursor.execute(f"select hikes, mountainbikes, roadbikes, camps from user_data where userID='{username}';")
         activity_tup = cursor.fetchall()[0]
         activities = []
@@ -34,12 +33,23 @@ class Recommender:
             # activities.append("road biking") 
         if activity_tup[3] == 1:
             activities.append("camping")
-        print(activities)
+        
+        db.close()
         return activities
     
     def get_user_location(self, username):
-        # make database query? or its input in some other way?
-        return ("Boulder", "Colorado")
+        # fetches zip code from the database
+        db=sqlite3.connect('outty_database.db')
+        cursor=db.cursor()
+        if self.username == None:
+            username = 'tgurhartest'
+        else: username = self.username
+
+        cursor.execute(f"SELECT userLocation from user_data WHERE userID='{username}';")
+        postal_code = cursor.fetchone()[0]
+        
+        db.close()
+        return postal_code
     
     def trail_api_query(self, lat, lon, state, activity_pref):
         # lat and lon info to query trailapi
@@ -95,19 +105,20 @@ class Recommender:
 
     def recommend(self):
        
-        #unique_activities = self.fav_activities
         activity_pref = self.fav_activities
-        city, state = self.location
+        postal_code = self.location
+    
 
-        # geoencoding for hiking trails api
+        # geoencoding for hiking trails api using user's zip
         data = None
         geo_attempts = 0
         while data == None: # WRITE TESTS FOR THIS
             conn = http.client.HTTPConnection('api.positionstack.com')
             params = urllib.parse.urlencode({
                 'access_key': self.geo_encode_key,
-                'query': city,
-                'region': state,
+                'query': postal_code,
+                # 'region': state,
+                # 'postal_code': postal_code,
                 'limit': 1,
                 })
 
@@ -125,10 +136,12 @@ class Recommender:
                     if geo_attempts > 10:
                         print ('Error')
                         return "Error getting geo encoding info"
-        #print(geo_attemps)
+        
+        state = data['data'][0]['region']
         lat = data['data'][0]['latitude']
         lon = data['data'][0]['longitude']
         
+        # makes a recommendation for each activity that the user likes
         recs = [self.trail_api_query(lat, lon, state, act) for act in activity_pref]
 
         return recs
@@ -138,6 +151,7 @@ class Recommender:
 if __name__ == "__main__":
     test_rec = Recommender("user1")
     recs = test_rec.recommend()[0]
+
     for i, rec in enumerate(recs):
         print(f'{i}) \n', rec)
         print("-"*20)
