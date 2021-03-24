@@ -18,9 +18,37 @@ class Recommender:
         cursor=db.cursor()
         print("username input into rec:",username)
         if username == None:
-            username = 'tgurhartest'
-        #TODO: get that from app state (if logged in ...)
+            username = 'Explorer'
+            try:
+
+                cursor.execute(f"select hikes, mountainbikes, roadbikes, camps from user_data where userID='{username}';")
+                
+                activity_tup = cursor.fetchall()[0]
+                activities = []
+                if activity_tup[0] == 1:
+                    activities.append("hiking")
+                if activity_tup[1] == 1:
+                    activities.append("mountain biking")
+                #TODO: no support for road biking yet
+                #if activity_tup[2] == 1:
+                    
+                    # activities.append("road biking") 
+                if activity_tup[3] == 1:
+                    activities.append("camping")
+                
+                db.close()
+                return activities
+
+            except Exception:
+                print("ran an exception!!!")
+                cursor.execute('CREATE TABLE IF NOT EXISTS user_data(userID INTEGER unique, emailAddress VARCHAR(90),password VARCHAR(90),userImage VARCHAR(90),hikes BOOLEAN, mountainBikes BOOLEAN,roadBikes BOOLEAN,camps BOOLEAN, userLocation VARCHAR(90));')
+                cursor.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',
+                           (username, 'email@email.com', 'supersecret', '', 0, 1, 0, 0, '80302'))
+
+                db.commit()
+        print("username after:",username)
         cursor.execute(f"select hikes, mountainbikes, roadbikes, camps from user_data where userID='{username}';")
+         
         activity_tup = cursor.fetchall()[0]
         activities = []
         if activity_tup[0] == 1:
@@ -42,7 +70,7 @@ class Recommender:
         db=sqlite3.connect('outty_database.db')
         cursor=db.cursor()
         if self.username == None:
-            username = 'tgurhartest'
+            username = 'Explorer'
         else: username = self.username
 
         cursor.execute(f"SELECT userLocation from user_data WHERE userID='{username}';")
@@ -117,8 +145,6 @@ class Recommender:
             params = urllib.parse.urlencode({
                 'access_key': self.geo_encode_key,
                 'query': postal_code,
-                # 'region': state,
-                # 'postal_code': postal_code,
                 'limit': 1,
                 })
 
