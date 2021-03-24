@@ -1,3 +1,8 @@
+#profilepic {
+  width: 75%;
+  border-radius: 100px;
+}
+
 html body {
   background: #F9F6EF;
   background-image: url(../img/bg.svg);
@@ -56,11 +61,12 @@ a {
 .container {
   /* margin-top: 5%; */
   width: 90%;
-  margin: auto auto;
+  margin: 5% auto;
 }
 
 .signup-container {
   padding: 0;
+  margin-top: 10%;
   margin: 0;
   list-style: none;
   -ms-box-orient: horizontal;
@@ -90,7 +96,7 @@ a {
     width: auto;
     height: 500px;
     margin: 0px;
-    background-color: white;
+    background-color:#f4f1f1;
     overflow: auto;
     display: -webkit-flex;
 
@@ -397,7 +403,4 @@ input[type=text], input[type=password], input[type=email] {
   width: 20%;
 }
 
-#profilepic {
-  width: 75%;
-  border-radius: 100px;
-}
+
