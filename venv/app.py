@@ -15,7 +15,6 @@ import sqlite3
 app = Flask(__name__)
 
 
-@app.route("/")
 @app.route("/home")
 def index(userId=None):
     # feel free to make structural changes to api call functions add parameters etc
@@ -36,6 +35,7 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/")
 @app.route("/dashboard")
 def dash(username=None):
     city = 'Boulder'
@@ -52,6 +52,7 @@ def dash(username=None):
     interests = {'Hiking': False, 'Mountain Biking': False, 'Camping': False, 'Caving': False,
                  'Trail Running': False, 'Snow Sports': False, 'ATV': False, 'Horseback Riding': False}
 
+<<<<<<< HEAD
     for fav in favs:
         interests[fav] = True
     
@@ -68,6 +69,21 @@ def dash(username=None):
             'status': ''
             }
     
+=======
+    radius = 30
+    recs = rec.recommend()
+
+    card1 = {'title': recs[0]['activities'][0]['name'],
+             'activity': recs[0]['activities'][0]['type'],
+             'distance': recs[0]['activities'][0]['distance'],
+             'image': recs[0]['activities'][0]['thumbnail'],
+             'description': recs[0]['activities'][0]['description'],
+             'directions-url': 'https://www.google.com/maps/dir/Current+Location/' + str(recs[0]['coords'][0]) + ',' + str(recs[0]['coords'][1]) + '?ref=trail-action-menu-directions',
+             'more-info-url': recs[0]['activities'][0]['url'],
+             'status': ''
+             }
+
+>>>>>>> 7d8c3941e5df2eb37772302f461ef0f118ae337b
     card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
              'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
     card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
@@ -100,43 +116,51 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
-    #create/connect to database
-    db=sqlite3.connect('outty_database.db')
-    cursor=db.cursor()
+    # create/connect to database
+    db = sqlite3.connect('outty_database.db')
+    cursor = db.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS user_data(userID INTEGER unique, emailAddress VARCHAR(90),password VARCHAR(90),userImage VARCHAR(90),hikes BOOLEAN, mountainBikes BOOLEAN,roadBikes BOOLEAN,camps BOOLEAN, userLocation VARCHAR(90));')
 
-    if request.method=='GET':
+    if request.method == 'GET':
         return render_template('signup.html')
 
     if request.method == 'POST':
 
        # write to database
-        userId=request.form['userId']
+        userId = request.form['userId']
         password = request.form['password']
         emailAddress = request.form['emailAddress']
         userImage = request.form['userImage']
-        userLocation=request.form['userLocation']
+        userLocation = request.form['userLocation']
         hikes = 'hikes' in request.form
         mountainBikes = 'mountainBikes' in request.form
         roadBikes = 'roadBikes' in request.form
         camps = 'camps' in request.form
-        
-        cursor.execute('SELECT userid from user_data where userid=?',(userId,))
+
+        cursor.execute(
+            'SELECT userid from user_data where userid=?', (userId,))
         result = cursor.fetchone()
-        
+
         if result:
             return 'Account already exists under this username.'
-        
+
         else:
-            cursor.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',(userId,emailAddress,password,userImage,hikes,mountainBikes,roadBikes,camps,userLocation))
+            cursor.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',
+                           (userId, emailAddress, password, userImage, hikes, mountainBikes, roadBikes, camps, userLocation))
 
             db.commit()
             db.close()
+<<<<<<< HEAD
             return redirect(url_for('dash',
                                 username=request.form['userId'],
                                 # userId=request.form['userId'],
                                 # password=request.form['password'],
                                 ))
+=======
+            return redirect(url_for('index',
+                                    userId=request.form['userId'],
+                                    password=request.form['password'],))
+>>>>>>> 7d8c3941e5df2eb37772302f461ef0f118ae337b
 
 
 @app.route('/profile', methods=['GET', 'POST'])
