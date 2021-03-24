@@ -3,7 +3,7 @@ html body {
   background-image: url(../img/bg.svg);
   background-repeat: repeat-y;
   background-size: 100%;
-  background-blend-mode: overlay;
+  background-blend-mode: multiply;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-border-radius: 6px;
