@@ -350,6 +350,7 @@ input[type=text], input[type=password], input[type=email] {
   padding: 8px 16px;
   border-radius: 0;
   overflow: hidden;
+  background: rgb(197, 195, 195);
 }
 
 .btn::before {
