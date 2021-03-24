@@ -5,41 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Outty</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <link href="https://fonts.googleapis.com/css?family=Inter:400|Zilla Slab:400,800" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.teal-red.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
 </head>
 
 <body>
-  <header>
-    <div class="container">
-      <h1 class="logo">Outty</h1>
-      <nav>
-        <ul class="menu">
-          <li><a href="{{ url_for('index') }}">Home</a></li>
-          <li><a href="{{ url_for('dash') }}">Dashboard</a></li>
-          <li><a href="{{ url_for('about') }}">About</a></li>
-          <!--if username is not default, should say profile, else login-->
-          <li><a href="{{ url_for('login') }}">Login</a></li>
-          <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
-          <li><a href="{{ url_for('profile') }}">Profile</a></li>
-          <li><a href="{{ url_for('settings') }}">Settings</a></li>
-          <li><a href="#">Log out</a></li>
-        </ul>
-      </nav>
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white">
+    <a class="navbar-brand brand" href="{{ url_for('dash') }}">Outty</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('dash') }}">Dashboard <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('about') }}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('settings') }}">Settings</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ url_for('login') }}">Login</a>
+            <a class="dropdown-item" href="{{ url_for('signup') }}">Sign Up</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Logout</a>
+          </div>
+        </li>
+      </ul>
     </div>
-  </header>
+  </nav>
+
   <div class="container">
     {% block content %}
     {% endblock %}
   </div>
 
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>
-  <!-- <script src = "https://unpkg.com/animejs@2.2.0/anime.min.js"></script> -->
-
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script src={{ url_for('static', filename='js/anime.min.js')}}></script>
   <script src={{ url_for('static', filename='js/card-animations.js')}}></script>
   <!-- <script src={{ url_for('static', filename='js/geolocation.js')}}></script> -->

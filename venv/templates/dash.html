@@ -5,7 +5,7 @@
   <div class="item">
     <div class="dashboard-text">
       <h3>{{greeting}}, {{username}}</h3>
-
+      <br>
       <p>
         <i class="mdl-icon-toggle material-icons">place</i> {{city}}, {{state}}
         <br>
@@ -99,7 +99,7 @@
         <div class="button"><i class="mdl-icon-toggle material-icons">directions</i><a href="{{suggestions[0]['directions-url']}}" target="_blank"> directions</a></div>
         <div class="button"><i class="mdl-icon-toggle material-icons">explore</i><a href="{{suggestions[0]['more-info-url']}}" target="_blank"> more info</a></div>
       </div>
-      <div>
+      <div class="card-description">
         <p><b>{{suggestions[0]['title']}}</b> {{suggestions[0]['description']}}</p>
       </div>
     </div>
