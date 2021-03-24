@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, g
 
 # could be moved into a single apis.py file, but for now
 from map_api import get_map_data
@@ -44,24 +44,30 @@ def dash(username=None):
     map_data = get_map_data()
     greeting = getGreeting()
     username = request.args.get("username")
+    
+    
     rec = Recommender(username)
+    favs = [activity.title() for activity in rec.fav_activities]
 
-    interests = {'Hiking': True, 'Mountain Biking': True, 'Camping': True, 'Caving': False,
+    interests = {'Hiking': False, 'Mountain Biking': False, 'Camping': False, 'Caving': False,
                  'Trail Running': False, 'Snow Sports': False, 'ATV': False, 'Horseback Riding': False}
 
+    for fav in favs:
+        interests[fav] = True
+    
     radius = 30
-    recs = rec.recommend()
-
-    card1 = {'title': recs[0]['activities'][0]['name'],
-             'activity': recs[0]['activities'][0]['type'],
-             'distance': recs[0]['activities'][0]['distance'],
-             'image': recs[0]['activities'][0]['thumbnail'],
-             'description': recs[0]['activities'][0]['description'],
-             'directions-url': 'https://www.google.com/maps/dir/Current+Location/' + str(recs[0]['coords'][0]) + ',' + str(recs[0]['coords'][1]) + '?ref=trail-action-menu-directions',
-             'more-info-url': recs[0]['activities'][0]['url'],
-             'status': ''
-             }
-
+    recs = rec.recommend()[0]
+    
+    card1 = {'title': recs[0]['activities'][0]['name'], 
+            'activity': recs[0]['activities'][0]['type'], 
+            'distance': recs[0]['activities'][0]['distance'], 
+            'image': recs[0]['activities'][0]['thumbnail'], 
+            'description': recs[0]['activities'][0]['description'],
+            'directions-url': 'https://www.google.com/maps/dir/Current+Location/' + str(recs[0]['coords'][0]) + ',' + str(recs[0]['coords'][1]) + '?ref=trail-action-menu-directions', 
+            'more-info-url': recs[0]['activities'][0]['url'], 
+            'status': ''
+            }
+    
     card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
              'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
     card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
@@ -128,9 +134,11 @@ def signup():
 
             db.commit()
             db.close()
-            return redirect(url_for('index',
-                                    userId=request.form['userId'],
-                                    password=request.form['password'],))
+            return redirect(url_for('dash',
+                                username=request.form['userId'],
+                                # userId=request.form['userId'],
+                                # password=request.form['password'],
+                                ))
 
 
 @app.route('/profile', methods=['GET', 'POST'])
