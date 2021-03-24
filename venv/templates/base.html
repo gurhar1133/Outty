@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Inter:400|Zilla Slab:400,800" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.teal-red.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
@@ -26,7 +27,7 @@
           <a class="nav-link" href="{{ url_for('dash') }}">Dashboard <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('about') }}">About</a>
+          <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('settings') }}">Settings</a>
@@ -40,6 +41,8 @@
             <a class="dropdown-item" href="{{ url_for('signup') }}">Sign Up</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Logout</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('about') }}">About</a>
           </div>
         </li>
       </ul>

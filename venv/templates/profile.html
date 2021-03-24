@@ -1,7 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="card">
-  <h3>profile</h3>
-  <p>Populate with profile user data</p>
+<body>
+
+<div class="profile-container">
+  <div class="profile-item">
+    <!--read profile picture from db-->
+    <img id="profilepic" src="/static/img/zimg/IMG_1852.jpeg" alt="profile pic">
+  </div>
+  <div class="profile-item">
+    <p>
+      <!--read username from db-->
+      <h3>Dora</h3><br>
+      <!--read twitter handle or nickname from feed-->
+      <h6>@doratheexplorer</h6> <br>
+      <!--last location from db?-->
+      <h6><i class="material-icons">my_location</i>Boulder, CO</h6>
+    </p>
+  </div>
+  <div class="profile-item">
+    <p>
+      <!--read activities to do from db-->
+      <h1>35</h1><br>
+      <h6>activities to do</h6>
+    </p>
+  </div>
+  <div class="profile-item">
+    <p>
+      <!--read activities complete from db-->
+      <h1>14</h1><br>
+      <h6>activities complete</h6>
+    </p>
+  </div>
+  <div class="profile-item">
+    <p>
+      <h3>Top Interests</h3><br>
+      <h3>icons</h3>
+    </p>
+  </div>
 </div>
+  
+</body>
 {% endblock %}
