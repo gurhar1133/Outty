@@ -144,7 +144,17 @@ def signup():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     # should read from the database to display info
-    return render_template('profile.html')
+    #filler cards for style
+    card1 = {'title': 'Tenderfoot Mountain Trail, Summit County', 'activity': 'Hiking',
+             'distance': 2.5, 'image': url_for('static', filename='img/zimg/IMG_1851.jpeg'), 'status': ''}
+    card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
+             'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
+    card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
+             'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
+
+    suggestions = [card1, card2, card3]
+
+    return render_template("profile.html", suggestions=suggestions)
 
 
 if __name__ == '__main__':
