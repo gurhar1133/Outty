@@ -11,17 +11,19 @@ from map_api import get_map_data
 from weather_api import get_weather_data
 from getGreeting import getGreeting
 import sqlite3
-
+import outty_database
+import os
 
 # We can all use one test case class or define a few with different setUp and tearDown methods
 # up to you
 class OuttyTestCase(unittest.TestCase):
 
     def setUp(self):
-        pass
+        outty_database.create('test.db')
+        outty_database.addUser('test.db','Testuser','emailAddress','password','userImage',1,1,0,1,'80111')
 
     def tearDown(self):
-        pass
+        os.remove('./test.db')
 
     def test_sanity(self):
         self.assertEqual(True, True)
@@ -85,43 +87,43 @@ class OuttyTestCase(unittest.TestCase):
     def test_rec_method_inputs(self):
         pass
 
-    def test_db_user_id(self):
-        conn = sqlite3.connect('outty_database.db')
-        c = conn.cursor()
-        for row in c.execute("select userId from user_data where emailAddress = 'email@email.com'"):
-           self.assertEqual(row[0],'Explorer',"'text' does not match expected")        
+    def test_db_insert(self):
+        conn = sqlite3.connect('test.db')
+        c=conn.cursor()
+        for row in c.execute("select count(userId) from user_data"):
+           self.assertEqual(row[0],1,"Insert database function not working properly")        
 
     def test_db_user_email(self):
-        conn = sqlite3.connect('outty_database.db')
+        conn = sqlite3.connect('test.db')
         c = conn.cursor()
-        for row in c.execute("select emailAddress from user_data where userId = 'Explorer'"):
-           self.assertEqual(row[0],'email@email.com',"'text' does not match expected")
+        for row in c.execute("select emailAddress from user_data where userId = 'Testuser'"):
+           self.assertEqual(row[0],'emailAddress',"Issues with emailaddress in database")
 
     def test_db_user_pw(self):
-        conn = sqlite3.connect('outty_database.db')
+        conn = sqlite3.connect('test.db')
         c = conn.cursor()
-        for row in c.execute("select password from user_data where userId = 'Explorer'"):
-           self.assertEqual(row[0],'supersecret',"'text' does not match expected")
+        for row in c.execute("select password from user_data where userId = 'Testuser'"):
+           self.assertEqual(row[0],'password',"Issues with password in database")
 
     def test_db_user_location(self):
-        conn = sqlite3.connect('outty_database.db')
+        conn = sqlite3.connect('test.db')
         c = conn.cursor()
-        for row in c.execute("select userLocation from user_data where userId = 'Explorer'"):
-           self.assertEqual(row[0],'80302',"'text' does not match expected")
+        for row in c.execute("select userLocation from user_data where userId = 'Testuser'"):
+           self.assertEqual(row[0],'80111',"'text' does not match expected")
 
     def test_db_user_activities(self):
-        conn = sqlite3.connect('outty_database.db')
+        conn = sqlite3.connect('test.db')
         c = conn.cursor()
-        for row in c.execute("select hikes, mountainBikes,roadBikes,camps from user_data where userId = 'Explorer'"):
-           self.assertEqual(row,(0,1,0,0),"'text' does not match expected")
+        for row in c.execute("select hikes, mountainBikes,roadBikes,camps from user_data where userId = 'Testuser'"):
+           self.assertEqual(row,(1,1,0,1),"Issues with activities in database")
 
 
     def test_unique_db_user(self):
-        conn = sqlite3.connect('outty_database.db')
+        conn = sqlite3.connect('test.db')
         c = conn.cursor()
         try:
             c.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',
-                           (username, 'email2@email.com', 'supersecret2', '', 0, 1, 0, 0, '80302'))
+                           (Testuser, 'email2@email.com', 'supersecret2', '', 0, 1, 0, 0, '80302'))
             self.fail("Should fail when trying to input existing user ID.")
         except Exception:
             pass
