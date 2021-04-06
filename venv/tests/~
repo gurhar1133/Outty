@@ -109,25 +109,17 @@ class OuttyTestCase(unittest.TestCase):
         for row in c.execute("select userLocation from user_data where userId = 'Explorer'"):
            self.assertEqual(row[0],'80302',"'text' does not match expected")
 
-    def test_db_user_activities(self):
+    def test_db_user_hikes(self):
         conn = sqlite3.connect('outty_database.db')
         c = conn.cursor()
-        for row in c.execute("select hikes, mountainBikes,roadBikes,camps from user_data where userId = 'Explorer'"):
-           self.assertEqual(row,(0,1,0,0),"'text' does not match expected")
+        for row in c.execute("select hikes from user_data where userId = 'Explorer'"):
+           self.assertEqual(row[0],0,"'text' does not match expected")
 
-
-    def test_unique_db_user(self):
+    def test_db_user_mb(self):
         conn = sqlite3.connect('outty_database.db')
         c = conn.cursor()
-        try:
-            c.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',
-                           (username, 'email2@email.com', 'supersecret2', '', 0, 1, 0, 0, '80302'))
-            self.fail("Should fail when trying to input existing user ID.")
-        except Exception:
-            pass
-    
-    def test_profile_db_update(self):
-        pass
+        for row in c.execute("select mountainBikes,roadBikes from user_data where userId = 'Explorer'"):
+           self.assertEqual(row,'1,0',"'text' does not match expected")
 
 # Main: Run Test Cases
 if __name__ == '__main__':

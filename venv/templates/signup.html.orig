@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form class="login-form" action="/login" method="POST">
+      <h1 class="login-form h1">Please Sign Up or Click Login For Existing Users</h1>
+      <div class="form-input-material">
+
+      <label for="userId">Enter a Username</label>
+      <input type="text" placeholder="userId" name="userId">
+      </div>
+
+      <div class="form-input-material">
+        <label for="password">Enter a Password</label>
+        <input type="password" placeholder="password" name="password">
+      </div>
+      
+      <div class="form-input-material">
+        <label for="email">Enter a Valid Email Address</label>
+        <input type="email" placeholder="" name="emailAddress">
+      </div>
+
+      <div class="form-input-material">
+        <label for="userImage">Choose a profile picture:</label>
+        <input type="file" id="userImage" name="userImage" accept="image/png, image/jpeg">
+      </div>
+        
+      <div class="form-input-material">
+        <label for="userLocation">Enter Your Zip Code</label>
+        <input type="text" placeholder="e.g. 00000" name="userLocation">
+      </div>
+      <!--checkbox-->
+      <div class="form-input-material">
+      <p>Choose your outdoor interests:</p>
+
+      <div class="form-input-material">
+        <label for="hikes"><input type="checkbox" id="hikes" name="hikes">
+          Hiking</label>
+      </div>
+
+      <div class="form-input-material">
+        <input type="checkbox" id="mountainBikes" name="mountainBikes">
+        <label for="mountainBikes">Mountain Biking</label>
+      </div>
+
+      <div class="form-input-material">
+        <input type="checkbox" id="roadBikes" name="roadBikes">
+        <label for="roadBikes">Road Biking</label>
+      </div>
+
+      <div class="form-input-material">
+        <input type="checkbox" id="camps" name="camps">
+        <label for="camps">Camping</label>
+      </div>
+      </div>
+      <input class="btn" type="submit" value="Sign-Up">
+     
+    </form>
+{% endblock %}
