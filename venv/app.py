@@ -57,8 +57,20 @@ def dash(username=None):
     
     radius = 30
     recs = rec.recommend()[0]
+
     
-    card1 = {'title': recs[0]['activities'][0]['name'], 
+
+    print("returned recs[0]: ", recs[0])
+    
+    
+    card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
+            'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
+    card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
+            'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
+
+    
+    if len(recs[0]['activities']) != 0: ## handles empy api call returned to frontend
+        card1 = {'title': recs[0]['activities'][0]['name'], 
             'activity': recs[0]['activities'][0]['type'], 
             'distance': recs[0]['activities'][0]['distance'], 
             'image': recs[0]['activities'][0]['thumbnail'], 
@@ -66,13 +78,10 @@ def dash(username=None):
             'directions-url': 'https://www.google.com/maps/dir/Current+Location/' + str(recs[0]['coords'][0]) + ',' + str(recs[0]['coords'][1]) + '?ref=trail-action-menu-directions', 
             'more-info-url': recs[0]['activities'][0]['url'], 
             'status': ''
-            }
-    
-    card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
-             'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
-    card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
-             'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
-
+        }
+    else:
+        card1 = card2
+        
     suggestions = [card1, card2, card3]
 
     if not username:
