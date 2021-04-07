@@ -134,8 +134,8 @@ class OuttyTestCase(unittest.TestCase):
     #     pass
 
     def test_weather_api(self):
-        self.assertContains(weather_api.get_weather_data(
-            'Boulder, Colorado'), "°F", "API not returning temperature")
+        self.assertIn("°F", weather_api.get_weather_data(
+            'Boulder, Colorado'))
 
     def test_getGreeting(self):
         self.assertEqual(getGreeting.getGreetingText(1),
