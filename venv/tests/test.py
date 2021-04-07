@@ -1,4 +1,7 @@
 import os
+import sys
+# Adds modules from parent directory to be imported into tests
+sys.path.append('../')
 import outty_database
 import sqlite3
 from getGreeting import getGreeting
@@ -9,9 +12,9 @@ from recommend import Recommender
 import app
 import config
 import unittest
-import sys
-# Adds modules from parent directory to be imported into tests
-sys.path.append('../')
+
+import regex as re
+
 
 
 # We can all use one test case class or define a few with different setUp and tearDown methods
@@ -61,14 +64,19 @@ class OuttyTestCase(unittest.TestCase):
         recs = test_rec.recommend()[0]
         self.assertEqual(type(recs), list)
 
-    def test_rec_handle_empty_api_return(self):
-        pass
+    # def test_rec_handle_empty_api_return(self):
+    #     pass
 
-    def test_rec_slow_response(self):
-        pass
+    # def test_rec_slow_response(self):
+    #     pass
 
-    def test_individual_api_fail(self):
-        pass
+    def test_bad_trail_api_inputs(self):
+        # testing bad trail api query. Should be flexible?
+        test_rec = Recommender("aFakeNameNotInDb")
+        try:
+            res = test_rec.trail_api_query("cat", "dog", 0, test_rec.fav_activities[0])
+        except Exception:
+            self.fail("not flexible to bad trail api inputs")
 
     def test_rec_get_activities(self):
         # if there is an error in retrieving fav activities then use hiking
@@ -77,14 +85,18 @@ class OuttyTestCase(unittest.TestCase):
         recs = test_rec.recommend()[0]
         self.assertEqual(type(recs), list)
 
-    def test_rec_get_user_loc(self):
-        pass
+    def test_rec_get_user_loc(self): # make sure us postal code returned
+        test_rec = Recommender("aFakeNameNotInDb")
+        postal_code = test_rec.get_user_location(test_rec.username)
+        pattern = re.compile('^[0-9]{5}(-[0-9]{4})?$')
+        result = re.fullmatch(pattern, postal_code)
+        self.assertNotEqual(result, None)
 
-    def test_rec_no_db(self):
-        pass
+    # def test_rec_no_db(self):
+    #     pass
 
-    def test_rec_method_inputs(self):
-        pass
+    # def test_rec_method_inputs(self):
+    #     pass
 
     def test_db_insert(self):
         conn = sqlite3.connect('test.db')

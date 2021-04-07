@@ -60,7 +60,7 @@ class Recommender:
         
             
 
-
+        db_res = cursor.fetchall()
         activity_tup = db_res[0]
         activities = []
         if activity_tup[0] == 1:
@@ -89,11 +89,12 @@ class Recommender:
         postal_code = cursor.fetchone()[0]
         
         db.close()
+        
         return postal_code
     
     def trail_api_query(self, lat, lon, state, activity_pref):
         # lat and lon info to query trailapi
-
+        print("inputs to trail_api_query(): ", lat, lon, state, activity_pref)
         url = "https://trailapi-trailapi.p.rapidapi.com/"
 
         querystring = {"q-activities_activity_type_name_eq":activity_pref,
@@ -113,6 +114,7 @@ class Recommender:
         response = requests.request("GET", url, headers=headers, params=querystring)
         if response.ok:
             rec_activities = json.loads(response.text)['places']
+            
             filtered_recs = []
             for rec in rec_activities:
                 filtered_rec = {}
@@ -138,6 +140,7 @@ class Recommender:
                         filtered_rec['activities'].append(activity)
 
                 filtered_recs.append(filtered_rec)
+            # print("SUCCESS: ", filtered_recs)
 
             return filtered_recs
         else:
