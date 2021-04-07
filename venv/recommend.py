@@ -16,9 +16,18 @@ class Recommender:
         # returns user's activity preferences after fetching from the database
         db=sqlite3.connect('outty_database.db')
         cursor=db.cursor()
-        print("username input into rec:",username)
-        if username == None:
+        # print("username input into rec:",username)
+
+        if username:
+            cursor.execute(f"select hikes, mountainbikes, roadbikes, camps from user_data where userID='{username}';")
+            db_res = cursor.fetchall()
+            print(f"result from fetch on {username}",db_res)
+        
+        
+        if (username == None) or type(username) == str and len(db_res) == 0:
+            print(f"{username} query failed, defaulting to 'explorer'")
             username = 'Explorer'
+            self.username = username
             try:
 
                 cursor.execute(f"select hikes, mountainbikes, roadbikes, camps from user_data where userID='{username}';")
@@ -44,12 +53,15 @@ class Recommender:
                 cursor.execute('CREATE TABLE IF NOT EXISTS user_data(userID INTEGER unique, emailAddress VARCHAR(90),password VARCHAR(90),userImage VARCHAR(90),hikes BOOLEAN, mountainBikes BOOLEAN,roadBikes BOOLEAN,camps BOOLEAN, userLocation VARCHAR(90));')
                 cursor.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',
                            (username, 'email@email.com', 'supersecret', '', 0, 1, 0, 0, '80302'))
-
+                
                 db.commit()
-        print("username after:",username)
+        # print("username after:",username)
         cursor.execute(f"select hikes, mountainbikes, roadbikes, camps from user_data where userID='{username}';")
-         
-        activity_tup = cursor.fetchall()[0]
+        
+            
+
+        db_res = cursor.fetchall()
+        activity_tup = db_res[0]
         activities = []
         if activity_tup[0] == 1:
             activities.append("hiking")
@@ -77,11 +89,12 @@ class Recommender:
         postal_code = cursor.fetchone()[0]
         
         db.close()
+        
         return postal_code
     
     def trail_api_query(self, lat, lon, state, activity_pref):
         # lat and lon info to query trailapi
-
+        print("inputs to trail_api_query(): ", lat, lon, state, activity_pref)
         url = "https://trailapi-trailapi.p.rapidapi.com/"
 
         querystring = {"q-activities_activity_type_name_eq":activity_pref,
@@ -101,6 +114,7 @@ class Recommender:
         response = requests.request("GET", url, headers=headers, params=querystring)
         if response.ok:
             rec_activities = json.loads(response.text)['places']
+            
             filtered_recs = []
             for rec in rec_activities:
                 filtered_rec = {}
@@ -126,6 +140,7 @@ class Recommender:
                         filtered_rec['activities'].append(activity)
 
                 filtered_recs.append(filtered_rec)
+            # print("SUCCESS: ", filtered_recs)
 
             return filtered_recs
         else:
@@ -135,7 +150,9 @@ class Recommender:
        
         activity_pref = self.fav_activities
         postal_code = self.location
-    
+        if len(activity_pref) == 0:
+            self.fav_activities = ['mountain biking']
+            activity_pref = self.fav_activities
 
         # geoencoding for hiking trails api using user's zip
         data = None
