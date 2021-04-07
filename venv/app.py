@@ -11,6 +11,7 @@ from recommend import Recommender
 
 import config
 import sqlite3
+import outty_database
 
 app = Flask(__name__)
 
@@ -109,10 +110,12 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
-    # create/connect to database
+    
+    #create/connect to database
+
+    outty_database.create('outty_database.db')    
     db = sqlite3.connect('outty_database.db')
     cursor = db.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS user_data(userID INTEGER unique, emailAddress VARCHAR(90),password VARCHAR(90),userImage VARCHAR(90),hikes BOOLEAN, mountainBikes BOOLEAN,roadBikes BOOLEAN,camps BOOLEAN, userLocation VARCHAR(90));')
 
     if request.method == 'GET':
         return render_template('signup.html')
@@ -138,12 +141,9 @@ def signup():
             return 'Account already exists under this username.'
 
         else:
-            cursor.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',
-                           (userId, emailAddress, password, userImage, hikes, mountainBikes, roadBikes, camps, userLocation))
+            outty_database.addUser('outty_database.db',userId,emailAddress,password,userImage,hikes,mountainBikes,roadBikes,camps,userLocation)
 
-            db.commit()
-            db.close()
-            return redirect(url_for('dash',
+        return redirect(url_for('dash',
                                 username=request.form['userId'],
                                 # userId=request.form['userId'],
                                 # password=request.form['password'],
