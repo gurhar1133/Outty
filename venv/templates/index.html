@@ -1,17 +1,11 @@
 {% extends "base.html" %}
-{% block content %}
-  <h3>{{greeting}}, {{username}}</h3>
-  <h3>{{city}}, {{state}}</h3>
-  <h3>{{ weather_data }}</h3>
-<h3><iframe
-  id="map"
-  width="600"
-  height="450"
-  style="border:0"
-  loading="lazy"
-  allowfullscreen
-  src={{ "https://www.google.com/maps/embed/v1/search?key=" + map_api_key +
-    "&q=hiking+trails,Boulder+CO" }}>
-</iframe></h3>
 
+{% block content %}
+
+<h1 class="text-center">
+  Welcome to Outty!
+</h1>
+<h2 class="text-center">
+  Sign up or login to try!
+</h2>
 {% endblock %}
