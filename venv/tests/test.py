@@ -1,20 +1,21 @@
+# tests will need to be updated but should generally work the same with test Cases
+
+import regex as re
+import unittest
+import config
+from .recommend import Recommender
+from flask import Flask, render_template, redirect, url_for, request, g
+import main
+import auth
+from map_api import get_map_data
+from weather_api import get_weather_data
+from getGreeting import getGreeting
+import sqlite3
+import outty_database
 import os
 import sys
 # Adds modules from parent directory to be imported into tests
 sys.path.append('../')
-import outty_database
-import sqlite3
-from getGreeting import getGreeting
-from weather_api import get_weather_data
-from map_api import get_map_data
-from flask import Flask, render_template, redirect, url_for, request, g
-from recommend import Recommender
-import app
-import config
-import unittest
-
-import regex as re
-
 
 
 # We can all use one test case class or define a few with different setUp and tearDown methods
@@ -45,7 +46,6 @@ class OuttyTestCase(unittest.TestCase):
             test_rec2 = Recommender(1)
             self.fail("Should trigger exception when non string inputed")
         except Exception:
-
             pass
         try:
             test_rec3 = Recommender([23, 2])
@@ -74,23 +74,10 @@ class OuttyTestCase(unittest.TestCase):
         # testing bad trail api query. Should be flexible?
         test_rec = Recommender("aFakeNameNotInDb")
         try:
-            res = test_rec.trail_api_query("cat", "dog", 0, test_rec.fav_activities[0])
+            res = test_rec.trail_api_query(
+                "cat", "dog", 0, test_rec.fav_activities[0])
         except Exception:
             self.fail("not flexible to bad trail api inputs")
-
-    def test_rec_get_activities(self):
-        # if there is an error in retrieving fav activities then use hiking
-        test_rec = Recommender("aFakeNameNotInDb")
-        test_rec.fav_activities = []
-        recs = test_rec.recommend()[0]
-        self.assertEqual(type(recs), list)
-
-    def test_rec_get_user_loc(self): # make sure us postal code returned
-        test_rec = Recommender("aFakeNameNotInDb")
-        postal_code = test_rec.get_user_location(test_rec.username)
-        pattern = re.compile('^[0-9]{5}(-[0-9]{4})?$')
-        result = re.fullmatch(pattern, postal_code)
-        self.assertNotEqual(result, None)
 
     # def test_rec_no_db(self):
     #     pass

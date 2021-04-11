@@ -90,21 +90,20 @@ a {
 }
 
 .signup-container-left img {
-    padding: none;
-    height: 500px;
-    object-fit: cover;
-    margin: 0px;
+  padding: none;
+  height: 500px;
+  object-fit: cover;
+  margin: 0px;
 }
 
 .signup-container-right {
-    padding: none;
-    width: auto;
-    height: 500px;
-    margin: 0px;
-    background-color:#f4f1f1;
-    overflow: auto;
-    display: -webkit-flex;
-
+  padding: none;
+  width: auto;
+  height: 500px;
+  margin: 0px;
+  background-color: #f4f1f1;
+  overflow: auto;
+  display: -webkit-flex;
 }
 
 .dashboard-container {
@@ -180,9 +179,9 @@ input[type=text], input[type=password], input[type=email] {
   /* padding: 12px 20px; */
   /* margin: 8px 0; */
   box-sizing: border-box;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   border-width: thin;
-  border-color: #7C7468;
+  border-color: rgba(0, 0, 0, 20%);
 }
 
 .card {
@@ -330,8 +329,8 @@ input[type=text], input[type=password], input[type=email] {
     0 2.1px 2.1px rgba(128, 128, 128, 0.195),
     0 4.4px 4.4px rgba(128, 128, 128, 0.241),
     0 12px 12px rgba(128, 128, 128, 0.35);
-    overflow: hidden;
-  }
+  overflow: hidden;
+}
 
 .login-form .form-input-material {
   margin: 4px 0;
@@ -353,14 +352,14 @@ input[type=text], input[type=password], input[type=email] {
   text-align: center;
 }
 
-.btn {
+form .btn {
   padding: 8px 16px;
   border-radius: 0;
   overflow: hidden;
   background: rgb(197, 195, 195);
 }
 
-.btn::before {
+form .btn::before {
   position: absolute;
   content: "";
   top: 0;
@@ -375,12 +374,12 @@ input[type=text], input[type=password], input[type=email] {
   transition: 0.6s;
 }
 
-.btn:hover {
+form .btn:hover {
   background: white;
   box-shadow: 0 0 20px 10px hsla(203, 22%, 84%, 0.5);
 }
 
-.btn:hover::before {
+form .btn:hover::before {
   transform: translateX(100%);
 }
 
@@ -390,10 +389,12 @@ input[type=text], input[type=password], input[type=email] {
   padding: 1%;
   display: flex;
 }
+
 .form-input-material input {
   color: rgb(8, 8, 8);
   padding: 2%;
 }
+
 .profile-container {
   color: #7C7468;
   font-family: 'Inter', sans-serif;
@@ -410,5 +411,3 @@ input[type=text], input[type=password], input[type=email] {
 .profile-item {
   width: 20%;
 }
-
-

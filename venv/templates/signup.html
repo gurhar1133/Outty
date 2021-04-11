@@ -1,69 +1,69 @@
 {% extends "base.html" %}
+
 {% block content %}
+
 <ul class="signup-container nowrap">
-<!-- Organize login box into two divs, make flexible list for window sizing
+  <!-- Organize login box into two divs, make flexible list for window sizing
 add background color to sign up
 add image and styling to login
 add image rotation (JS)
  -->
   <li class="signup-container-left">
-    <img src="static/img/zimg/IMG_1719.jpeg" alt="broken">
+    <img src="static/img/zimg/IMG_1719.jpeg" alt="Image">
   </li>
   <li class="signup-container-right">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-danger">
+      {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+    </div>
+    {% endif %}
+    {% endwith %}
+
     <form class="login-form" action="/signup" method="POST">
-      <h5>Please Sign Up or Click Login For Existing Users</h5>
+      <h5>Sign Up</h5>
       <div class="form-input-material">
-      <label for="userId">Enter a Username</label>
-      <input type="text" placeholder="userId" name="userId">
+        <label for="name">Name</label>
+        <input type="text" placeholder="Your Name" name="name" required>
+      </div>
+      <div class="form-input-material">
+        <label for="email">Email Address</label>
+        <input type="email" placeholder="your.email@website.com" name="emailAddress" required>
+      </div>
+      <div class="form-input-material">
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" name="password" required>
       </div>
 
       <div class="form-input-material">
-        <label for="password">Enter a Password</label>
-        <input type="password" placeholder="password" name="password">
-      </div>
-      
-      <div class="form-input-material">
-        <label for="email">Enter a Valid Email Address</label>
-        <input type="email" placeholder="" name="emailAddress">
+        <label for="zipcode">Zipcode</label>
+        <input id="zipcode" name="zipcode" placeholder="80301" type="text" pattern="[0-9]{5}" title="(valid 5-digit US zipcode)" required>
       </div>
 
       <div class="form-input-material">
-        <label for="userImage">Choose a profile picture:</label>
-        <input type="file" id="userImage" name="userImage" accept="image/png, image/jpeg">
+        <label for="userImage">URL for Profile Picture</label>
+        <input type="url" placeholder="http://site.com/image.jpg" name="userImage" required>
       </div>
-        
       <div class="form-input-material">
-        <label for="userLocation">Enter Your Zip Code</label>
-        <input type="text" placeholder="e.g. 00000" name="userLocation">
-      </div>
-      <!--checkbox-->
-      <div class="form-input-material">
-      <p>Choose your outdoor interests:</p>
-
-      <div class="form-input-material">
-        <input type="checkbox" id="hikes" name="hikes">
-        <label for="hikes">
-          Hiking</label>
-      </div>
-
-      <div class="form-input-material">
-        <input type="checkbox" id="mountainBikes" name="mountainBikes">
-        <label for="mountainBikes">Mountain Biking</label>
-      </div>
-
-      <div class="form-input-material">
-        <input type="checkbox" id="roadBikes" name="roadBikes">
-        <label for="roadBikes">Road Biking</label>
-      </div>
-
-      <div class="form-input-material">
-        <input type="checkbox" id="camps" name="camps">
-        <label for="camps">Camping</label>
-      </div>
+        <p>Select your outdoor interests:</p>
+        <div class="form-input-material">
+          <input type="checkbox" name="hiking" value="true">
+          <label for="hiking">
+            Hiking</label>
+        </div>
+        <div class="form-input-material">
+          <input type="checkbox" name="mountainBiking" value="true">
+          <label for="mountainBiking">Mountain Biking</label>
+        </div>
+        <div class="form-input-material">
+          <input type="checkbox" name="camping" value="true">
+          <label for="camping">Camping</label>
+        </div>
       </div>
       <input class="btn" type="submit" value="Sign-Up">
-     
     </form>
-    </li>
-  </ul>
+  </li>
+</ul>
+
+
 {% endblock %}

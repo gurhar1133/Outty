@@ -5,8 +5,9 @@
 # return the data in easily usable format, eg an array or object
 import requests
 from flask import Flask, request
-
 import config
+
+
 def get_weather_data(city):
     """ Make api call, and return data to populate index.html """
     API_KEY = config.weather_api_key  # initialize API key here
@@ -23,10 +24,10 @@ def get_weather_data(city):
     current_temperature = response.get('main', {}).get('temp')
 
     if current_temperature:
-        current_temperature_f = round((current_temperature - 273.15)* 9/5 + 32, 1)
+        current_temperature_f = round(
+            (current_temperature - 273.15) * 9 / 5 + 32, 1)
         return f'{int(current_temperature_f)}°F'
     else:
         return f'Error getting temperature for {city.title()}'
-
 
     return

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block content %}
 
 <div class="dashboard-container">
@@ -14,43 +15,17 @@
       <br>
       <p>My Interests</p>
 
-      {% for your_list_element in interests %}
-      {% if interests[your_list_element] == True %}
-      {% if your_list_element=='Hiking' %}
+      {% if hiking %}
       <i class="mdl-icon-toggle material-icons">hiking</i>
       {% endif %}
 
-      {% if your_list_element=='Mountain Biking' %}
+      {% if mountainBiking %}
       <i class="mdl-icon-toggle material-icons">directions_bike</i>
       {% endif %}
 
-      {% if your_list_element=='Camping' %}
+      {% if camping %}
       <i class="mdl-icon-toggle material-icons">cabin</i>
       {% endif %}
-
-      {% if your_list_element=='Caving' %}
-      <i class="mdl-icon-toggle material-icons">terrain</i>
-      {% endif %}
-
-      {% if your_list_element=='Trail Running' %}
-      <i class="mdl-icon-toggle material-icons">directions_run</i>
-      {% endif %}
-
-      {% if your_list_element=='Winter Sports' %}
-      <i class="mdl-icon-toggle material-icons">sledding</i>
-      {% endif %}
-
-      {% if your_list_element=='ATV' %}
-      <i class="mdl-icon-toggle material-icons">sports_motorsports</i>
-      {% endif %}
-
-      {% if your_list_element=='Horse Riding' %}
-      <i class="mdl-icon-toggle material-icons">bedroom_baby</i>
-      {% endif %}
-
-
-      {% endif %}
-      {% endfor %}
 
       <br>
 
@@ -105,4 +80,5 @@
     </div>
 
   </div>
+
   {% endblock %}
