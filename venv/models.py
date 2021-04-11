@@ -5,7 +5,10 @@ from . import db
 
 class User(UserMixin, db.Model):
     # primary keys are required by SQLAlchemy
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
+    emailAddress = db.Column(db.String(100), unique=True, primary_key=True)
     name = db.Column(db.String(1000))
+    password = db.Column(db.String(100))
+    userImage = db.Column(db.String(1000))
+    hiking = db.Column(db.Boolean, default=False, nullable=False)
+    mountainBiking = db.Column(db.Boolean, default=False, nullable=False)
+    camping = db.Column(db.Boolean, default=False, nullable=False)
