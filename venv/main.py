@@ -61,6 +61,7 @@ def dash():
                      'activity': recs[0]['activities'][0]['type'],
                      'distance': recs[0]['activities'][0]['distance'],
                      'image': recs[0]['activities'][0]['thumbnail'],
+                     'map-embed-url': 'https://maps.google.com/maps?q=' + str(recs[0]['coords'][0]) + ", " + str(recs[0]['coords'][1]) + '&z=15&output=embed',
                      'description': recs[0]['activities'][0]['description'],
                      'directions-url': 'https://www.google.com/maps/dir/Current+Location/' + str(recs[0]['coords'][0]) + ',' + str(recs[0]['coords'][1]) + '?ref=trail-action-menu-directions',
                      'more-info-url': recs[0]['activities'][0]['url'],
@@ -70,7 +71,6 @@ def dash():
             card1 = card2
 
         suggestions = [card1, card2, card3]
-
         if not username:
             username = "Explorer"
     return render_template("dash.html", suggestions=suggestions,

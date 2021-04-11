@@ -63,10 +63,9 @@
 
   <div class="expanded-card">
     <div class="content">
-
-      <map><iframe width="300" height="270" loading="lazy" allowfullscreen src={{ "https://www.google.com/maps/embed/v1/search?key=" + map_api_key +
-      "&q=hiking+trails,{{city}}+{{state}}" }}>
-        </iframe></map>
+      <map>
+        <iframe src="{{suggestions[0]['map-embed-url']}}" width="360" height="270" frameborder="0" style="border:0"></iframe>
+      </map>
 
     </div>
     <div class="card-body">
