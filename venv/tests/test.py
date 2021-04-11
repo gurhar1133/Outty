@@ -43,7 +43,6 @@ class OuttyTestCase(unittest.TestCase):
             test_rec2 = Recommender(1)
             self.fail("Should trigger exception when non string inputed")
         except Exception:
-
             pass
         try:
             test_rec3 = Recommender([23, 2])
