@@ -1,9 +1,12 @@
+# tests will need to be updated but should generally work the same with test Cases
+
 import regex as re
 import unittest
 import config
-import app
-from recommend import Recommender
+from .recommend import Recommender
 from flask import Flask, render_template, redirect, url_for, request, g
+import main
+import auth
 from map_api import get_map_data
 from weather_api import get_weather_data
 from getGreeting import getGreeting

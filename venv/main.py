@@ -8,6 +8,7 @@ from .recommend import Recommender
 import config
 from .zipcodeCityState import getFullStateName
 from .models import User
+from werkzeug.security import generate_password_hash, check_password_hash
 from .updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
 
 main = Blueprint('main', __name__)
@@ -101,8 +102,9 @@ def profile():
 @main.route('/settings')
 @login_required
 def settings():
-    user = findUserToUpdate(current_user.emailAddress)
-    updateEmailAddress(user, "test2@gmail.com")
-    updateName(user, "test2")
+    # user = findUserToUpdate(current_user.emailAddress)
+    # updateEmailAddress(user, "test1@gmail.com")
+    # updateName(user, "test1")
+    # updatePassword(user, "test3") doesnt work yet
 
     return render_template('settings.html')
