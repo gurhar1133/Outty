@@ -1,13 +1,73 @@
 from . import db
 from flask import Blueprint, render_template, url_for, request, redirect
 from flask_login import login_required, current_user
-from map_api import get_map_data
-from weather_api import get_weather_data
-from getGreeting import getGreeting
-from recommend import Recommender
+from .map_api import get_map_data
+from .weather_api import get_weather_data
+from .getGreeting import getGreeting
+from .recommend import Recommender
 import config
 
 main = Blueprint('main', __name__)
+us_state_abbrev = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'American Samoa': 'AS',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'District of Columbia': 'DC',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Guam': 'GU',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Northern Mariana Islands': 'MP',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Pennsylvania': 'PA',
+    'Puerto Rico': 'PR',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virgin Islands': 'VI',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY'
+}
+
+abbrev_us_state = dict(map(reversed, us_state_abbrev.items()))
 
 
 @main.route('/')
@@ -21,23 +81,21 @@ def index():
 @main.route('/dashboard')
 @login_required
 def dash():
-    city = 'Boulder'
-    state = 'Colorado'
-    weather_data = get_weather_data(city + ', ' + state)
+    city = current_user.city
+    state = current_user.state
+    weather_data = get_weather_data(
+        city + ', ' + abbrev_us_state[current_user.state])
     map_data = get_map_data()
     greeting = getGreeting()
 
     # username = request.args.get("username")
     username = current_user.name
-    rec = Recommender(username)
+    rec = Recommender(current_user)
     favs = [activity.title() for activity in rec.fav_activities]
 
-    hiking = current_user.hiking
-    mountainBiking = current_user.mountainBiking
-    camping = current_user.camping
-
-    interests = {'hiking': hiking,
-                 'mountainBiking': mountainBiking, 'camping': camping}
+    interests = {'hiking': current_user.hiking,
+                 'mountainBiking': current_user.mountainBiking,
+                 'camping': current_user.camping}
 
     for fav in favs:
         interests[fav] = True
@@ -50,8 +108,11 @@ def dash():
                  'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
         card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
                  'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
+        if not recs[0]['activities'][0]['thumbnail']:
+            recs[0]['activities'][0]['thumbnail'] = url_for(
+                'static', filename='img/noImage.jpg')
 
-        if len(recs[0]['activities']) != 0:  # handles empy api call returned to frontend
+        if len(recs[0]['activities']) != 0:
             card1 = {'title': recs[0]['activities'][0]['name'],
                      'activity': recs[0]['activities'][0]['type'],
                      'distance': recs[0]['activities'][0]['distance'],
@@ -61,7 +122,7 @@ def dash():
                      'more-info-url': recs[0]['activities'][0]['url'],
                      'status': ''
                      }
-        else:
+        else:  # handles empty api call returned to frontend
             card1 = card2
 
         suggestions = [card1, card2, card3]
@@ -89,6 +150,7 @@ def profile():
 
     suggestions = [card1, card2, card3]
     return render_template('profile.html', email=current_user.emailAddress, name=current_user.name, userImage=current_user.userImage, zipcode=current_user.zipcode,
+                           city=current_user.city, state=current_user.state,
                            hiking=current_user.hiking, mountainBiking=current_user.mountainBiking, camping=current_user.camping,
                            suggestions=suggestions)
 

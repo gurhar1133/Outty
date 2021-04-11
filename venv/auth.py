@@ -3,6 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from .models import User
 from . import db
+from .zipcodeToCityState import get_citystate_data
+
 
 auth = Blueprint('auth', __name__)
 
@@ -44,15 +46,15 @@ def signup_post():
     name = request.form.get('name')
     password = request.form.get('password')
     zipcode = request.form.get('zipcode')
-
     userImage = request.form.get('userImage')
     hikingValue = request.form.get('hiking')
     mountainBikingValue = request.form.get('mountainBiking')
     campingValue = request.form.get('camping')
 
-    print(hikingValue)
-    print(mountainBikingValue)
-    print(campingValue)
+    cityStateData = get_citystate_data(zipcode)
+    city = cityStateData[0]
+    state = cityStateData[1]
+    userRadius = 20
 
     if hikingValue:
         hiking = True
@@ -81,6 +83,9 @@ def signup_post():
                     name=name,
                     password=generate_password_hash(password, method='sha256'),
                     zipcode=zipcode,
+                    city=city,
+                    state=state,
+                    userRadius=userRadius,
                     userImage=userImage,
                     hiking=hiking,
                     mountainBiking=mountainBiking,
