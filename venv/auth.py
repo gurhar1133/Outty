@@ -43,10 +43,31 @@ def signup_post():
     emailAddress = request.form.get('emailAddress')
     name = request.form.get('name')
     password = request.form.get('password')
+    zipcode = request.form.get('zipcode')
+
     userImage = request.form.get('userImage')
-    hiking = request.form.get('hiking')
-    mountainBiking = request.form.get('mountainBiking')
-    camping = request.form.get('camping')
+    hikingValue = request.form.get('hiking')
+    mountainBikingValue = request.form.get('mountainBiking')
+    campingValue = request.form.get('camping')
+
+    print(hikingValue)
+    print(mountainBikingValue)
+    print(campingValue)
+
+    if hikingValue:
+        hiking = True
+    else:
+        hiking = False
+
+    if mountainBikingValue:
+        mountainBiking = True
+    else:
+        mountainBiking = False
+
+    if campingValue:
+        camping = True
+    else:
+        camping = False
 
     # if this returns a user, then the email already exists in database
     user = User.query.filter_by(emailAddress=emailAddress).first()
@@ -59,6 +80,7 @@ def signup_post():
     new_user = User(emailAddress=emailAddress,
                     name=name,
                     password=generate_password_hash(password, method='sha256'),
+                    zipcode=zipcode,
                     userImage=userImage,
                     hiking=hiking,
                     mountainBiking=mountainBiking,

@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="column is-4 is-offset-4">
-  <h3 class="title">Sign Up</h3>
-  <div class="box">
+
+<ul class="signup-container nowrap">
+  <!-- Organize login box into two divs, make flexible list for window sizing
+add background color to sign up
+add image and styling to login
+add image rotation (JS)
+ -->
+  <li class="signup-container-left">
+    <img src="static/img/zimg/IMG_1719.jpeg" alt="Image">
+  </li>
+  <li class="signup-container-right">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <div class="notification is-danger">
@@ -11,27 +19,51 @@
     </div>
     {% endif %}
     {% endwith %}
-    <form method="POST" action="/signup">
-      <div class="field">
-        <div class="control">
-          <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-        </div>
+
+    <form class="login-form" action="/signup" method="POST">
+      <h5>Sign Up</h5>
+      <div class="form-input-material">
+        <label for="name">Name</label>
+        <input type="text" placeholder="Your Name" name="name" required>
+      </div>
+      <div class="form-input-material">
+        <label for="email">Email Address</label>
+        <input type="email" placeholder="your.email@website.com" name="emailAddress" required>
+      </div>
+      <div class="form-input-material">
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" name="password" required>
       </div>
 
-      <div class="field">
-        <div class="control">
-          <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
-        </div>
+      <div class="form-input-material">
+        <label for="zipcode">Zipcode</label>
+        <input id="zipcode" name="zipcode" placeholder="80301" type="text" pattern="[0-9]{5}" title="(valid 5-digit US zipcode)" required>
       </div>
 
-      <div class="field">
-        <div class="control">
-          <input class="input is-large" type="password" name="password" placeholder="Password">
+      <div class="form-input-material">
+        <label for="userImage">URL for Profile Picture</label>
+        <input type="url" placeholder="http://site.com/image.jpg" name="userImage" required>
+      </div>
+      <div class="form-input-material">
+        <p>Select your outdoor interests:</p>
+        <div class="form-input-material">
+          <input type="checkbox" name="hiking" value="true">
+          <label for="hiking">
+            Hiking</label>
+        </div>
+        <div class="form-input-material">
+          <input type="checkbox" name="mountainBiking" value="true">
+          <label for="mountainBiking">Mountain Biking</label>
+        </div>
+        <div class="form-input-material">
+          <input type="checkbox" name="camping" value="true">
+          <label for="camping">Camping</label>
         </div>
       </div>
-
-      <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+      <input class="btn" type="submit" value="Sign-Up">
     </form>
-  </div>
-</div>
+  </li>
+</ul>
+
+
 {% endblock %}

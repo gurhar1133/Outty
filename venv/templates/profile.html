@@ -6,16 +6,16 @@
   <div class="profile-container">
     <div class="profile-item">
       <!--read profile picture from db-->
-      <img id="profilepic" src="/static/img/zimg/githubb.jpg" alt="profile pic">
+      <img id="profilepic" src={{userImage}} alt="profile pic">
     </div>
     <div class="profile-item">
       <p>
         <!--read username from db-->
       <h3>{{name}}</h3><br>
-      <!--read twitter handle or nickname from feed-->
+      <!--read email from db-->
       <h6>{{email}}</h6> <br>
       <!--last location from db?-->
-      <h6><i id="locationicon" class="material-icons">my_location</i>Denver, CO</h6>
+      <h6><i id="locationicon" class="material-icons">my_location</i>Denver, CO {{zipcode}}</h6>
       </p>
     </div>
     <div class="profile-item">
@@ -34,22 +34,22 @@
     </div>
     <div class="profile-item">
       <p>
-      <h3>Top Interests</h3><br>
+        <!--read interests from db-->
+      <h3>Your Interests</h3><br>
       <h3>
-        <span class="material-icons">
-          <!--fill based on db-->
-          hiking
-        </span>
-        <span class="material-icons">
-          kayaking
-        </span>
-        <span class="material-icons">
-          <!--fill based on db-->
-          snowboarding
-        </span>
-        <span class="material-icons">
-          snowshoeing
-        </span>
+
+        {% if hiking %}
+        <i class="mdl-icon-toggle material-icons">hiking</i>
+        {% endif %}
+
+        {% if mountainBiking %}
+        <i class="mdl-icon-toggle material-icons">directions_bike</i>
+        {% endif %}
+
+        {% if camping %}
+        <i class="mdl-icon-toggle material-icons">cabin</i>
+        {% endif %}
+
       </h3>
       </p>
     </div>
@@ -137,8 +137,6 @@
     </div>
 
   </div>
-
-
 
   <div>
     <div>

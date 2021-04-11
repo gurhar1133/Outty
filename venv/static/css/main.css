@@ -352,14 +352,14 @@ input[type=text], input[type=password], input[type=email] {
   text-align: center;
 }
 
-.btn {
+form .btn {
   padding: 8px 16px;
   border-radius: 0;
   overflow: hidden;
   background: rgb(197, 195, 195);
 }
 
-.btn::before {
+form .btn::before {
   position: absolute;
   content: "";
   top: 0;
@@ -374,12 +374,12 @@ input[type=text], input[type=password], input[type=email] {
   transition: 0.6s;
 }
 
-.btn:hover {
+form .btn:hover {
   background: white;
   box-shadow: 0 0 20px 10px hsla(203, 22%, 84%, 0.5);
 }
 
-.btn:hover::before {
+form .btn:hover::before {
   transform: translateX(100%);
 }
 
