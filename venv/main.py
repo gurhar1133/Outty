@@ -7,6 +7,8 @@ from .getGreeting import getGreeting
 from .recommend import Recommender
 import config
 from .zipcodeCityState import getFullStateName
+from .models import User
+from .updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
 
 main = Blueprint('main', __name__)
 
@@ -99,4 +101,8 @@ def profile():
 @main.route('/settings')
 @login_required
 def settings():
+    user = findUserToUpdate(current_user.emailAddress)
+    updateEmailAddress(user, "test2@gmail.com")
+    updateName(user, "test2")
+
     return render_template('settings.html')
