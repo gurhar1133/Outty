@@ -411,3 +411,27 @@ form .btn:hover::before {
 .profile-item {
   width: 20%;
 }
+
+
+@keyframes fillout{
+  from {
+      transform: scaleX(0);
+      
+  }
+  to{
+      transform: scaleX(1);
+      
+  }
+}
+@keyframes spin{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(720deg);
+    }
+}
+
+.settings-form{
+  animation: fillout .27s linear;
+}
