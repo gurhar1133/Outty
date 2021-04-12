@@ -96,7 +96,10 @@ def signup_post():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect(url_for('auth.login'))
+    user = User.query.filter_by(emailAddress=emailAddress).first()
+    login_user(user)
+
+    return redirect(url_for('main.profile'))
 
 
 @auth.route('/logout')
