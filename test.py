@@ -3,19 +3,18 @@
 import regex as re
 import unittest
 import config
-from .recommend import Recommender
+from venv.recommend import Recommender
 from flask import Flask, render_template, redirect, url_for, request, g
-import main
-import auth
-from map_api import get_map_data
-from weather_api import get_weather_data
-from getGreeting import getGreeting
+import venv.main
+import venv.auth
+from venv.map_api import get_map_data
+from venv.weather_api import get_weather_data
+from venv.getGreeting import getGreeting
 import sqlite3
-import outty_database
+# import venv.outty_database
 import os
-import sys
-# Adds modules from parent directory to be imported into tests
-sys.path.append('../')
+
+
 
 
 # We can all use one test case class or define a few with different setUp and tearDown methods
@@ -24,12 +23,14 @@ sys.path.append('../')
 class OuttyTestCase(unittest.TestCase):
 
     def setUp(self):
-        outty_database.create('test.db')
-        outty_database.addUser('test.db', 'Testuser', 'emailAddress',
-                               'password', 'userImage', 1, 1, 0, 1, '80111')
+        # outty_database.create('test.db')
+        # outty_database.addUser('test.db', 'Testuser', 'emailAddress',
+        #                        'password', 'userImage', 1, 1, 0, 1, '80111')
+        pass
 
     def tearDown(self):
-        os.remove('./test.db')
+        if os.path.exists('./test.db'):
+            os.remove('./test.db')
 
     def test_sanity(self):
         self.assertEqual(True, True)
