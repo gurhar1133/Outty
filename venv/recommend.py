@@ -3,7 +3,8 @@ import http.client
 import urllib.parse
 import json
 import config
-
+from .models import Activity
+from . import db
 
 class Recommender:
     def __init__(self, current_user):
@@ -55,6 +56,9 @@ class Recommender:
                 filtered_rec['coords'] = (rec['lat'], rec['lon'])
                 filtered_rec['place_desc'] = rec['description']
                 filtered_rec['activities'] = []
+                #filtered_rec['lat'] = rec['lat']
+                #filtered_rec['lon'] = rec['lon']
+
                 for act in rec['activities']:
                     # print("actname:", act['name'])
                     # print("act_pref:", activity_pref)
@@ -66,11 +70,32 @@ class Recommender:
                         activity['distance'] = act['length']
                         activity['thumbnail'] = act['thumbnail']
                         activity['description'] = act['description']
+                        #activity['lat'] = act['lat']
 
                         filtered_rec['activities'].append(activity)
 
+                        #added by Sam to insert recommended activity into activity Table
+                        #checks to see if latitude, longitude, type already exist in activity table
+                        #may want use variables to speed things up
+                        activity = Activity.query.filter_by(type=act['activity_type_name'],latitude=rec['lat'],longitude=rec['lon']).first()
+
+                        #if activity doesn't exist, add it to database
+                        if not activity:
+                            new_activity = Activity(name=act['name'],
+                                            type=act['activity_type_name'],
+                                            url=act['url'],
+                                            latitude=rec['lat'],
+                                            longitude=rec['lon'],
+                                            thumbnail=act['thumbnail'],
+                                            description=act['description']
+                                            )
+
+                            # add the new activity to database
+                            db.session.add(new_activity)
+                            db.session.commit()
+
                 filtered_recs.append(filtered_rec)
-            # print("SUCCESS: ", filtered_recs)
+                # print("SUCCESS: ", filtered_recs)
 
             return filtered_recs
         else:
