@@ -67,6 +67,7 @@ def dash():
                      'more-info-url': recs[0]['activities'][0]['url'],
                      'status': ''
                      }
+
         else:  # handles empty api call returned to frontend
             card1 = card2
 

@@ -17,3 +17,26 @@ class User(UserMixin, db.Model):
     hiking = db.Column(db.Boolean, default=False, nullable=False)
     mountainBiking = db.Column(db.Boolean, default=False, nullable=False)
     camping = db.Column(db.Boolean, default=False, nullable=False)
+
+class Activity(db.Model):
+    # primary keys are required by SQLAlchemy
+    id = db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(1000), nullable=False)
+    type=db.Column(db.String(1000), nullable=False)
+    url=db.Column(db.String(1000))
+    latitude=db.Column(db.String(1000), nullable=False)
+    longitude=db.Column(db.String(1000), nullable=False)
+    thumbnail=db.Column(db.String(1000))
+    description=db.Column(db.String(5000))
+
+#many to many relationship between activity and users
+#using a table as recommended in flask documentation
+user_activities = db.Table('user_activities',
+    db.Column('activity_id', db.Integer, db.ForeignKey('activity.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True))
+
+#many to many relationship between liked activities and users
+#using a table as recommended in flask documentation
+user_liked_activities = db.Table('user_liked_activities',
+    db.Column('activity_id', db.Integer, db.ForeignKey('activity.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True))
