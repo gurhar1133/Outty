@@ -1,14 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+  <h2>{{ message }}</h2>
   <div class="card settings-form">
     <h3>Update your settings?</h3>
-    <form class="login-form" action="/dashboard">
-
+    <form class="login-form" action="/settings" method="POST" oninput="result.value=!!password.value&&(password.value==password2.value)?'Match!':'Nope!'">
+      <p>* indicates required field</p>
       <div class="form-input-material">
         <label for="email">New Email Address</label>
         <input type="email" placeholder="your.email@website.com" name="emailAddress">
+      </div>
+
+      <div class="form-input-material">
+        <label for="newName">New Username</label>
+        <input placeholder="new username" name="newName">
+      </div>
+
+      <div class="form-input-material">
+        <label for="oldPassword">Current Password *</label>
+        <input type="password" placeholder="Password" name="oldPassword" required>
       </div>
 
       <div class="form-input-material">
@@ -17,8 +27,8 @@
       </div>
 
       <div class="form-input-material">
-        <label for="password">Confirm New Password</label>
-        <input type="password" placeholder="Password" name="password">
+        <label for="password2">Confirm New Password</label>
+        <input type="password" placeholder="Password" name="password2">
       </div>
 
       <div class="form-input-material">
