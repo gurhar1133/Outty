@@ -93,7 +93,7 @@ def dash():
     return render_template("dash.html", suggestions=suggestions,
                            hiking=current_user.hiking, mountainBiking=current_user.mountainBiking, camping=current_user.camping,
                            city=city, state=state, weather_data=weather_data, map_data=map_data, map_api_key=config.map_api_key,
-                           username=username, greeting=greeting)
+                           username=username, greeting=greeting, activityPageId=activityPageId)
 
 
 @main.route('/profile')

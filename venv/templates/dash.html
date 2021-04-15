@@ -49,12 +49,15 @@
           <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[0]['distance']}} miles
         </p>
         <div class="buttonholder">
-          <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
+          <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">cancel</i></button>
           <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
           <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
         </div>
         <div class="expand-button">
           <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
+        </div>
+        <div class="expand-button">
+          <button id="expand-button" class="mdl-button mdl-button--icon mdl-button" onclick="window.location.href='./activity?id={{activityPageId}}';"><i class="material-icons">description</i></button>
         </div>
       </div>
     </div>
