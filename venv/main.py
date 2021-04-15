@@ -10,6 +10,7 @@ from .zipcodeCityState import getFullStateName
 from .models import User, Activity
 from werkzeug.security import generate_password_hash, check_password_hash
 from .updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
+from .saveActivity import getActivityById, addActivityToDatabase, addLikedActivity, addCompletedActivity, getActivityIdByUrl
 
 main = Blueprint('main', __name__)
 
@@ -72,6 +73,21 @@ def dash():
             card1 = card2
 
         suggestions = [card1, card2, card3]
+
+        addActivityToDatabase(
+            {'name': recs[0]['activities'][0]['name'],
+             'type': recs[0]['activities'][0]['type'],
+             'url': recs[0]['activities'][0]['url'],
+             'latitude': str(recs[0]['coords'][0]),
+             'longitude': str(recs[0]['coords'][1]),
+             'thumbnail': recs[0]['activities'][0]['thumbnail'],
+             'description': recs[0]['activities'][0]['description']
+             }
+        )
+
+        activityPageId = getActivityIdByUrl(recs[0]['activities'][0]['url'])
+        print(activityPageId)
+
         if not username:
             username = "Explorer"
     return render_template("dash.html", suggestions=suggestions,
@@ -84,6 +100,8 @@ def dash():
 @login_required
 def profile():
     # should read from the database to display info
+    # activity = Activity.query.filter_by(url=url).first()
+
     # filler cards for style
 
     card1 = {'title': 'Tenderfoot Mountain Trail, Summit County', 'activity': 'Hiking',
@@ -97,7 +115,7 @@ def profile():
     return render_template('profile.html', email=current_user.emailAddress, name=current_user.name, userImage=current_user.userImage, zipcode=current_user.zipcode,
                            city=current_user.city, state=current_user.state,
                            hiking=current_user.hiking, mountainBiking=current_user.mountainBiking, camping=current_user.camping,
-                           suggestions=suggestions)
+                           suggestions=suggestions, numberOfLiked=14, numberOfCompleted=35)
 
 
 @main.route('/settings')
@@ -115,7 +133,7 @@ def settings():
 @login_required
 def activity():
     # get parameter from url string
-    activityId = request.args.get('id')
-    activity = Activity.query.filter_by(id=activityId).first()
+    activity = getActivityById(request.args.get('id'))
 
+    # addCompletedActivity(activity.url)
     return render_template('activity.html', activity=activity)

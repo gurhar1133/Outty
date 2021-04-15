@@ -2,6 +2,24 @@
 from flask_login import UserMixin
 from . import db
 
+# many to many relationship between activity and users
+# using a table as recommended in flask documentation
+user_completed_activities = db.Table('user_completed_activities',
+                                     db.Column('activity_id', db.Integer, db.ForeignKey(
+                                         'activity.id'), primary_key=True),
+                                     db.Column('user_id', db.Integer, db.ForeignKey(
+                                         'user.id'), primary_key=True),
+                                     db.Column('date_added', db.DateTime))
+
+# many to many relationship between liked activities and users
+# using a table as recommended in flask documentation
+user_liked_activities = db.Table('user_liked_activities',
+                                 db.Column('activity_id', db.Integer, db.ForeignKey(
+                                     'activity.id'), primary_key=True),
+                                 db.Column('user_id', db.Integer, db.ForeignKey(
+                                     'user.id'), primary_key=True),
+                                 db.Column('date_added', db.DateTime))
+
 
 class User(UserMixin, db.Model):
     # primary keys are required by SQLAlchemy
@@ -17,6 +35,10 @@ class User(UserMixin, db.Model):
     hiking = db.Column(db.Boolean, default=False, nullable=False)
     mountainBiking = db.Column(db.Boolean, default=False, nullable=False)
     camping = db.Column(db.Boolean, default=False, nullable=False)
+    likedActivities = db.relationship(
+        "Activity", secondary=user_liked_activities)
+    completedActivities = db.relationship(
+        "Activity", secondary=user_completed_activities)
 
 
 class Activity(db.Model):
@@ -28,23 +50,5 @@ class Activity(db.Model):
     latitude = db.Column(db.String(1000), nullable=False)
     longitude = db.Column(db.String(1000), nullable=False)
     thumbnail = db.Column(db.String(1000))
-    description = db.Column(db.String(5000))
-
-
-# many to many relationship between activity and users
-# using a table as recommended in flask documentation
-user_completed_activities = db.Table('user_activities',
-                                     db.Column('activity_id', db.Integer, db.ForeignKey(
-                                         'activity.id'), primary_key=True),
-                                     db.Column('user_id', db.Integer, db.ForeignKey(
-                                         'user.id'), primary_key=True),
-                                     db.Column('data_added', db.DateTime))
-
-# many to many relationship between liked activities and users
-# using a table as recommended in flask documentation
-user_liked_activities = db.Table('user_liked_activities',
-                                 db.Column('activity_id', db.Integer, db.ForeignKey(
-                                     'activity.id'), primary_key=True),
-                                 db.Column('user_id', db.Integer, db.ForeignKey(
-                                     'user.id'), primary_key=True),
-                                 db.Column('data_added', db.DateTime))
+    description = db.Column(db.String(5000)
+                            )
