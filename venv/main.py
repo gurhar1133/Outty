@@ -1,5 +1,5 @@
 from . import db
-from flask import Blueprint, render_template, url_for, request, redirect
+from flask import Blueprint, render_template, url_for, request, redirect, flash
 from flask_login import login_required, current_user
 from .map_api import get_map_data
 from .weather_api import get_weather_data
@@ -107,8 +107,86 @@ def settings():
     # updateEmailAddress(user, "test1@gmail.com")
     # updateName(user, "test1")
     # updatePassword(user, "test3") doesnt work yet
-
+    
     return render_template('settings.html')
+
+@main.route('/settings', methods=['POST'])
+@login_required
+def settings_post():
+    updates = { 'newEmail': request.form.get('emailAddress'), 
+                'newUsername': request.form.get('newName'),
+                'oldPassword': request.form.get('oldPassword'),
+                'newPassword': request.form.get('password'), 
+                'newPassword2': request.form.get('password2'),
+                'newZipcode': request.form.get('zipcode'), 
+                'newUserImage': request.form.get('userImage'),
+                'hikes': request.form.get('hiking'), 
+                'mountainBikes': request.form.get('mountainBiking'), 
+                'camps': request.form.get('camping')
+                }
+    if (check_password_hash(current_user.password, updates['oldPassword'])):
+
+        if updates['newPassword'] != '':
+            if updates['newPassword'] == updates['newPassword2']:
+                updatePassword(current_user, updates['newPassword'])
+            else:
+                return render_template('settings.html', message="Please ensure that new passwords match")
+
+        if updates['newEmail'] != None and updates['newEmail'] != '':
+            updateEmailAddress(current_user, updates['newEmail'])
+        
+        if updates['newUsername'] != '':
+            updateName(current_user, updates['newUsername'])
+
+        if updates['newZipcode'] != '':
+            updateZipcode(current_user, updates['newZipcode'])
+
+        if updates['newUserImage'] != '':
+            updateUserImage(current_user, updates['newUserImage']) 
+        
+
+        # if the user doesnt select any activities
+        if updates['mountainBikes'] == None and updates['hikes'] == None and updates['camps'] == None:
+            print('no activity updates')
+        else:
+            if updates['camps'] == 'true':
+                updateCamping(current_user, True)
+            else:
+                updateCamping(current_user, False)
+
+            if updates['hikes'] == 'true':
+                updateHiking(current_user, True)
+            else:
+                updateHiking(current_user, False)
+
+            if updates['mountainBikes'] == 'true':
+                updateMountainBiking(current_user, True)
+            else:
+                updateMountainBiking(current_user, False)
+
+
+        print(updates)
+
+        
+
+
+        card1 = {'title': 'Tenderfoot Mountain Trail, Summit County', 'activity': 'Hiking',
+                'distance': 2.5, 'image': url_for('static', filename='img/zimg/IMG_1851.jpeg'), 'status': ''}
+        card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
+                'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
+        card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
+                'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
+        suggestions = [card1, card2, card3]
+
+
+        return render_template('profile.html', email=current_user.emailAddress, name=current_user.name, userImage=current_user.userImage, zipcode=current_user.zipcode,
+                            city=current_user.city, state=current_user.state,
+                            hiking=current_user.hiking, mountainBiking=current_user.mountainBiking, camping=current_user.camping,
+                            suggestions=suggestions)
+    else:
+        
+        return render_template('settings.html', message="Please check that you entered your password correctly")
+
 
 
 @main.route('/activity', methods=['GET'])
