@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="p-5 card">
+  <div class="row">
+    <div class="col-lg">
+      <h1>
+        {{activity.name}}
+      </h1>
+      <h4 class="text-left">
+        {{activity.type}}
+      </h4>
+      <p>
+        ({{activity.latitude}}, {{activity.longitude}})
+      </p>
+      <br>
+      <p>
+        {{activity.description}}
+      </p>
+      <br>
+      <div class="text-left">
+        <a class="btn btn-secondary btn-lg" href="https://www.google.com/maps/dir/Current+Location/{{activity.latitude}}, {{activity.longitude}}?ref=trail-action-menu-directions" role="button">directions</a>
+        <a class="btn btn-secondary btn-lg" href="{{activity.url}}" role="button">more info</a>
+        <a class="btn btn-secondary btn-lg" href="{{activity.url}}" role="button">completed</a>
+        <a class="btn btn-secondary btn-lg" href="{{activity.url}}" role="button">like</a>
+
+      </div>
+      <br>
+    </div>
+    <div class="col-sm">
+      <img src="{{activity.thumbnail}}" onerror="this.onerror=null; this.src='{{url_for('static', filename='img/noImage.jpg')}}'" class="img-fluid rounded float-right">
+    </div>
+  </div>
+
+  <br>
+  <map>
+    <iframe src="https://maps.google.com/maps?q={{activity.latitude}}, {{activity.longitude}}&z=15&output=embed" width="360" height="360" frameborder="0" style="border:0"></iframe>
+  </map>
+
+</div>
+
+
+
+{% endblock %}
