@@ -27,7 +27,7 @@ jobs:
             WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }} 
             MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
         run: |
-          env
+          python3 venv/getsecretsimport.py
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
