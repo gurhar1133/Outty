@@ -21,6 +21,7 @@ jobs:
           
       - name: Run Python script
         # Time for Python codee
+        run: python -c 'import os;print(os.environ)'
         env:
             TRAIL_API_KEY: ${{ secrets.TRAIL_API_KEY }}
             GEO_ENCODE_KEY: ${{ secrets.GEO_ENCODE_KEY }}
