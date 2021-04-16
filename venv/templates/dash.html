@@ -5,25 +5,25 @@
 <div class="dashboard-container">
   <div class="item">
     <div class="dashboard-text">
-      <h3>{{greeting}}, {{username}}</h3>
+      <h3>{{greeting}}, {{current_user.name}}</h3>
       <br>
       <p>
-        <i class="mdl-icon-toggle material-icons">place</i> {{city}}, {{state}}
+        <i class="mdl-icon-toggle material-icons">place</i> {{current_user.city}}, {{current_user.state}}
         <br>
         <i class="mdl-icon-toggle material-icons">thermostat</i> {{ weather_data }}
       </p>
       <br>
       <p>My Interests</p>
 
-      {% if hiking %}
+      {% if current_user.hiking %}
       <i class="mdl-icon-toggle material-icons">hiking</i>
       {% endif %}
 
-      {% if mountainBiking %}
+      {% if current_user.mountainBiking %}
       <i class="mdl-icon-toggle material-icons">directions_bike</i>
       {% endif %}
 
-      {% if camping %}
+      {% if current_user.camping %}
       <i class="mdl-icon-toggle material-icons">cabin</i>
       {% endif %}
 
@@ -44,43 +44,13 @@
       <div class="card-body">
         <p class="card-title">{{suggestions[0]['title']}}</p>
         <p class="card-text">
-          <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[0]['activity']}}
-          <br>
-          <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[0]['distance']}} miles
+          {{suggestions[0]['activity']}}
         </p>
-        <div class="buttonholder">
-          <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">cancel</i></button>
-          <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
-          <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-        </div>
-        <div class="expand-button">
-          <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
-        </div>
-        <div class="expand-button">
-          <button id="expand-button" class="mdl-button mdl-button--icon mdl-button" onclick="window.location.href='./activity?id={{activityPageId}}';"><i class="material-icons">description</i></button>
-        </div>
+        <a class="btn btn-light btn-lg" onclick="window.location.href='./activity?id={{activityPageId}}';" role="button">view activity</a>
       </div>
     </div>
   </div>
 
+</div>
 
-  <div class="expanded-card">
-    <div class="content">
-      <map>
-        <iframe src="{{suggestions[0]['map-embed-url']}}" width="360" height="270" frameborder="0" style="border:0"></iframe>
-      </map>
-
-    </div>
-    <div class="card-body">
-      <div class="button-group">
-        <div class="button"><i class="mdl-icon-toggle material-icons">directions</i><a href="{{suggestions[0]['directions-url']}}" target="_blank"> directions</a></div>
-        <div class="button"><i class="mdl-icon-toggle material-icons">explore</i><a href="{{suggestions[0]['more-info-url']}}" target="_blank"> more info</a></div>
-      </div>
-      <div class="card-description">
-        <p><b>{{suggestions[0]['title']}}</b> {{suggestions[0]['description']}}</p>
-      </div>
-    </div>
-
-  </div>
-
-  {% endblock %}
+{% endblock %}

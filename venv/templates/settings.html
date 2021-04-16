@@ -2,55 +2,55 @@
 
 {% block content %}
 
-  <div class="card settings-form">
-    <h3>Update your settings?</h3>
-    <form class="login-form" action="/dashboard">
+<div class="cardy settings-form">
+  <h3>Update your settings?</h3>
+  <form class="login-form" action="/dashboard">
 
+    <div class="form-input-material">
+      <label for="email">New Email Address</label>
+      <input type="email" placeholder="your.email@website.com" name="emailAddress">
+    </div>
+
+    <div class="form-input-material">
+      <label for="password">New Password</label>
+      <input type="password" placeholder="Password" name="password">
+    </div>
+
+    <div class="form-input-material">
+      <label for="password">Confirm New Password</label>
+      <input type="password" placeholder="Password" name="password">
+    </div>
+
+    <div class="form-input-material">
+      <label for="zipcode">New Zipcode</label>
+      <input id="zipcode" name="zipcode" placeholder="80301" type="text" pattern="[0-9]{5}" title="(valid 5-digit US zipcode)">
+    </div>
+
+    <div class="form-input-material">
+      <label for="userImage">URL for New Profile Picture</label>
+      <input type="url" placeholder="http://site.com/image.jpg" name="userImage">
+    </div>
+
+    <div class="form-input-material">
+      <p>Select New Interests:</p>
       <div class="form-input-material">
-        <label for="email">New Email Address</label>
-        <input type="email" placeholder="your.email@website.com" name="emailAddress">
+        <input type="checkbox" name="hiking" value="true">
+        <label for="hiking">
+          Hiking</label>
       </div>
-
       <div class="form-input-material">
-        <label for="password">New Password</label>
-        <input type="password" placeholder="Password" name="password">
+        <input type="checkbox" name="mountainBiking" value="true">
+        <label for="mountainBiking">Mountain Biking</label>
       </div>
-
       <div class="form-input-material">
-        <label for="password">Confirm New Password</label>
-        <input type="password" placeholder="Password" name="password">
+        <input type="checkbox" name="camping" value="true">
+        <label for="camping">Camping</label>
       </div>
+    </div>
 
-      <div class="form-input-material">
-        <label for="zipcode">New Zipcode</label>
-        <input id="zipcode" name="zipcode" placeholder="80301" type="text" pattern="[0-9]{5}" title="(valid 5-digit US zipcode)">
-      </div>
+    <input class="btn tn-default" type="submit" value="Save">
+  </form>
+</div>
 
-      <div class="form-input-material">
-        <label for="userImage">URL for New Profile Picture</label>
-        <input type="url" placeholder="http://site.com/image.jpg" name="userImage">
-      </div>
 
-      <div class="form-input-material">
-        <p>Select New Interests:</p>
-        <div class="form-input-material">
-          <input type="checkbox" name="hiking" value="true">
-          <label for="hiking">
-            Hiking</label>
-        </div>
-        <div class="form-input-material">
-          <input type="checkbox" name="mountainBiking" value="true">
-          <label for="mountainBiking">Mountain Biking</label>
-        </div>
-        <div class="form-input-material">
-          <input type="checkbox" name="camping" value="true">
-          <label for="camping">Camping</label>
-        </div>
-      </div>
-
-      <input class="btn tn-default" type="submit" value="Save">
-    </form>
-  </div>
-
-  
 {% endblock %}

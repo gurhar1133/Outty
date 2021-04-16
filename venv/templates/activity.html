@@ -1,8 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{ messages[0] }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+{% endwith %}
 
 <div class="p-5 card">
+
+
   <div class="row">
     <div class="col-lg">
       <h1>
@@ -18,12 +30,42 @@
       <p>
         {{activity.description}}
       </p>
+
+
+
+      <p>
+        {% if activity.likes.count() ==1 %}
+        {{ activity.likes.count() }} like
+        {% else %}
+        {{ activity.likes.count() }} likes
+        {% endif %}
+      </p>
+      <p>
+        {% if activity.completes.count() ==1 %}
+        {{ activity.completes.count() }} complete
+        {% else %}
+        {{ activity.completes.count() }} completes
+        {% endif %}
+      </p>
+
       <br>
       <div class="text-left">
         <a class="btn btn-secondary btn-lg" href="https://www.google.com/maps/dir/Current+Location/{{activity.latitude}}, {{activity.longitude}}?ref=trail-action-menu-directions" role="button">directions</a>
         <a class="btn btn-secondary btn-lg" href="{{activity.url}}" role="button">more info</a>
-        <a class="btn btn-secondary btn-lg" href="{{activity.url}}" role="button">completed</a>
-        <a class="btn btn-secondary btn-lg" href="{{activity.url}}" role="button">like</a>
+        {% if current_user.has_liked_activity(activity) %}
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('main.like_action', activity_id=activity.id, action='unlike') }}" role="button">unlike</a>
+        {% else %}
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('main.like_action', activity_id=activity.id, action='like') }}" role="button">like</a>
+        {% endif %}
+
+        {% if current_user.has_completed_activity(activity) %}
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('main.complete_action', activity_id=activity.id, action='uncomplete') }}" role="button">uncomplete</a>
+        {% else %}
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('main.complete_action', activity_id=activity.id, action='complete') }}" role="button">complete</a>
+        {% endif %}
+
+
+
 
       </div>
       <br>

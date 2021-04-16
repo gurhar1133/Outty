@@ -1,5 +1,5 @@
 from . import db
-from flask import Blueprint, render_template, url_for, request, redirect
+from flask import Blueprint, render_template, url_for, request, redirect, flash
 from flask_login import login_required, current_user
 from .map_api import get_map_data
 from .weather_api import get_weather_data
@@ -7,10 +7,10 @@ from .getGreeting import getGreeting
 from .recommend import Recommender
 import config
 from .zipcodeCityState import getFullStateName
-from .models import User, Activity
+from .models import User, Activity, ActivityLike, ActivityComplete
 from werkzeug.security import generate_password_hash, check_password_hash
 from .updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
-from .saveActivity import getActivityById, addActivityToDatabase, addLikedActivity, addCompletedActivity, getActivityIdByUrl
+from .saveActivity import addActivityToDatabase, getActivityIdByUrl
 
 main = Blueprint('main', __name__)
 
@@ -86,36 +86,54 @@ def dash():
         )
 
         activityPageId = getActivityIdByUrl(recs[0]['activities'][0]['url'])
-        print(activityPageId)
+        # print(activityPageId)
 
         if not username:
             username = "Explorer"
-    return render_template("dash.html", suggestions=suggestions,
-                           hiking=current_user.hiking, mountainBiking=current_user.mountainBiking, camping=current_user.camping,
-                           city=city, state=state, weather_data=weather_data, map_data=map_data, map_api_key=config.map_api_key,
-                           username=username, greeting=greeting, activityPageId=activityPageId)
+    return render_template("dash.html", suggestions=suggestions, weather_data=weather_data, greeting=greeting, activityPageId=activityPageId)
 
 
 @main.route('/profile')
 @login_required
 def profile():
     # should read from the database to display info
-    # activity = Activity.query.filter_by(url=url).first()
+    likedActivitiesData = ActivityLike.query.filter_by(
+        user_id=current_user.id).all()
+    likedActivitiesCount = ActivityLike.query.filter_by(
+        user_id=current_user.id).count()
 
-    # filler cards for style
+    likedActivities = []
+    for i in range(likedActivitiesCount):
+        specificActivityId = likedActivitiesData[i].activity_id
+        specificActivity = Activity.query.filter_by(
+            id=specificActivityId).first()
+        likedActivity = {'id': specificActivity.id,
+                         'name': specificActivity.name,
+                         'type': specificActivity.type,
+                         'thumbnail': specificActivity.thumbnail,
+                         'date_added': likedActivitiesData[i].date_added
+                         }
+        likedActivities.append(likedActivity)
 
-    card1 = {'title': 'Tenderfoot Mountain Trail, Summit County', 'activity': 'Hiking',
-             'distance': 2.5, 'image': url_for('static', filename='img/zimg/IMG_1851.jpeg'), 'status': ''}
-    card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
-             'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
-    card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
-             'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
+    completedActivitiesData = ActivityComplete.query.filter_by(
+        user_id=current_user.id).all()
+    completedActivitiesCount = ActivityComplete.query.filter_by(
+        user_id=current_user.id).count()
 
-    suggestions = [card1, card2, card3]
-    return render_template('profile.html', email=current_user.emailAddress, name=current_user.name, userImage=current_user.userImage, zipcode=current_user.zipcode,
-                           city=current_user.city, state=current_user.state,
-                           hiking=current_user.hiking, mountainBiking=current_user.mountainBiking, camping=current_user.camping,
-                           suggestions=suggestions, numberOfLiked=14, numberOfCompleted=35)
+    completedActivities = []
+    for i in range(completedActivitiesCount):
+        specificActivityId = completedActivitiesData[i].activity_id
+        specificActivity = Activity.query.filter_by(
+            id=specificActivityId).first()
+        completedActivity = {'id': specificActivity.id,
+                             'name': specificActivity.name,
+                             'type': specificActivity.type,
+                             'thumbnail': specificActivity.thumbnail,
+                             'date_added': completedActivitiesData[i].date_added
+                             }
+        completedActivities.append(completedActivity)
+
+    return render_template('profile.html', likedActivities=likedActivities, completedActivities=completedActivities)
 
 
 @main.route('/settings')
@@ -133,7 +151,43 @@ def settings():
 @login_required
 def activity():
     # get parameter from url string
-    activity = getActivityById(request.args.get('id'))
+    activityId = request.args.get('id')
+    activity = Activity.query.filter_by(id=activityId).first()
 
-    # addCompletedActivity(activity.url)
+    # get date time, can also use in the future to maybe add a comment from user?
+    # if current_user.has_liked_activity(activity):
+    #     activityLike = ActivityLike.query.filter_by(
+    #         activity_id=activity.id, user_id=current_user.id).first()
+    #     print(activityLike.date_added)
+
     return render_template('activity.html', activity=activity)
+
+
+@main.route('/like/<int:activity_id>/<action>')
+@login_required
+def like_action(activity_id, action):
+    activity = Activity.query.filter_by(id=activity_id).first_or_404()
+    if action == 'like':
+        current_user.like_activity(activity)
+        db.session.commit()
+        flash('Activity has been liked')
+    if action == 'unlike':
+        current_user.unlike_activity(activity)
+        db.session.commit()
+        flash('Activity has been unliked')
+    return redirect(request.referrer)
+
+
+@main.route('/complete/<int:activity_id>/<action>')
+@login_required
+def complete_action(activity_id, action):
+    activity = Activity.query.filter_by(id=activity_id).first_or_404()
+    if action == 'complete':
+        current_user.complete_activity(activity)
+        db.session.commit()
+        flash('Activity has been completed')
+    if action == 'uncomplete':
+        current_user.uncomplete_activity(activity)
+        db.session.commit()
+        flash('Activity has been uncompleted')
+    return redirect(request.referrer)
