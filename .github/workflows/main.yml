@@ -13,21 +13,21 @@ jobs:
       # Check-out your repository.
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Setup Python
         uses: actions/setup-python@v2.2.1
         with:
           python-version: 3.7
-          
+
       - name: Run Python script
         run: |
-          python3 venv/getsecretsimport.py
+          python3 venv/gitsecretsimport.py
         env:
           TRAIL_API_KEY: ${{ secrets.TRAIL_API_KEY }}
           GEO_ENCODE_KEY: ${{ secrets.GEO_ENCODE_KEY }}
-          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }} 
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
           MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
-     
+
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
@@ -40,11 +40,11 @@ jobs:
           # If you don't want to use repository secrets (which is recommended) you can do:
           # email: my.email@example.com
           email: ${{ secrets.HEROKU_EMAIL }}
-          
+
           # Heroku API key associated with provided user's email.
           # Api Key is available under your Heroku account settings.
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          
+
           # Name of the heroku application to which the build is to be sent.
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
 
