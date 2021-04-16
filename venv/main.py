@@ -1,7 +1,6 @@
 from __init__ import db
 from flask import Blueprint, render_template, url_for, request, redirect, flash
 from flask_login import login_required, current_user
-from map_api import get_map_data
 from weather_api import get_weather_data
 from getGreeting import getGreeting
 from recommend import Recommender
