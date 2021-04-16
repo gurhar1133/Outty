@@ -17,10 +17,10 @@ jobs:
       - name: Run Python script
         # Time for Python codee
         run: |
-            trail_api_key=${{ secrets.TRAIL_API_KEY }} python3 venv/gitsecretsimport.py
-            geo_encode_key=${{ secrets.GEO_ENCODE_KEY }} python3 venv/gitsecretsimport.py
-            weather_api_key=${{ secrets.WEATHER_API_KEY }} python3 venv/gitsecretsimport.py
-            map_api_key=${{ secrets.MAP_API_KEY }} python3 venv/gitsecretsimport.py
+            TRAIL_API_KEY=${{ secrets.TRAIL_API_KEY }} python3 venv/gitsecretsimport.py
+            GEO_ENCODE_KEY=${{ secrets.GEO_ENCODE_KEY }} python3 venv/gitsecretsimport.py
+            WEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }} python3 venv/gitsecretsimport.py
+            MAP_API_KEY=${{ secrets.MAP_API_KEY }} python3 venv/gitsecretsimport.py
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
