@@ -19,7 +19,7 @@ jobs:
           python-version: 3.7
       - name: Run Python script
         run: |
-          python3 venv/gitsecretsimport.py
+          python3 script.py
         env:
           TRAIL_API_KEY: ${{ secrets.TRAIL_API_KEY }}
           GEO_ENCODE_KEY: ${{ secrets.GEO_ENCODE_KEY }}
