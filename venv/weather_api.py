@@ -5,7 +5,7 @@
 # return the data in easily usable format, eg an array or object
 import requests
 from flask import Flask, request
-from __init__ import keys
+from gitsecretsimport import keys
 
 
 def get_weather_data(city):

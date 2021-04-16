@@ -4,7 +4,8 @@ import urllib.parse
 import json
 import os
 from models import Activity
-from __init__ import db, keys
+from __init__ import db
+from gitsecretsimport import keys
 
 class Recommender:
     def __init__(self, current_user):
