@@ -1,5 +1,6 @@
 from .models import User
 from .zipcodeCityState import get_citystate_data
+from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 
 
