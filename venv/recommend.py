@@ -2,9 +2,9 @@ import requests
 import http.client
 import urllib.parse
 import json
-import config
+import os
 from models import Activity
-from __init__ import db
+from __init__ import db, keys
 
 class Recommender:
     def __init__(self, current_user):
@@ -19,8 +19,9 @@ class Recommender:
         self.fav_activities = activities
         self.userRadius = current_user.userRadius
         self.location = current_user.zipcode
-        self.geo_encode_key = config.geo_encode_key
-        self.trail_api_key = config.trail_api_key
+        self.geo_encode_key = keys["geo_encode_key"]
+        #os.envronget()
+        self.trail_api_key = keys["trail_api_key"]
 
     def trail_api_query(self, lat, lon, state, activity_pref):
         # lat and lon info to query trailapi

@@ -2,10 +2,34 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import os
-port = int(os.environ.get("PORT", 5000))
+
+
+try:
+    import config
+except:
+    config = 0
+
+if config == 0:
+    trail_api_key = os.environ['trail_api_key']
+    geo_encode_key = os.environ['geo_encode_key']
+    weather_api_key = os.environ['weather_api_key']
+    map_api_key = os.environ['map_api_key']
+
+else:
+    trail_api_key = config.trail_api_key
+    geo_encode_key = config.geo_encode_key
+    weather_api_key = config.weather_api_key
+    map_api_key = config.map_api_key
+
+keys = {"trail_api_key": trail_api_key,
+        "geo_encode_key": geo_encode_key,
+        "weather_api_key": weather_api_key,
+        "map_api_key": map_api_key}
+
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
+port = int(os.environ.get("PORT", 5000))
 
 
 def create_app():

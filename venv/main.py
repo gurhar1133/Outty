@@ -5,7 +5,6 @@ from map_api import get_map_data
 from weather_api import get_weather_data
 from getGreeting import getGreeting
 from recommend import Recommender
-import config
 from zipcodeCityState import getFullStateName
 from models import User, Activity, ActivityLike, ActivityComplete
 from werkzeug.security import generate_password_hash, check_password_hash
