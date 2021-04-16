@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{ messages[0] }} Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+{% endwith %}
 
 <ul class="signup-container nowrap">
   <!-- Organize login box into two divs, make flexible list for window sizing
@@ -12,14 +22,6 @@ add image rotation (JS)
     <img src="static/img/zimg/IMG_1719.jpeg" alt="Image">
   </li>
   <li class="signup-container-right">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="notification is-danger">
-      {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
-    </div>
-    {% endif %}
-    {% endwith %}
-
     <form class="login-form" action="/signup" method="POST">
       <h5>Sign Up</h5>
       <div class="form-input-material">
@@ -44,7 +46,7 @@ add image rotation (JS)
         <label for="userImage">URL for Profile Picture</label>
         <input type="url" placeholder="http://site.com/image.jpg" name="userImage" required>
       </div>
-      
+
       <div class="form-input-material">
         <p>Select your outdoor interests:</p>
         <div class="form-input-material">

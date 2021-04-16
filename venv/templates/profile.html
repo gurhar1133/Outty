@@ -1,225 +1,121 @@
 {% extends "base.html" %}
 {% block content %}
 
-<body>
 
-  <div class="profile-container">
-    <div class="profile-item">
-      <!--read profile picture from db-->
-      <img id="profilepic" src={{userImage}} alt="profile pic">
-    </div>
-    <div class="profile-item">
-      <p>
-        <!--read username from db-->
-      <h3>{{name}}</h3><br>
-      <!--read email from db-->
-      <h6>{{email}}</h6> <br>
-      <!--last location from db?-->
-      <h6><i id="locationicon" class="material-icons">my_location</i>{{city}}, {{state}}, {{zipcode}}</h6>
-      </p>
-    </div>
-    <div class="profile-item">
-      <p>
-        <!--read activities to do from db-->
-      <h1>35</h1><br>
-      <h6>Liked Activities</h6>
-      </p>
-    </div>
-    <div class="profile-item">
-      <p>
-        <!--read activities complete from db-->
-      <h1>14</h1><br>
-      <h6>Completed Activities</h6>
-      </p>
-    </div>
-    <div class="profile-item">
-      <p>
-        <!--read interests from db-->
-      <h3>Your Interests</h3><br>
-      <h3>
-
-        {% if hiking %}
-        <i class="mdl-icon-toggle material-icons">hiking</i>
-        {% endif %}
-
-        {% if mountainBiking %}
-        <i class="mdl-icon-toggle material-icons">directions_bike</i>
-        {% endif %}
-
-        {% if camping %}
-        <i class="mdl-icon-toggle material-icons">cabin</i>
-        {% endif %}
-
-      </h3>
-      </p>
-    </div>
+<div class="profile-container">
+  <div class="profile-item">
+    <img id="profilepic" src={{current_user.userImage}} alt="profile pic">
   </div>
-  <div>
-    <div>
-      <p>
-        Completed Activities:
-      </p>
-    </div>
-    <div class="dashboard-container">
-      <div class="item" style="width: 30%;">
-        <div id=card-click-area class="suggestion-card">
-          <div class="content">
-            <img class="card-img-top" src={{suggestions[0]['image']}} alt="activity image">
-          </div>
-          <div class="card-body">
-            <p class="card-title">{{suggestions[0]['title']}}</p>
-            <p class="card-text">
-              <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[0]['activity']}}
-              <br>
-              <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[0]['distance']}} miles
-            </p>
-            <div class="buttonholder">
-              <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
-              <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
-              <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-            </div>
-            <div class="expand-button">
-              <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item" style="width: 30%;">
-        <div id=card-click-area class="suggestion-card">
-          <div class="content">
-            <img class="card-img-top" src={{suggestions[1]['image']}} alt="activity image">
-          </div>
-          <div class="card-body">
-            <p class="card-title">{{suggestions[1]['title']}}</p>
-            <p class="card-text">
-              <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[1]['activity']}}
-              <br>
-              <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[1]['distance']}} miles
-            </p>
-            <div class="buttonholder">
-              <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
-              <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
-              <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-            </div>
-            <div class="expand-button">
-              <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item" style="width: 30%;">
-        <div id=card-click-area class="suggestion-card">
-          <div class="content">
-            <img class="card-img-top" src={{suggestions[2]['image']}} alt="activity image">
-          </div>
-          <div class="card-body">
-            <p class="card-title">{{suggestions[2]['title']}}</p>
-            <p class="card-text">
-              <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[2]['activity']}}
-              <br>
-              <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[2]['distance']}} miles
-            </p>
-            <div class="buttonholder">
-              <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
-              <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
-              <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-            </div>
-            <div class="expand-button">
-              <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <p class="p-2">
-      </p>
-    </div>
-
+  <div class="profile-item">
+    <p>
+    <h3>{{current_user.name}}</h3><br>
+    <h6>{{current_user.emailAddress}}</h6> <br>
+    <h6><i id="locationicon" class="material-icons">my_location</i>{{current_user.city}}, {{current_user.state}}, {{current_user.zipcode}}</h6>
+    </p>
   </div>
-
-  <div>
-    <div>
-      <p>
-        Liked Activities:
-      </p>
-    </div>
-    <div class="dashboard-container">
-      <div class="item" style="width: 30%;">
-        <div id=card-click-area class="suggestion-card">
-          <div class="content">
-            <img class="card-img-top" src={{suggestions[0]['image']}} alt="activity image">
-          </div>
-          <div class="card-body">
-            <p class="card-title">{{suggestions[0]['title']}}</p>
-            <p class="card-text">
-              <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[0]['activity']}}
-              <br>
-              <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[0]['distance']}} miles
-            </p>
-            <div class="buttonholder">
-              <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
-              <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
-              <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-            </div>
-            <div class="expand-button">
-              <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item" style="width: 30%;">
-        <div id=card-click-area class="suggestion-card">
-          <div class="content">
-            <img class="card-img-top" src={{suggestions[1]['image']}} alt="activity image">
-          </div>
-          <div class="card-body">
-            <p class="card-title">{{suggestions[1]['title']}}</p>
-            <p class="card-text">
-              <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[1]['activity']}}
-              <br>
-              <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[1]['distance']}} miles
-            </p>
-            <div class="buttonholder">
-              <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
-              <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
-              <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-            </div>
-            <div class="expand-button">
-              <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item" style="width: 30%;">
-        <div id=card-click-area class="suggestion-card">
-          <div class="content">
-            <img class="card-img-top" src={{suggestions[2]['image']}} alt="activity image">
-          </div>
-          <div class="card-body">
-            <p class="card-title">{{suggestions[2]['title']}}</p>
-            <p class="card-text">
-              <i class="mdl-icon-toggle material-icons">hiking</i> {{suggestions[2]['activity']}}
-              <br>
-              <i class="mdl-icon-toggle material-icons">place</i> {{suggestions[2]['distance']}} miles
-            </p>
-            <div class="buttonholder">
-              <button id="dislike-button" class="mdl-button mdl-button--icon mdl-button--accent"><i class="material-icons">thumb_down</i></button>
-              <button id="completed-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">check_circle</i></button>
-              <button id="like-button" class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-            </div>
-            <div class="expand-button">
-              <button id="expand-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">info</i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <p class="p-4">
-      </p>
-    </div>
-
+  <div class="profile-item">
+    <p>
+    <h1>{{ current_user.liked.count() }}</h1><br>
+    <h6>
+      {% if current_user.liked.count() ==1 %}
+      liked activity
+      {% else %}
+      liked activities
+      {% endif %}
+    </h6>
+    </p>
   </div>
-</body>
+  <div class="profile-item">
+    <p>
+    <h1>{{ current_user.completed.count() }}</h1><br>
+    <h6>
+      {% if current_user.liked.count() ==1 %}
+      completed activity
+      {% else %}
+      completed activities
+      {% endif %}
+    </h6>
+    </p>
+  </div>
+  <div class="profile-item">
+    <p>
+    <h3>Your Interests</h3><br>
+    <h3>
+
+      {% if current_user.hiking %}
+      <i class="mdl-icon-toggle material-icons">hiking</i>
+      {% endif %}
+
+      {% if current_user.mountainBiking %}
+      <i class="mdl-icon-toggle material-icons">directions_bike</i>
+      {% endif %}
+
+      {% if current_user.camping %}
+      <i class="mdl-icon-toggle material-icons">cabin</i>
+      {% endif %}
+
+    </h3>
+    </p>
+  </div>
+</div>
+{% if likedActivities %}
+<div class="container">
+  <h3>Liked Activities ({{ current_user.liked.count() }})</h3>
+  <div class="card-columns">
+    {% for likedActivity in likedActivities %}
+    <div class="card">
+      {% if likedActivity.thumbnail %}
+      <img class="card-img-top" src={{likedActivity.thumbnail}}>
+      {% else %}
+      <img class="card-img-top" src={{url_for('static', filename='img/noImage.jpg')}}>
+      {% endif %}
+
+      <div class="card-body">
+        <h5 class="card-title">{{likedActivity.name}}</h5>
+        <p class="card-text">{{likedActivity.type}}</p>
+        <a class="btn btn-light" onclick="window.location.href='./activity?id={{likedActivity.id}}';" role="button">view activity</a>
+      </div>
+
+      <div class="card-footer">
+        <small class="text-muted">{{likedActivity.date_added}}</small>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if completedActivities %}
+
+
+<div class="container">
+  <h3>Completed Activities ({{ current_user.completed.count() }})</h3>
+
+  <div class="card-columns">
+    {% for completedActivity in completedActivities %}
+    <div class="card">
+      {% if completedActivity.thumbnail %}
+      <img class="card-img-top" src={{completedActivity.thumbnail}}>
+      {% else %}
+
+      <img class="card-img-top" src={{url_for('static', filename='img/noImage.jpg')}}>
+
+      {% endif %}
+
+      <div class="card-body">
+        <h5 class="card-title">{{completedActivity.name}}</h5>
+        <p class="card-text">{{completedActivity.type}}</p>
+        <a class="btn btn-light" onclick="window.location.href='./activity?id={{completedActivity.id}}';" role="button">view activity</a>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">{{completedActivity.date_added}}</small>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+
 {% endblock %}
