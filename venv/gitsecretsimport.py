@@ -6,10 +6,10 @@ except:
     config = 0
 
 if config == 0:
-    trail_api_key = os.environ['trail_api_key']
-    geo_encode_key = os.environ['geo_encode_key']
-    weather_api_key = os.environ['weather_api_key']
-    map_api_key = os.environ['map_api_key']
+    trail_api_key = os.environ['TRAIL_API_KEY']
+    geo_encode_key = os.environ['GEO_ENCODE_KEY']
+    weather_api_key = os.environ['WEATHER_API_KEY']
+    map_api_key = os.environ['MAP_API_KEY']
 
 else:
     trail_api_key = config.trail_api_key
