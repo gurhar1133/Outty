@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+import os
+port = int(os.environ.get("PORT", 5000))
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
@@ -36,4 +38,5 @@ def create_app():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app = create_app()
+    app.run(debug=True,host='0.0.0.0',port=port)
