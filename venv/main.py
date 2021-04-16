@@ -1,16 +1,16 @@
-from . import db
+from __init__ import db
 from flask import Blueprint, render_template, url_for, request, redirect, flash
 from flask_login import login_required, current_user
-from .map_api import get_map_data
-from .weather_api import get_weather_data
-from .getGreeting import getGreeting
-from .recommend import Recommender
+from map_api import get_map_data
+from weather_api import get_weather_data
+from getGreeting import getGreeting
+from recommend import Recommender
 import config
-from .zipcodeCityState import getFullStateName
-from .models import User, Activity, ActivityLike, ActivityComplete
+from zipcodeCityState import getFullStateName
+from models import User, Activity, ActivityLike, ActivityComplete
 from werkzeug.security import generate_password_hash, check_password_hash
-from .updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
-from .saveActivity import addActivityToDatabase, getActivityIdByUrl
+from updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
+from saveActivity import addActivityToDatabase, getActivityIdByUrl
 
 main = Blueprint('main', __name__)
 

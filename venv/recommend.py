@@ -3,8 +3,8 @@ import http.client
 import urllib.parse
 import json
 import config
-from .models import Activity
-from . import db
+from models import Activity
+from __init__ import db
 
 class Recommender:
     def __init__(self, current_user):

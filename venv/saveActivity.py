@@ -1,5 +1,5 @@
-from .models import Activity, User, ActivityLike
-from . import db
+from models import Activity, User, ActivityLike
+from __init__ import db
 from flask_login import current_user
 from datetime import datetime
 
