@@ -28,7 +28,6 @@ def dash():
     state = current_user.state
     weather_data = get_weather_data(
         city + ', ' + getFullStateName(current_user.state))
-    map_data = get_map_data()
     greeting = getGreeting()
 
     # username = request.args.get("username")
