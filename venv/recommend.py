@@ -149,7 +149,7 @@ class Recommender:
 
 
 if __name__ == "__main__":
-    test_rec = Recommender("test1")
+    test_rec = Recommender("test3")
     recs = test_rec.recommend()[0]
 
     for i, rec in enumerate(recs):
