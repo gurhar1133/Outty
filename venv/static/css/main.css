@@ -8,6 +8,17 @@
   margin-right: 5px;
 }
 
+#signup_img {
+  position: absolute;
+  left: -500px;
+  height: 100%;
+}
+
+#signup {
+  background-color: #FFFFFF;
+  color: #7C7468;
+}
+
 html body {
   background: #F9F6EF;
   background-image: url(../img/bg.svg);
@@ -69,41 +80,10 @@ a {
   margin: 5% auto;
 }
 
-.signup-container {
-  padding: 0;
-  margin-top: 10%;
-  margin: 0;
-  list-style: none;
-  -ms-box-orient: horizontal;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -moz-flex;
-  display: -webkit-flex;
-  display: flex;
-  justify-content: center;
-}
 
 .nowrap {
   -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap;
-}
-
-.signup-container-left img {
-  padding: none;
-  height: 500px;
-  object-fit: cover;
-  margin: 0px;
-}
-
-.signup-container-right {
-  padding: none;
-  width: auto;
-  height: 500px;
-  margin: 0px;
-  background-color: #f4f1f1;
-  overflow: auto;
-  display: -webkit-flex;
 }
 
 .dashboard-container {
@@ -137,6 +117,10 @@ a {
 
   .dashboard-text {
     margin-top: 0%;
+  }
+
+  #signup_img {
+    display: none;
   }
 }
 

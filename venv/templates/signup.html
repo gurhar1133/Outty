@@ -12,61 +12,59 @@
 {% endif %}
 {% endwith %}
 
-<ul class="signup-container nowrap">
+
   <!-- Organize login box into two divs, make flexible list for window sizing
 add background color to sign up
 add image and styling to login
 add image rotation (JS)
  -->
-  <li class="signup-container-left">
-    <img src="static/img/zimg/IMG_1719.jpeg" alt="Image">
-  </li>
-  <li class="signup-container-right">
-    <form class="login-form" action="/signup" method="POST">
-      <h5>Sign Up</h5>
-      <div class="form-input-material">
-        <label for="name">Name</label>
-        <input type="text" placeholder="Your Name" name="name" required>
-      </div>
-      <div class="form-input-material">
-        <label for="email">Email Address</label>
-        <input type="email" placeholder="your.email@website.com" name="emailAddress" required>
-      </div>
-      <div class="form-input-material">
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" name="password" required>
-      </div>
 
-      <div class="form-input-material">
-        <label for="zipcode">Zipcode</label>
-        <input id="zipcode" name="zipcode" placeholder="80301" type="text" pattern="[0-9]{5}" title="(valid 5-digit US zipcode)" required>
-      </div>
+<div id="signup" class="container position-relative">
+  <h3 class="p-5 text-center">
+    New Users Please Sign-Up
+    <small class="text-muted">Existing Users Please <a href="{{ url_for('auth.login') }}">Login</a></small>
+  </h3>
+  <form action="/signup" method="POST">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input class="form-control" type="text" placeholder="Your Name" name="name" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input class="form-control" type="email" placeholder="your.email@website.com" name="emailAddress" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input class="form-control" type="password" placeholder="Password" name="password" required>
+    </div>
 
-      <div class="form-input-material">
-        <label for="userImage">URL for Profile Picture</label>
-        <input type="url" placeholder="http://site.com/image.jpg" name="userImage" required>
-      </div>
+    <div class="form-group">
+      <label for="zipcode">Zipcode</label>
+      <input class="form-control" id="zipcode" name="zipcode" placeholder="80301" type="text" pattern="[0-9]{5}" title="(valid 5-digit US zipcode)" required>
+    </div>
 
-      <div class="form-input-material">
-        <p>Select your outdoor interests:</p>
-        <div class="form-input-material">
-          <input type="checkbox" name="hiking" value="true">
-          <label for="hiking">
-            Hiking</label>
-        </div>
-        <div class="form-input-material">
-          <input type="checkbox" name="mountainBiking" value="true">
-          <label for="mountainBiking">Mountain Biking</label>
-        </div>
-        <div class="form-input-material">
-          <input type="checkbox" name="camping" value="true">
-          <label for="camping">Camping</label>
-        </div>
-      </div>
-      <input class="btn" type="submit" value="Sign-Up">
-    </form>
-  </li>
-</ul>
+    <div class="form-group">
+      <label for="userImage">URL for Profile Picture</label>
+      <input class="form-control" type="url" placeholder="http://site.com/image.jpg" name="userImage" required>
+    </div>
 
+    <div class="form-group">
+      <p>Select your outdoor interests:</p>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="hiking" value="true">
+        <label class="form-check-label" for="hiking"> Hiking</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="mountainBiking" value="true">
+        <label class="form-check-label" for="mountainBiking">Mountain Biking</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="camping" value="true">
+        <label class="form-check-label" for="camping">Camping</label>
+      </div>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Sign-Up">
+  </form>
+</div>
 
 {% endblock %}
