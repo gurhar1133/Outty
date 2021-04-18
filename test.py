@@ -2,12 +2,10 @@
 
 import regex as re
 import unittest
-import config
 from venv.recommend import Recommender
 from flask import Flask, render_template, redirect, url_for, request, g
 import venv.main
 import venv.auth
-from venv.map_api import get_map_data
 from venv.weather_api import get_weather_data
 from venv.getGreeting import getGreeting
 import sqlite3
