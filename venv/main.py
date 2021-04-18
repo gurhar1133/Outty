@@ -55,6 +55,7 @@ def dash():
 
 # then use database to generate cards???? instead of recs then we can use the id to query!
     suggestions = []
+    print("returned recs:", recs)
     for i in range(len(recs)):
         card = {
             'title': recs[i]['activities'][0]['name'],
