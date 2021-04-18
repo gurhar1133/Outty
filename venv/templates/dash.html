@@ -53,6 +53,7 @@
 </div>
 <br>
 <div class="card-columns">
+  {% if len(suggestions) > 1 %}
   {% for suggestion in suggestions %}
   <div class="card">
     {% if suggestion['image'] %}
@@ -68,6 +69,7 @@
 
   </div>
   {% endfor %}
+  {% endif %}
 </div>
 
 

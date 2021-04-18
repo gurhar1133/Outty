@@ -106,6 +106,7 @@ class Recommender:
     def recommend(self):
 
         activity_pref = self.fav_activities
+        print("activity pref: ", activity_pref)
         postal_code = self.location
         if len(activity_pref) == 0:
             self.fav_activities = ['mountain biking']
@@ -142,14 +143,16 @@ class Recommender:
         lon = data['data'][0]['longitude']
 
         # makes a recommendation for each activity that the user likes
-        recs = [self.trail_api_query(lat, lon, state, act)
-                for act in activity_pref]
-
+        # recs = [self.trail_api_query(lat, lon, state, act)
+        #         for act in activity_pref]
+        recs = []
+        for act in activity_pref:
+            recs.append(self.trail_api_query(lat, lon, state, act))
         return recs
 
 
 if __name__ == "__main__":
-    test_rec = Recommender("test1")
+    test_rec = Recommender("test3")
     recs = test_rec.recommend()[0]
 
     for i, rec in enumerate(recs):
