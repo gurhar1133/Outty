@@ -57,7 +57,7 @@ def dash():
     suggestions = []
     print("returned recs:", recs)
     for i in range(len(recs)):
-        print("TITLE?", recs[i])
+        recs[i]
         card = {
             
             'title': recs[i]['activities'][0]['name'],
