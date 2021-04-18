@@ -5,12 +5,12 @@
 # return the data in easily usable format, eg an array or object
 import requests
 from flask import Flask, request
-import config
+from gitsecretsimport import keys
 
 
 def get_weather_data(city):
     """ Make api call, and return data to populate index.html """
-    API_KEY = config.weather_api_key  # initialize API key here
+    API_KEY = keys["weather_api_key"]  # initialize API key here
     # call API and convert response into Python dictionary
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&APPID={API_KEY}'
     response = requests.get(url).json()

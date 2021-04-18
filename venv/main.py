@@ -1,16 +1,14 @@
-from . import db
+from __init__ import db
 from flask import Blueprint, render_template, url_for, request, redirect, flash
 from flask_login import login_required, current_user
-from .map_api import get_map_data
-from .weather_api import get_weather_data
-from .getGreeting import getGreeting
-from .recommend import Recommender
-import config
-from .zipcodeCityState import getFullStateName
-from .models import User, Activity, ActivityLike, ActivityComplete
+from weather_api import get_weather_data
+from getGreeting import getGreeting
+from recommend import Recommender
+from zipcodeCityState import getFullStateName
+from models import User, Activity, ActivityLike, ActivityComplete
 from werkzeug.security import generate_password_hash, check_password_hash
-from .updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
-from .saveActivity import addActivityToDatabase, getActivityIdByUrl
+from updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
+from saveActivity import addActivityToDatabase, getActivityIdByUrl
 
 main = Blueprint('main', __name__)
 
@@ -26,15 +24,10 @@ def index():
 @main.route('/dashboard')
 @login_required
 def dash():
-    city = current_user.city
-    state = current_user.state
     weather_data = get_weather_data(
-        city + ', ' + getFullStateName(current_user.state))
-    map_data = get_map_data()
+        current_user.city + ', ' + getFullStateName(current_user.state))
     greeting = getGreeting()
 
-    # username = request.args.get("username")
-    username = current_user.name
     rec = Recommender(current_user)
     favs = [activity.title() for activity in rec.fav_activities]
 
@@ -46,33 +39,6 @@ def dash():
         interests[fav] = True
         radius = 30
         recs = rec.recommend()[0]
-
-        print("returned recs[0]: ", recs[0])
-
-        card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
-                 'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
-        card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
-                 'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
-        if not recs[0]['activities'][0]['thumbnail']:
-            recs[0]['activities'][0]['thumbnail'] = url_for(
-                'static', filename='img/noImage.jpg')
-
-        if len(recs[0]['activities']) != 0:
-            card1 = {'title': recs[0]['activities'][0]['name'],
-                     'activity': recs[0]['activities'][0]['type'],
-                     'distance': recs[0]['activities'][0]['distance'],
-                     'image': recs[0]['activities'][0]['thumbnail'],
-                     'map-embed-url': 'https://maps.google.com/maps?q=' + str(recs[0]['coords'][0]) + ", " + str(recs[0]['coords'][1]) + '&z=15&output=embed',
-                     'description': recs[0]['activities'][0]['description'],
-                     'directions-url': 'https://www.google.com/maps/dir/Current+Location/' + str(recs[0]['coords'][0]) + ',' + str(recs[0]['coords'][1]) + '?ref=trail-action-menu-directions',
-                     'more-info-url': recs[0]['activities'][0]['url'],
-                     'status': ''
-                     }
-
-        else:  # handles empty api call returned to frontend
-            card1 = card2
-
-        suggestions = [card1, card2, card3]
 
         addActivityToDatabase(
             {'name': recs[0]['activities'][0]['name'],
@@ -86,10 +52,18 @@ def dash():
         )
 
         activityPageId = getActivityIdByUrl(recs[0]['activities'][0]['url'])
-        # print(activityPageId)
 
-        if not username:
-            username = "Explorer"
+# then use database to generate cards???? instead of recs then we can use the id to query!
+    suggestions = []
+    for i in range(len(recs)):
+        card = {
+            'title': recs[i]['activities'][0]['name'],
+            'activity': recs[i]['activities'][0]['type'],
+            'image': recs[i]['activities'][0]['thumbnail'],
+        }
+        suggestions.append(card)
+
+    print(suggestions)
     return render_template("dash.html", suggestions=suggestions, weather_data=weather_data, greeting=greeting, activityPageId=activityPageId)
 
 
@@ -143,23 +117,24 @@ def settings():
     # updateEmailAddress(user, "test1@gmail.com")
     # updateName(user, "test1")
     # updatePassword(user, "test3") doesnt work yet
-    
+
     return render_template('settings.html')
+
 
 @main.route('/settings', methods=['POST'])
 @login_required
 def settings_post():
-    updates = { 'newEmail': request.form.get('emailAddress'), 
-                'newUsername': request.form.get('newName'),
-                'oldPassword': request.form.get('oldPassword'),
-                'newPassword': request.form.get('password'), 
-                'newPassword2': request.form.get('password2'),
-                'newZipcode': request.form.get('zipcode'), 
-                'newUserImage': request.form.get('userImage'),
-                'hikes': request.form.get('hiking'), 
-                'mountainBikes': request.form.get('mountainBiking'), 
-                'camps': request.form.get('camping')
-                }
+    updates = {'newEmail': request.form.get('emailAddress'),
+               'newUsername': request.form.get('newName'),
+               'oldPassword': request.form.get('oldPassword'),
+               'newPassword': request.form.get('password'),
+               'newPassword2': request.form.get('password2'),
+               'newZipcode': request.form.get('zipcode'),
+               'newUserImage': request.form.get('userImage'),
+               'hikes': request.form.get('hiking'),
+               'mountainBikes': request.form.get('mountainBiking'),
+               'camps': request.form.get('camping')
+               }
     if (check_password_hash(current_user.password, updates['oldPassword'])):
 
         if updates['newPassword'] != '':
@@ -170,7 +145,7 @@ def settings_post():
 
         if updates['newEmail'] != None and updates['newEmail'] != '':
             updateEmailAddress(current_user, updates['newEmail'])
-        
+
         if updates['newUsername'] != '':
             updateName(current_user, updates['newUsername'])
 
@@ -178,8 +153,7 @@ def settings_post():
             updateZipcode(current_user, updates['newZipcode'])
 
         if updates['newUserImage'] != '':
-            updateUserImage(current_user, updates['newUserImage']) 
-        
+            updateUserImage(current_user, updates['newUserImage'])
 
         # if the user doesnt select any activities
         if updates['mountainBikes'] == None and updates['hikes'] == None and updates['camps'] == None:
@@ -200,29 +174,23 @@ def settings_post():
             else:
                 updateMountainBiking(current_user, False)
 
-
         print(updates)
 
-        
-
-
         card1 = {'title': 'Tenderfoot Mountain Trail, Summit County', 'activity': 'Hiking',
-                'distance': 2.5, 'image': url_for('static', filename='img/zimg/IMG_1851.jpeg'), 'status': ''}
+                 'distance': 2.5, 'image': url_for('static', filename='img/zimg/IMG_1851.jpeg'), 'status': ''}
         card2 = {'title': 'Emerald Lake Hiking Trail, Estes Park', 'activity': 'Hiking',
-                'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
+                 'distance': 22.5, 'image': url_for('static', filename='img/estes.jpg'), 'status': ''}
         card3 = {'title': 'City of Boulder Bike Path', 'activity': 'Biking',
-                'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
+                 'distance': 5.3, 'image': url_for('static', filename='img/park.jpg'), 'status': ''}
         suggestions = [card1, card2, card3]
 
-
         return render_template('profile.html', email=current_user.emailAddress, name=current_user.name, userImage=current_user.userImage, zipcode=current_user.zipcode,
-                            city=current_user.city, state=current_user.state,
-                            hiking=current_user.hiking, mountainBiking=current_user.mountainBiking, camping=current_user.camping,
-                            suggestions=suggestions)
+                               city=current_user.city, state=current_user.state,
+                               hiking=current_user.hiking, mountainBiking=current_user.mountainBiking, camping=current_user.camping,
+                               suggestions=suggestions)
     else:
-        
-        return render_template('settings.html', message="Please check that you entered your password correctly")
 
+        return render_template('settings.html', message="Please check that you entered your password correctly")
 
 
 @main.route('/activity', methods=['GET'])

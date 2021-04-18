@@ -46,11 +46,29 @@
         <p class="card-text">
           {{suggestions[0]['activity']}}
         </p>
-        <a class="btn btn-light btn-lg" onclick="window.location.href='./activity?id={{activityPageId}}';" role="button">view activity</a>
+        <a class="btn btn-light" onclick="window.location.href='./activity?id={{activityPageId}}';" role="button">view activity</a>
       </div>
     </div>
   </div>
-
 </div>
+<br>
+<div class="card-columns">
+  {% for suggestion in suggestions %}
+  <div class="card">
+    {% if suggestion['image'] %}
+    <img class="card-img-top" src="{{suggestion['image']}}">
+    {% else %}
+    <img class="card-img-top" src={{url_for('static', filename='img/noImage.jpg')}}>
+    {% endif %}
+
+    <div class="card-body">
+      <h5 class="card-title">{{suggestion['title']}}</h5>
+      <p class="card-text">{{suggestion['activity']}}</p>
+    </div>
+
+  </div>
+  {% endfor %}
+</div>
+
 
 {% endblock %}
