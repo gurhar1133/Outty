@@ -2,17 +2,15 @@
 
 import regex as re
 import unittest
-from venv.recommend import Recommender
+from recommend import Recommender
 from flask import Flask, render_template, redirect, url_for, request, g
-import venv.main
-import venv.auth
-from venv.weather_api import get_weather_data
-from venv.getGreeting import getGreeting
+import main
+import auth
+from weather_api import get_weather_data
+from getGreeting import getGreeting
 import sqlite3
 # import venv.outty_database
 import os
-
-
 
 
 # We can all use one test case class or define a few with different setUp and tearDown methods
