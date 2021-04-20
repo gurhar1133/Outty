@@ -1,6 +1,5 @@
 # tests will need to be updated but should generally work the same with test Cases
 
-from __init__ import db
 import regex as re
 import unittest
 from recommend import Recommender
@@ -9,6 +8,8 @@ import main
 import auth
 from weather_api import get_weather_data
 from getGreeting import getGreeting
+import sqlite3
+# import venv.outty_database
 import os
 
 
@@ -129,19 +130,19 @@ class OuttyTestCase(unittest.TestCase):
     #     pass
 
     def test_weather_api(self):
-        self.assertIn("°F", get_weather_data(
+        self.assertIn("°F", weather_api.get_weather_data(
             'Boulder, Colorado'))
 
     def test_getGreeting(self):
-        self.assertEqual(getGreetingText(1),
+        self.assertEqual(getGreeting.getGreetingText(1),
                          'Good Morning', "Wrong greeting")
-        self.assertEqual(getGreetingText(
+        self.assertEqual(getGreeting.getGreetingText(
             12), 'Good Afternoon', "Wrong greeting")
-        self.assertEqual(getGreetingText(
+        self.assertEqual(getGreeting.getGreetingText(
             16), 'Good Afternoon', "Wrong greeting")
-        self.assertEqual(getGreetingText(18),
+        self.assertEqual(getGreeting.getGreetingText(18),
                          'Good Evening', "Wrong greeting")
-        self.assertEqual(getGreetingText(20),
+        self.assertEqual(getGreeting.getGreetingText(20),
                          'Good Evening', "Wrong greeting")
 
     # def test_likeActivity(self):
