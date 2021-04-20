@@ -76,26 +76,6 @@ class Recommender:
 
                         filtered_rec['activities'].append(activity)
 
-                        #added by Sam to insert recommended activity into activity Table
-                        #checks to see if latitude, longitude, type already exist in activity table
-                        #may want use variables to speed things up
-                        activity = Activity.query.filter_by(type=act['activity_type_name'],latitude=rec['lat'],longitude=rec['lon']).first()
-
-                        #if activity doesn't exist, add it to database
-                        if not activity:
-                            new_activity = Activity(name=act['name'],
-                                            type=act['activity_type_name'],
-                                            url=act['url'],
-                                            latitude=rec['lat'],
-                                            longitude=rec['lon'],
-                                            thumbnail=act['thumbnail'],
-                                            description=act['description']
-                                            )
-
-                            # add the new activity to database
-                            db.session.add(new_activity)
-                            db.session.commit()
-
                 filtered_recs.append(filtered_rec)
                 # print("SUCCESS: ", filtered_recs)
 

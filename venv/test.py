@@ -1,158 +1,173 @@
 # tests will need to be updated but should generally work the same with test Cases
-
-from __init__ import db
 import regex as re
 import unittest
-from recommend import Recommender
 from flask import Flask, render_template, redirect, url_for, request, g
-import main
-import auth
 from weather_api import get_weather_data
+from werkzeug.security import generate_password_hash,check_password_hash
 from getGreeting import getGreeting
 import os
-
-
+from getGreeting import getGreetingText
+from updateSettings import *
+from recommend import *
+from models import User
+from __init__ import create_app,db
+from flask_testing import TestCase
 # We can all use one test case class or define a few with different setUp and tearDown methods
 # up to you
 
-class OuttyTestCase(unittest.TestCase):
+#class OuttyTestCase(unittest.TestCase):
+class MyTest(TestCase):
 
-    def setUp(self):
-        # outty_database.create('test.db')
-        # outty_database.addUser('test.db', 'Testuser', 'emailAddress',
-        #                        'password', 'userImage', 1, 1, 0, 1, '80111')
-        pass
+    SQLALCHEMY_DATABASE_URI = "sqlite://"
+    TESTING = False
+
+    def create_app(self):
+        # pass in test configuration
+        return create_app()
 
     def tearDown(self):
-        if os.path.exists('./test.db'):
-            os.remove('./test.db')
+        user = User.query.filter_by(emailAddress='outty_test@test.org').first()
+        db.session.delete(user)
+        db.session.commit()
+
+    def setUp(self):
+
+        user = User.query.filter_by(emailAddress='outty_test@test.org').first()
+
+        if user:
+            # if match found, user is already in database, and do not need to add to database
+            return
+        else:
+            new_user = User(emailAddress='outty_test@test.org',
+                            name='Outty TestUser',
+                            #password=generate_password_hash('testing', method='sha256'),
+                            password='testing',
+                            zipcode='80113',
+                            city='Denver',
+                            state='CO',
+                            userRadius='10',
+                            userImage='https://avatars.githubusercontent.com/u/28833281?v=4',
+                            hiking=1,
+                            mountainBiking=0,
+                            camping=1
+                            )
+            db.session.add(new_user)
+            db.session.commit()
+            return
 
     def test_sanity(self):
-        self.assertEqual(True, True)
+         self.assertEqual(True, True)
+    #
+    # def test_rec_construcor_input(self):
+    #       # should be flexible enough to handle Null input
+    #       test_rec = Recommender(None)
+    #       recs = test_rec.recommend()[0]
+    #       self.assertEqual(type(recs), list)
+    #       # but if type of constructor input is a number or something
+    #       # other than None or string then recommender should
+    #       # trigger an exception
+    #       try:
+    #           test_rec2 = Recommender(1)
+    #           self.fail("Should trigger exception when non string inputed")
+    #       except Exception:
+    #           pass
+    #       try:
+    #           test_rec3 = Recommender([23, 2])
+    #           self.fail("Should trigger exception when non string inputed")
+    #       except Exception:
+    #           pass
+    #       try:
+    #           test_rec4 = Recommender({"name": "id"})
+    #           self.fail("Should trigger exception when non string inputed")
+    #       except Exception:
+    #           print("cool, inputs handled correctly")
+    #
+    # def test_rec_on_bad_username(self):
+    #       # if not in db, should just treat as default explorer
+    #       test_rec = Recommender("aFakeNameNotInDb")
+    #       recs = test_rec.recommend()[0]
+    #       self.assertEqual(type(recs), list)
+    #
+    #   # def test_rec_handle_empty_api_return(self):
+    #   #     pass
+    #
+    #   # def test_rec_slow_response(self):
+    #   #     pass
 
-    def test_rec_construcor_input(self):
-        # should be flexible enough to handle Null input
-        test_rec = Recommender(None)
-        recs = test_rec.recommend()[0]
-        self.assertEqual(type(recs), list)
-        # but if type of constructor input is a number or something
-        # other than None or string then recommender should
-        # trigger an exception
-        try:
-            test_rec2 = Recommender(1)
-            self.fail("Should trigger exception when non string inputed")
-        except Exception:
-            pass
-        try:
-            test_rec3 = Recommender([23, 2])
-            self.fail("Should trigger exception when non string inputed")
-        except Exception:
-            pass
-        try:
-            test_rec4 = Recommender({"name": "id"})
-            self.fail("Should trigger exception when non string inputed")
-        except Exception:
-            print("cool, inputs handled correctly")
+    # def test_bad_trail_api_inputs(self):
+          # testing bad trail api query. Should be flexible?
+          #test_rec = Recommender("aFakeNameNotInDb")
+          # try:
+          #     res = test_rec.trail_api_query(
+          #         "cat", "dog", 0, test_rec.fav_activities[0])
+          # except Exception:
+          #     self.fail("not flexible to bad trail api inputs")
 
-    def test_rec_on_bad_username(self):
-        # if not in db, should just treat as default explorer
-        test_rec = Recommender("aFakeNameNotInDb")
-        recs = test_rec.recommend()[0]
-        self.assertEqual(type(recs), list)
+    def test_update_email(self):
+      user=findUserToUpdate('outty_test@test.org')
+      updateEmailAddress(user,"outty_tester@test.org")
+      email = User.query.filter_by(emailAddress='outty_tester@test.org').first().emailAddress
+      self.assertEqual(email,'outty_tester@test.org')
+      #need to update email address for rest of tests work
+      updateEmailAddress(user,"outty_test@test.org")
 
-    # def test_rec_handle_empty_api_return(self):
-    #     pass
+    def test_updateName(self):
+       user=findUserToUpdate('outty_test@test.org')
+       updateName(user,"Outty Testuser2")
+       name = User.query.filter_by(emailAddress='outty_test@test.org').first().name
+       self.assertEqual(name,'Outty Testuser2')
 
-    # def test_rec_slow_response(self):
-    #     pass
+    def test_updateZipcode(self):
+       user=findUserToUpdate('outty_test@test.org')
+       updateZipcode(user,'80111')
+       zip = User.query.filter_by(emailAddress='outty_test@test.org').first().zipcode
+       self.assertEqual(zip,'80111')
 
-    def test_bad_trail_api_inputs(self):
-        # testing bad trail api query. Should be flexible?
-        test_rec = Recommender("aFakeNameNotInDb")
-        try:
-            res = test_rec.trail_api_query(
-                "cat", "dog", 0, test_rec.fav_activities[0])
-        except Exception:
-            self.fail("not flexible to bad trail api inputs")
+    def test_updateUserRadius(self):
+       user=findUserToUpdate('outty_test@test.org')
+       updateUserRadius(user,77)
+       radius = User.query.filter_by(emailAddress='outty_test@test.org').first().userRadius
+       self.assertEqual(radius,77)
 
-    # def test_rec_no_db(self):
-    #     pass
+    def test_updateUserImage(self):
+      user=findUserToUpdate('outty_test@test.org')
+      updateUserImage(user,'77')
+      image = User.query.filter_by(emailAddress='outty_test@test.org').first().userImage
+      self.assertEqual(image,'77')
 
-    # def test_rec_method_inputs(self):
-    #     pass
+    def test_updateHiking(self):
+      user=findUserToUpdate('outty_test@test.org')
+      updateHiking(user,0)
+      hike = User.query.filter_by(emailAddress='outty_test@test.org').first().hiking
+      self.assertEqual(hike,0)
 
-    def test_db_insert(self):
-        conn = sqlite3.connect('test.db')
-        c = conn.cursor()
-        for row in c.execute("select count(userId) from user_data"):
-            self.assertEqual(
-                row[0], 1, "Insert database function not working properly")
+    def test_updateMountainBiking(self):
+      user=findUserToUpdate('outty_test@test.org')
+      updateMountainBiking(user,1)
+      bike = User.query.filter_by(emailAddress='outty_test@test.org').first().mountainBiking
+      self.assertEqual(bike,1)
 
-    def test_db_user_email(self):
-        conn = sqlite3.connect('test.db')
-        c = conn.cursor()
-        for row in c.execute("select emailAddress from user_data where userId = 'Testuser'"):
-            self.assertEqual(row[0], 'emailAddress',
-                             "Issues with emailaddress in database")
-
-    def test_db_user_pw(self):
-        conn = sqlite3.connect('test.db')
-        c = conn.cursor()
-        for row in c.execute("select password from user_data where userId = 'Testuser'"):
-            self.assertEqual(row[0], 'password',
-                             "Issues with password in database")
-
-    def test_db_user_location(self):
-        conn = sqlite3.connect('test.db')
-        c = conn.cursor()
-        for row in c.execute("select userLocation from user_data where userId = 'Testuser'"):
-            self.assertEqual(row[0], '80111', "'text' does not match expected")
-
-    def test_db_user_activities(self):
-        conn = sqlite3.connect('test.db')
-        c = conn.cursor()
-        for row in c.execute("select hikes, mountainBikes,roadBikes,camps from user_data where userId = 'Testuser'"):
-            self.assertEqual(row, (1, 1, 0, 1),
-                             "Issues with activities in database")
-
-    def test_unique_db_user(self):
-        conn = sqlite3.connect('test.db')
-        c = conn.cursor()
-        try:
-            c.execute('INSERT INTO user_data(userId,emailAddress, password, userImage,hikes,mountainBikes,roadBikes,camps, userLocation) VALUES(?,?,?,?,?,?,?,?,?);',
-                      (Testuser, 'email2@email.com', 'supersecret2', '', 0, 1, 0, 0, '80302'))
-            self.fail("Should fail when trying to input existing user ID.")
-        except Exception:
-            pass
-
-    # def test_profile_db_update(self):
-    #     pass
+    def test_updateupdateCamping(self):
+      user=findUserToUpdate('outty_test@test.org')
+      updateCamping(user,0)
+      camp = User.query.filter_by(emailAddress='outty_test@test.org').first().camping
+      self.assertEqual(camp,0)
 
     def test_weather_api(self):
-        self.assertIn("°F", get_weather_data(
-            'Boulder, Colorado'))
+      self.assertIn("°F", get_weather_data(
+          'Boulder, Colorado'))
 
     def test_getGreeting(self):
-        self.assertEqual(getGreetingText(1),
-                         'Good Morning', "Wrong greeting")
-        self.assertEqual(getGreetingText(
-            12), 'Good Afternoon', "Wrong greeting")
-        self.assertEqual(getGreetingText(
-            16), 'Good Afternoon', "Wrong greeting")
-        self.assertEqual(getGreetingText(18),
-                         'Good Evening', "Wrong greeting")
-        self.assertEqual(getGreetingText(20),
-                         'Good Evening', "Wrong greeting")
-
-    # def test_likeActivity(self):
-    #     pass
-    #
-    # def test_dislikeActivity(self):
-    #     pass
-    #
-    # def test_completeActivity(self):
-    #     pass
-
+      self.assertEqual(getGreetingText(1),
+                       'Good Morning', "Wrong greeting")
+      self.assertEqual(getGreetingText(
+          12), 'Good Afternoon', "Wrong greeting")
+      self.assertEqual(getGreetingText(
+          16), 'Good Afternoon', "Wrong greeting")
+      self.assertEqual(getGreetingText(18),
+                       'Good Evening', "Wrong greeting")
+      self.assertEqual(getGreetingText(20),
+                       'Good Evening', "Wrong greeting")
 
 # Main: Run Test Cases
 if __name__ == '__main__':
