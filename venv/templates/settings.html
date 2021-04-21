@@ -2,63 +2,95 @@
 
 {% block content %}
 <h2>{{ message }}</h2>
-<div class="cardy settings-form">
-  <h3>Update your settings?</h3>
-  <form class="login-form" action="/settings" method="POST" oninput="result.value=!!password.value&&(password.value==password2.value)?'Match!':'Nope!'">
-    <p>* indicates required field</p>
-    <div class="form-input-material">
+<div class="p-5 cardy settings-form">
+  <h2>Update Settings</h2>
+  <form action="/settings" method="POST" oninput="result.value=!!password.value&&(password.value==password2.value)?'Match!':'Nope!'">
+    <small>
+      <center>*indicates required field</center>
+    </small>
+    <br>
+
+    <h5>User Settings</h5>
+
+    <div class="form-group">
       <label for="email">New Email Address</label>
-      <input type="email" placeholder="your.email@website.com" name="emailAddress">
+      <br>
+      <input class="form-control" type="email" placeholder="current email: {{current_user.emailAddress}}" name="emailAddress">
     </div>
 
-    <div class="form-input-material">
+    <div class="form-group">
       <label for="newName">New Username</label>
-      <input placeholder="new username" name="newName">
+      <br>
+      <input class="form-control" placeholder="current username: {{current_user.name}}" name="newName">
     </div>
 
-    <div class="form-input-material">
-      <label for="oldPassword">Current Password *</label>
-      <input type="password" placeholder="Password" name="oldPassword" required>
-    </div>
-
-    <div class="form-input-material">
-      <label for="password">New Password</label>
-      <input type="password" placeholder="Password" name="password">
-    </div>
-
-    <div class="form-input-material">
-      <label for="password2">Confirm New Password</label>
-      <input type="password" placeholder="Password" name="password2">
-    </div>
-
-    <div class="form-input-material">
-      <label for="zipcode">New Zipcode</label>
-      <input id="zipcode" name="zipcode" placeholder="80301" type="text" pattern="[0-9]{5}" title="(valid 5-digit US zipcode)">
-    </div>
-
-    <div class="form-input-material">
+    <div class="form-group">
       <label for="userImage">URL for New Profile Picture</label>
-      <input type="url" placeholder="http://site.com/image.jpg" name="userImage">
+      <br>
+      <input class="form-control" type="url" placeholder="current profile picture: {{current_user.userImage}}" name="userImage">
     </div>
 
-    <div class="form-input-material">
-      <p>Select New Interests:</p>
-      <div class="form-input-material">
-        <input type="checkbox" name="hiking" value="true">
-        <label for="hiking">
+    <br>
+    <br>
+    <h5>Password Settings</h5>
+
+    <div class="form-group">
+      <label for="oldPassword">Current Password *</label>
+      <br>
+      <input class="form-control" type="password" placeholder="Password" name="oldPassword" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">New Password</label>
+      <br>
+      <input class="form-control" type="password" placeholder="Password" name="password">
+    </div>
+
+    <div class="form-group">
+      <label for="password2">Confirm New Password</label>
+      <br>
+      <input class="form-control" type="password" placeholder="Password" name="password2">
+    </div>
+
+    <br>
+    <br>
+
+    <h5>Recommendation Settings</h5>
+
+    <div class="form-group">
+      <label for="zipcode">New Zipcode</label>
+      <br>
+      <input class="form-control" id="zipcode" name="zipcode" placeholder="current zipcode: {{current_user.zipcode}}" type="text" pattern="[0-9]{5}" title="(valid 5-digit US zipcode)">
+    </div>
+
+    <div class="form-group">
+      <label for="userRadius">User Radius (miles)</label>
+      <br>
+      <input class="form-control" type="number" placeholder="current radius: {{current_user.userRadius}}" name="userRadius" pattern="[0-9]{3}" title="(numeric distance under 999 miles)">
+    </div>
+
+
+
+    <div class="form-group">
+      <p>Update Interests:</p>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="hiking" value="true">
+        <label class="form-check-label" for="hiking">
           Hiking</label>
       </div>
-      <div class="form-input-material">
-        <input type="checkbox" name="mountainBiking" value="true">
-        <label for="mountainBiking">Mountain Biking</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="mountainBiking" value="true">
+        <label class="form-check-label" for="mountainBiking">Mountain Biking</label>
       </div>
-      <div class="form-input-material">
-        <input type="checkbox" name="camping" value="true">
-        <label for="camping">Camping</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="camping" value="true">
+        <label class="form-check-label" for="camping">Camping</label>
       </div>
     </div>
+    <br>
+    <br>
 
-    <input class="btn tn-default" type="submit" value="Save">
+    <input class="btn btn-default btn-block mb-sm" type="submit" value="Update Settings">
   </form>
 </div>
 

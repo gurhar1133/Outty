@@ -4,7 +4,7 @@
 
 <div class="dashboard-container">
   <div class="item">
-    <div class="dashboard-text">
+    <div class="cardy p-4 dashboard-text">
       <h3>{{greeting}}, {{current_user.name}}</h3>
       <br>
       <p>
@@ -36,9 +36,13 @@
   </div>
 
   <div class="item">
-    <div id=card-click-area class="suggestion-card">
+    <div class="suggestion-card">
       <div class="content">
-        <img class="card-img-top" src={{suggestions[0]['image']}} alt="activity image">
+        {% if suggestions[0]['image'] %}
+        <img class="card-img-top" src="{{suggestions[0]['image']}}">
+        {% else %}
+        <img class="card-img-top" src={{url_for('static', filename='img/noImage.jpg')}}>
+        {% endif %}
       </div>
 
       <div class="card-body">
@@ -46,14 +50,19 @@
         <p class="card-text">
           {{suggestions[0]['activity']}}
         </p>
-        <a class="btn btn-light" onclick="window.location.href='./activity?id={{activityPageId}}';" role="button">view activity</a>
+        {% if suggestions[0]['id'] %}
+        <a class="btn btn-light" onclick="window.location.href='./activity?id={{suggestions[0]['id']}}';" role="button">view activity</a>
+        {% endif %}
+
+
       </div>
     </div>
   </div>
 </div>
 <br>
+
 <div class="card-columns">
-  {% if len(suggestions) > 1 %}
+  {% if suggestions|length>1 %}
   {% for suggestion in suggestions %}
   <div class="card">
     {% if suggestion['image'] %}
@@ -65,6 +74,9 @@
     <div class="card-body">
       <h5 class="card-title">{{suggestion['title']}}</h5>
       <p class="card-text">{{suggestion['activity']}}</p>
+
+      <a class="btn btn-light" onclick="window.location.href='./activity?id={{suggestion['id']}}';" role="button">view activity</a>
+
     </div>
 
   </div>

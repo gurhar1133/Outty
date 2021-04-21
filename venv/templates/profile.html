@@ -2,19 +2,19 @@
 {% block content %}
 
 
-<div class="profile-container">
-  <div class="profile-item">
+<div class="card p-5 profile-container">
+
+  <div class="profile-item p-2">
     <img id="profilepic" src={{current_user.userImage}} alt="profile pic">
   </div>
-  <div class="profile-item">
-    <p>
+
+
+  <div class="profile-item p-2">
     <h3>{{current_user.name}}</h3><br>
-    <h6>{{current_user.emailAddress}}</h6> <br>
-    <h6><i id="locationicon" class="material-icons">my_location</i>{{current_user.city}}, {{current_user.state}}, {{current_user.zipcode}}</h6>
-    </p>
+    <p>{{current_user.emailAddress}}</p> <br>
+    <p><i id="locationicon" class="material-icons">my_location</i>{{current_user.city}}, {{current_user.state}}, {{current_user.zipcode}}</p>
   </div>
-  <div class="profile-item">
-    <p>
+  <div class="profile-item p-2">
     <h1>{{ current_user.liked.count() }}</h1><br>
     <h6>
       {% if current_user.liked.count() ==1 %}
@@ -23,10 +23,8 @@
       liked activities
       {% endif %}
     </h6>
-    </p>
   </div>
-  <div class="profile-item">
-    <p>
+  <div class="profile-item p-2">
     <h1>{{ current_user.completed.count() }}</h1><br>
     <h6>
       {% if current_user.liked.count() ==1 %}
@@ -35,10 +33,8 @@
       completed activities
       {% endif %}
     </h6>
-    </p>
   </div>
   <div class="profile-item">
-    <p>
     <h3>Your Interests</h3><br>
     <h3>
 
@@ -55,8 +51,9 @@
       {% endif %}
 
     </h3>
-    </p>
   </div>
+</div>
+</div>
 </div>
 {% if likedActivities %}
 <div class="container">
@@ -74,10 +71,6 @@
         <h5 class="card-title">{{likedActivity.name}}</h5>
         <p class="card-text">{{likedActivity.type}}</p>
         <a class="btn btn-light" onclick="window.location.href='./activity?id={{likedActivity.id}}';" role="button">view activity</a>
-      </div>
-
-      <div class="card-footer">
-        <small class="text-muted">{{likedActivity.date_added}}</small>
       </div>
 
     </div>
@@ -107,9 +100,6 @@
         <h5 class="card-title">{{completedActivity.name}}</h5>
         <p class="card-text">{{completedActivity.type}}</p>
         <a class="btn btn-light" onclick="window.location.href='./activity?id={{completedActivity.id}}';" role="button">view activity</a>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">{{completedActivity.date_added}}</small>
       </div>
     </div>
     {% endfor %}

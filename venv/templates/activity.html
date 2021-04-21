@@ -51,7 +51,11 @@
       <br>
       <div class="text-left">
         <a class="btn btn-secondary btn-lg" href="https://www.google.com/maps/dir/Current+Location/{{activity.latitude}}, {{activity.longitude}}?ref=trail-action-menu-directions" role="button">directions</a>
+
+        {% if "singletracks" in  activity.url %}
         <a class="btn btn-secondary btn-lg" href="{{activity.url}}" role="button">more info</a>
+        {% endif %}
+
         {% if current_user.has_liked_activity(activity) %}
         <a class="btn btn-secondary btn-lg" href="{{ url_for('main.like_action', activity_id=activity.id, action='unlike') }}" role="button">unlike</a>
         {% else %}

@@ -6,6 +6,8 @@ import os
 from models import Activity
 from __init__ import db
 from gitsecretsimport import keys
+from saveActivity import addActivityToDatabase, getActivityIdByUrl
+
 
 class Recommender:
     def __init__(self, current_user):
@@ -21,7 +23,7 @@ class Recommender:
         self.userRadius = current_user.userRadius
         self.location = current_user.zipcode
         self.geo_encode_key = keys["geo_encode_key"]
-        #os.envronget()
+        # os.envronget()
         self.trail_api_key = keys["trail_api_key"]
 
     def trail_api_query(self, lat, lon, state, activity_pref):
@@ -78,6 +80,16 @@ class Recommender:
 
                 filtered_recs.append(filtered_rec)
                 # print("SUCCESS: ", filtered_recs)
+                addActivityToDatabase(
+                    {'name': act['name'],
+                     'type': act['activity_type_name'],
+                     'url': act['url'],
+                     'latitude': rec['lat'],
+                     'longitude': rec['lon'],
+                     'thumbnail': act['thumbnail'],
+                     'description': act['description']
+                     }
+                )
 
             return filtered_recs
         else:
