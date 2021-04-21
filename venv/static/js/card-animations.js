@@ -15,14 +15,14 @@ let suggestionEntrance = anime({
 });
 
 
-let dashTextFadeIn = anime({
-  targets: '.dashboard-text',
-  opacity: ['0%', '100%'],
-  translateX: [-40, 0],
-  duration: 900,
-  easing: 'easeOutElastic'
-
-});
+// let dashTextFadeIn = anime({
+//   targets: '.dashboard-text',
+//   opacity: ['0%', '100%'],
+//   translateX: [-40, 0],
+//   duration: 900,
+//   easing: 'easeOutElastic'
+//
+// });
 
 let dislikeAnimation = anime({
   targets: '.suggestion-card',
@@ -73,15 +73,15 @@ let expandedCardSuggestionAnimation = anime({
   // direction:'alternate',
 });
 
-let expandedCardGreetingAnimation = anime({
-  targets: '.dashboard-text',
-  opacity: ['100%', '0%'],
-  translateX: ['0em', '-30em'],
-  duration: 500,
-  easing: 'easeInOutCubic',
-  autoplay: false,
-  // direction:'alternate',
-});
+// let expandedCardGreetingAnimation = anime({
+//   targets: '.dashboard-text',
+//   opacity: ['100%', '0%'],
+//   translateX: ['0em', '-30em'],
+//   duration: 500,
+//   easing: 'easeInOutCubic',
+//   autoplay: false,
+//   // direction:'alternate',
+// });
 
 let closeButtonAnimation = anime({
   targets: '.close-button',
