@@ -8,7 +8,7 @@ from zipcodeCityState import getFullStateName
 from models import User, Activity, ActivityLike, ActivityComplete
 from werkzeug.security import generate_password_hash, check_password_hash
 from updateSettings import findUserToUpdate, updateEmailAddress, updateName, updatePassword, updateZipcode, updateUserRadius, updateUserImage, updateHiking, updateMountainBiking, updateCamping
-from saveActivity import addActivityToDatabase, getActivityIdByUrl
+from saveActivity import getActivityIdByUrl
 
 main = Blueprint('main', __name__)
 
@@ -41,36 +41,18 @@ def dash():
         recs = rec.recommend()
         rec0 = recs[0]
 
-        if len(rec0) >= 1:
-            try:
-                addActivityToDatabase(
-                    {'name': rec0[0]['activities'][0]['name'],
-                     'type': rec0[0]['activities'][0]['type'],
-                     'url': rec0[0]['activities'][0]['url'],
-                     'latitude': str(rec0[0]['coords'][0]),
-                     'longitude': str(rec0[0]['coords'][1]),
-                     'thumbnail': rec0[0]['activities'][0]['thumbnail'],
-                     'description': rec0[0]['activities'][0]['description']
-                     }
-                )
-
-                activityPageId = getActivityIdByUrl(
-                    rec0[0]['activities'][0]['url'])
-            except Exception:
-                activityPageId = "www.google.com"
-        else:
-            activityPageId = "www.google.com"
-
-# then use database to generate cards???? instead of recs then we can use the id to query!
     suggestions = []
 
     for i in range(len(recs)):
         for j in range(len(recs[i])):
             try:
+                activityId = getActivityIdByUrl(
+                    recs[i][j]['activities'][0]['url'])
                 card = {
                     'title': recs[i][j]['activities'][0]['name'],
                     'activity': recs[i][j]['activities'][0]['type'],
                     'image': recs[i][j]['activities'][0]['thumbnail'],
+                    'id': activityId,
                 }
 
                 suggestions.append(card)
@@ -88,10 +70,15 @@ def dash():
                 }
 
     print(suggestions)
-    if suggestions == []:
-        suggestions.append(backup_card)
+    if not suggestions:
+        suggestions.append({
+            'title': "Couldn't find activities in your area",
+            'activity': " ",
+            'image': url_for('static', filename='img/lost.jpg')
+        }
+        )
 
-    return render_template("dash.html", suggestions=suggestions, weather_data=weather_data, greeting=greeting, activityPageId=activityPageId, len=len)
+    return render_template("dash.html", suggestions=suggestions, weather_data=weather_data, greeting=greeting)
 
 
 @main.route('/profile')
