@@ -3,74 +3,69 @@
 {% block content %}
 
 <div class="dashboard-container">
-  <div class="item">
-    <div class="dashboard-text">
-      <h3>{{greeting}}, {{current_user.name}}</h3>
-      <br>
-      <p>
-        <i class="mdl-icon-toggle material-icons">place</i> {{current_user.city}}, {{current_user.state}}
-        <br>
-        <i class="mdl-icon-toggle material-icons">thermostat</i> {{ weather_data }}
-      </p>
-      <br>
-      <p>My Interests</p>
+  <!-- <div class="item"> -->
+  <div class="cardy p-4 dashboard-text">
+    <h3>{{greeting}}, {{current_user.name}}</h3>
+    <br>
 
-      {% if current_user.hiking %}
-      <i class="mdl-icon-toggle material-icons">hiking</i>
-      {% endif %}
+    <i class="mdl-icon-toggle material-icons">place</i> {{current_user.city}}, {{current_user.state}}
+    <br>
+    <i class="mdl-icon-toggle material-icons">thermostat</i> {{ weather_data }}
+    <br>
+    <br>
+    <p>My Interests</p>
 
-      {% if current_user.mountainBiking %}
-      <i class="mdl-icon-toggle material-icons">directions_bike</i>
-      {% endif %}
+    {% if current_user.hiking %}
+    <i class="mdl-icon-toggle material-icons">hiking</i>
+    {% endif %}
 
-      {% if current_user.camping %}
-      <i class="mdl-icon-toggle material-icons">cabin</i>
-      {% endif %}
+    {% if current_user.mountainBiking %}
+    <i class="mdl-icon-toggle material-icons">directions_bike</i>
+    {% endif %}
 
-      <br>
+    {% if current_user.camping %}
+    <i class="mdl-icon-toggle material-icons">cabin</i>
+    {% endif %}
 
-    </div>
+    <br>
+
   </div>
-  <div class="close-button">
-    <button id="close-button" class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">close</i></button>
-  </div>
+  <!-- </div> -->
 
-  <div class="item">
-    <div id=card-click-area class="suggestion-card">
+
+
+  <!-- <div class="item"> -->
+  <div class="card-columns">
+
+    {% for suggestion in suggestions %}
+    <div class="suggestion-card card">
       <div class="content">
-        <img class="card-img-top" src={{suggestions[0]['image']}} alt="activity image">
+        {% if suggestion['image'] %}
+        <img class="card-img-top" src="{{suggestion['image']}}">
+        {% else %}
+        <img class="card-img-top" src={{url_for('static', filename='img/noImage.jpg')}}>
+        {% endif %}
       </div>
 
       <div class="card-body">
-        <p class="card-title">{{suggestions[0]['title']}}</p>
+        <p class="card-title">{{suggestion['title']}}</p>
         <p class="card-text">
-          {{suggestions[0]['activity']}}
+          {{suggestion['activity']}}
         </p>
-        <a class="btn btn-light" onclick="window.location.href='./activity?id={{activityPageId}}';" role="button">view activity</a>
+        {% if suggestion['id'] %}
+        <a class="btn btn-light" onclick="window.location.href='./activity?id={{suggestion['id']}}';" role="button">view activity</a>
+        {% endif %}
+
+
       </div>
     </div>
+    {% endfor %}
   </div>
+  <!-- </div> -->
+
+
 </div>
 <br>
-<div class="card-columns">
-  {% if len(suggestions) > 1 %}
-  {% for suggestion in suggestions %}
-  <div class="card">
-    {% if suggestion['image'] %}
-    <img class="card-img-top" src="{{suggestion['image']}}">
-    {% else %}
-    <img class="card-img-top" src={{url_for('static', filename='img/noImage.jpg')}}>
-    {% endif %}
-
-    <div class="card-body">
-      <h5 class="card-title">{{suggestion['title']}}</h5>
-      <p class="card-text">{{suggestion['activity']}}</p>
-    </div>
-
-  </div>
-  {% endfor %}
-  {% endif %}
-</div>
 
 
 {% endblock %}

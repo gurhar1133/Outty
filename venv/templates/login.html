@@ -14,7 +14,8 @@
 {% endwith %}
 
 <div class="p-5 cardy text-center">
-  <h3>Login</h3>
+  <h3>Login to existing account</h3>
+  <small class="text-muted"><a href="{{ url_for('auth.signup') }}"> New user? Sign up here!</a></small>
   <form method="POST" action="/login">
     <div class="field">
       <br>

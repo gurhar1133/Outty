@@ -13,16 +13,17 @@
 {% endwith %}
 
 
-  <!-- Organize login box into two divs, make flexible list for window sizing
+<!-- Organize login box into two divs, make flexible list for window sizing
 add background color to sign up
 add image and styling to login
 add image rotation (JS)
  -->
 
-<div id="signup" class="container position-relative pb-2">
-  <h3 class="p-5 text-center">
-    New Users Please Sign-Up
-    <small class="text-muted">Existing Users Please <a href="{{ url_for('auth.login') }}">Login</a></small>
+<div id="signup" class="cardy p-5 position-relative pb-2">
+  <h3 class="text-center">
+    Create a new account
+    <br>
+    <small class="text-muted">Existing user? <a href="{{ url_for('auth.login') }}">Login here!</a></small>
   </h3>
   <form action="/signup" method="POST">
     <div class="form-group">
@@ -63,7 +64,7 @@ add image rotation (JS)
         <label class="form-check-label" for="camping">Camping</label>
       </div>
     </div>
-    <input class="btn btn-default btn-lg btn-block mb-sm" type="submit" value="Sign-Up">
+    <input class="btn btn-default btn-block mb-sm" type="submit" value="Sign-Up">
   </form>
 </div>
 

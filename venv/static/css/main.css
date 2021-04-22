@@ -1,6 +1,7 @@
 #profilepic {
-  width: 80%;
-  height: 80%;
+  height: 8rem;
+  width: 8rem;
+  object-fit: center;
   border-radius: 50%;
 }
 
@@ -80,7 +81,6 @@ a {
   margin: 5% auto;
 }
 
-
 .nowrap {
   -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap;
@@ -90,7 +90,7 @@ a {
   margin-top: 2%;
   display: flex;
   flex-direction: row;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: flex-start;
 }
 
@@ -100,11 +100,6 @@ a {
     justify-content: center;
     align-items: flex-start;
     margin-top: 0%;
-  }
-
-  .item {
-    margin: 0px;
-    justify-content: center;
   }
 
   .suggestion-card {
@@ -117,6 +112,7 @@ a {
 
   .dashboard-text {
     margin-top: 0%;
+    width: auto;
   }
 
   #signup_img {
@@ -142,20 +138,10 @@ h3 {
   font-size: 22px;
 }
 
-.item {
-  /* flex-grow: 1; */
-  /* height: 100px; */
-}
-
-.item+.item {
-  margin-left: 2%;
-}
-
 /* Dashboard Items */
 .dashboard-text {
-  /* float: left; */
-  margin-top: 30%;
-  width: 70%;
+  margin-top: 0%;
+  width: 20rem;
 }
 
 input[type=text], input[type=password], input[type=email] {
@@ -182,8 +168,8 @@ input[type=text], input[type=password], input[type=email] {
 .suggestion-card {
   /* width: 300px; */
   /* width: 90%; */
-  width: 300px;
-  height: 450px;
+  /* width: 300px;
+  height: 450px; */
   color: #7C7468;
   font-family: 'Inter', sans-serif;
   font-size: 15px;
@@ -226,10 +212,17 @@ input[type=text], input[type=password], input[type=email] {
 }
 
 .suggestion-card .content img {
-  width: 300px;
-  height: 270px;
+  height: 50%;
+  /* height: 270px; */
   object-fit: cover;
   border-radius: 20px 20px 0px 0px;
+}
+
+.card .card-img-top {
+  height: 50%;
+  /* height: 270px; */
+  object-fit: cover;
+  /* border-radius: 20px 20px 0px 0px; */
 }
 
 .close-button {
