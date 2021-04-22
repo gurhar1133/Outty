@@ -25,7 +25,7 @@
 
 * Testing: unittests originally, now using Flask-test (see TESTING.md for more details)
 
-* Deployment: Heroku, Docker, Github-Secrets, Github-Actions
+* Deployment: Heroku, Docker, Github-Secrets, Github-Actions. See RunApp.md for Docker usage for running the app locally
 
 * Code Editors: VS-code, vim, Atom
 
