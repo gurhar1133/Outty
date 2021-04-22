@@ -7,7 +7,7 @@
 
 * Install docker: https://docs.docker.com/docker-for-mac/install/
 
-* a file called config.py in the venv directory that contains the necessary api keys:
+* a file called config.py in the venv directory is necessary for managing api keys. It contains the necessary api keys:
 
     - trail_api_key = "XXXXXXXXXXXXXXXXXXXX" # trail api: https://rapidapi.com/trailapi/api/trailapi
 
