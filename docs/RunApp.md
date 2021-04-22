@@ -1,7 +1,7 @@
 ## Outty
 * Gurhar, Zach, Vidya, Sam
 
-### Running the app
+### Running the app locally
 
 #### The app is containerized with docker and will require:
 
@@ -19,8 +19,3 @@
 
 * Potentially helpful link: https://medium.com/@ksashok containerise-your-python-flask-using-docker-and-deploy-it-onto-heroku-a0b48d025e43
 
-
-#### Running locally without docker
-
-* ``` cd venv ```
-* ``` python -m flask run ```
