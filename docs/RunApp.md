@@ -1,3 +1,6 @@
+## Outty
+* Gurhar, Zach, Vidya, Sam
+
 ### Running the app
 
 #### The app is containerized with docker and will require:

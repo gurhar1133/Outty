@@ -1,13 +1,15 @@
 ## Outty
 * Gurhar, Zach, Vidya, Sam
-* Automated unit tests are in test.py. To execude them navigate to /tests and run
 
-```
-python test.py
+## Unit Tests:
 
-```
+* Automated unit tests are in test.py. To execude them navigate to /venv and run
 
-## TESTS:
+* ``` python test.py ```
+
+* Unit tests make use of flask_testing module
+
+## USER TESTS:
 ### Create new user 
     Use case name
 	    New user creation
