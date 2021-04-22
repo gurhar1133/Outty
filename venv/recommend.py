@@ -8,7 +8,7 @@ from __init__ import db
 from gitsecretsimport import keys
 from saveActivity import addActivityToDatabase, getActivityIdByUrl
 
-# uses trail api and geoencoding api (api.positionstack.com)
+# uses trail api and geoencoding api (see api.positionstack.com)
 class Recommender:
     def __init__(self, current_user):
         self.username = current_user.name
