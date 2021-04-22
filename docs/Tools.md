@@ -1,4 +1,7 @@
-### Tools Used
+## Outty
+* Gurhar, Zach, Vidya, Sam
+
+## Tools Used
 
 * Notion and google drive for project tracking and shared documentation
 
