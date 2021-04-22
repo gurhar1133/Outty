@@ -19,7 +19,7 @@
 
 * bootstrap for responsivity
 
-* Apis: Trail api, OpenWeather api, Google Maps api
+* Apis: Trail api, OpenWeather api, Google Maps api, and geoencoding with api.positionstack.com. Trail api and geoencoding are necessary for recomendations (see recommend.py). 
 
 * Data base: originally sqlite3 but migrated to Flask-SQLAlchemy for improved authentication and user state management. Also use DB Browser for database testing
 
