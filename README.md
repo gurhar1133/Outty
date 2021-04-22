@@ -7,6 +7,9 @@
   * Zach
   * Gurhar
   * Sam
+
+#### Link:
+* http://outty-5000-server.herokuapp.com/
   
 ### Vision statement: 
 * App: Outdoor activity recommender
@@ -17,25 +20,26 @@
 * It is something we all would use ourselves. Also, Each component/feature can be integrated separately allowing for incremental development. It is something that allows us to start small and build, meaning once we are able to get the basics working, there are a number of different enhancements/features that we can incorporate. In essence, it is a general idea that will allow us to focus on various enhancements as we move forward, which lends itself perfectly to agile development. Also because it’s a fun idea that makes planning outdoor activities more convenient.
 
 
-### Risks to project completion, possibly including:
-* Possible new language or working environment
-* No prior experience working with these team members
-* Unkown at present what best workflow will look like
-* Bugs
-* Unknown at present which api’s to use to make the process easier
-* Unknown at present whether use of a frontend framework will be needed
-* Unknown at present which backend to use
-* Incredibly general topic, which may make it difficult to focus on direction at times
+### Risks to project completion/challenges included:
+* Bugs and integration conflicts
+* Database migration from sqlite3 to Flask-SQLAlchemy
+* Rewriting tests to accomadate database migration
+* Project Scope - how many different activities? how robust of a recommendation algorithm? 
+* Task Management - who should do what?
 
-### Mitigation Strategy for above risks
+
+### Mitigation Strategies for above risks/challenges
 * Weekly check ins on different stages to ensure on track with milestones for sprints
+* Hopping on zoom to help eachother debug
 * Group text for quick easy communication and utilizing project tracking board
 * Starting each feature early to allow for ample debugging time
 * Find good apis
-* Early prototyping may tell us whether we will need a frontend framework like react etc.
+* Solution - agile development philosophy, start with very small scope and build more features as we go.
+* Early prototyping
 * Regular incremental commits and having tests in place parallel to development
 * Organize file structure/code structure beforehand
-* Creating a procedure to commit between different stages of codebase (for each merge into master)
+* Good git practices: branch and check pull request for conflicts
+* Come up with tasks together first without specifying who will do what, then have a friendly discussion about who wants to do what, rebalance the load at the end if work is not close to equal. Review - Everyone adjusted their attitude to be happy and ready to tackle any task, regardless of their prior experience with a tool. Because of this collective attitude, we got a lot done! 
 
 ### Development method:
 * Regular scrum meetings. Scrum style - i.e. follow the agile development method, as presented in the textbook and lectures, as closely as possible. Our product will at least do something after sprint 0, and something better after sprint 1, etc. 
@@ -44,7 +48,15 @@
 
 ### Project Tracking Software:
 * Notion: notion is free for teams if we use our .edu email, we can use this to track task progress, as well as work on documentation collaboratively.
-* Other project tracking tools may be brought in as needed.
+
+### Documentation
+* See /docs
+
+### Running the app locally
+* See /docs/RunApp.md
+
+### Tools/requirements
+* See /docs/Tools.md or venv/requirements.txt
 
 ### Colaborators:
 https://github.com/zzanetti <br>

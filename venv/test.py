@@ -5,6 +5,8 @@ from flask import Flask, render_template, redirect, url_for, request, g
 from weather_api import get_weather_data
 from werkzeug.security import generate_password_hash,check_password_hash
 from getGreeting import getGreeting
+import sqlite3
+# import venv.outty_database
 import os
 from getGreeting import getGreetingText
 from updateSettings import *
