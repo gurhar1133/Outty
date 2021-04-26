@@ -10,10 +10,11 @@ import sqlite3
 import os
 from getGreeting import getGreetingText
 from updateSettings import *
-from recommend import *
+from recommend import Recommender
 from models import User
 from __init__ import create_app,db
 from flask_testing import TestCase
+from gitsecretsimport import keys
 # We can all use one test case class or define a few with different setUp and tearDown methods
 # up to you
 
@@ -32,9 +33,12 @@ class MyTest(TestCase):
         db.session.delete(user)
         db.session.commit()
 
+
+
     def setUp(self):
 
         user = User.query.filter_by(emailAddress='outty_test@test.org').first()
+
 
         if user:
             # if match found, user is already in database, and do not need to add to database
@@ -59,51 +63,45 @@ class MyTest(TestCase):
 
     def test_sanity(self):
          self.assertEqual(True, True)
-    #
-    # def test_rec_construcor_input(self):
-    #       # should be flexible enough to handle Null input
-    #       test_rec = Recommender(None)
-    #       recs = test_rec.recommend()[0]
-    #       self.assertEqual(type(recs), list)
-    #       # but if type of constructor input is a number or something
-    #       # other than None or string then recommender should
-    #       # trigger an exception
-    #       try:
-    #           test_rec2 = Recommender(1)
-    #           self.fail("Should trigger exception when non string inputed")
-    #       except Exception:
-    #           pass
-    #       try:
-    #           test_rec3 = Recommender([23, 2])
-    #           self.fail("Should trigger exception when non string inputed")
-    #       except Exception:
-    #           pass
-    #       try:
-    #           test_rec4 = Recommender({"name": "id"})
-    #           self.fail("Should trigger exception when non string inputed")
-    #       except Exception:
-    #           print("cool, inputs handled correctly")
-    #
-    # def test_rec_on_bad_username(self):
-    #       # if not in db, should just treat as default explorer
-    #       test_rec = Recommender("aFakeNameNotInDb")
-    #       recs = test_rec.recommend()[0]
-    #       self.assertEqual(type(recs), list)
-    #
-    #   # def test_rec_handle_empty_api_return(self):
-    #   #     pass
-    #
-    #   # def test_rec_slow_response(self):
-    #   #     pass
 
-    # def test_bad_trail_api_inputs(self):
-          # testing bad trail api query. Should be flexible?
-          #test_rec = Recommender("aFakeNameNotInDb")
-          # try:
-          #     res = test_rec.trail_api_query(
-          #         "cat", "dog", 0, test_rec.fav_activities[0])
-          # except Exception:
-          #     self.fail("not flexible to bad trail api inputs")
+    def test_rec_construcor_input_list(self):
+          #if anything other than a user object is passed in, trigger exception
+          # should be flexible enough to handle Null input
+          user=findUserToUpdate('outty_test@test.org')
+          test_rec = Recommender(user)
+          recs = test_rec.recommend()[0]
+          self.assertEqual(type(recs), list)
+
+          # but if type of constructor input is a number or something
+          # other than None or string then recommender should
+          # trigger an exception
+    def test_rec_construcor_input(self):
+          try:
+              test_rec2 = Recommender(1)
+              self.fail("Should trigger exception when non string inputed")
+          except Exception:
+              pass
+
+          try:
+              test_rec3 = Recommender([23, 2])
+              self.fail("Should trigger exception when non string inputed")
+          except Exception:
+              pass
+          try:
+              test_rec4 = Recommender({"name": "id"})
+              self.fail("Should trigger exception when non string inputed")
+          except Exception:
+              print("cool, inputs handled correctly")
+
+    def test_bad_trail_api_inputs(self):
+          #testing bad trail api query. Should be flexible?
+          user=findUserToUpdate('outty_test@test.org')
+          test_rec = Recommender(user)
+          try:
+              res = test_rec.trail_api_query(
+                  "cat", "dog", 0, test_rec.fav_activities[0])
+          except Exception:
+              self.fail("not flexible to bad trail api inputs")
 
     def test_update_email(self):
       user=findUserToUpdate('outty_test@test.org')
