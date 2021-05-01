@@ -11,12 +11,13 @@
 
     - trail_api_key = "XXXXXXXXXXXXXXXXXXXX" # trail api: https://rapidapi.com/trailapi/api/trailapi
 
-    - geo_encode_key = "XXXXXXXXXXXXXXXXXXXX"  # geo encoding: api.positionstack.com )
+    - geo_encode_key = "XXXXXXXXXXXXXXXXXXXX"  # geo encoding: (google maps geocoding)
 
     - weather_api_key = "XXXXXXXXXXXXXXXXXXXX" # OpenWeather api
 
     - map_api_key = "XXXXXXXXXXXXXXXXXXXX"  # Google Maps api
 
+* collaborator access to notion page contains keys in 'notes page'
 
 #### Run app through command line
 * ``` cd venv ```
