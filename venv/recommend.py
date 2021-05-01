@@ -107,32 +107,52 @@ class Recommender:
         # geoencoding for hiking trails api using user's zip
         data = None
         geo_attempts = 0
-        while data == None:  # WRITE TESTS FOR THIS
-            conn = http.client.HTTPConnection('api.positionstack.com')
+        while data == None and geo_attempts < 10:  # WRITE TESTS FOR THIS??
+            
             params = urllib.parse.urlencode({
-                'access_key': self.geo_encode_key,
-                'query': postal_code,
-                'limit': 1,
+                'key': keys["geo_encode_key"],
+                'address': postal_code
             })
 
-            conn.request('GET', '/v1/forward?{}'.format(params))
-            res = conn.getresponse()
-            if not res.status == 200:
-                print('Error')
-                return "Error getting geo encoding info"
-            else:
-                data = res.read()
-                data = json.loads(data.decode('utf-8'))
-                if data['data'] == [[]]:
-                    data = None
-                    geo_attempts += 1
-                    if geo_attempts > 10:
-                        print('Error')
-                        return "Error getting geo encoding info"
+            base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
+            data = requests.get(base_url, params=params)
+            if data.ok:
+                data = data.json()
+                state = data['results'][0]['address_components'][-2]['long_name']
+                lat = data['results'][0]['geometry']['bounds']['northeast']['lat']
+                lon = data['results'][0]['geometry']['bounds']['northeast']['lng']
 
-        state = data['data'][0]['region']
-        lat = data['data'][0]['latitude']
-        lon = data['data'][0]['longitude']
+            else: geo_attempts += 1
+
+        if geo_attempts >= 10:
+            return "error geoencoding"
+
+        # while data == None:  # WRITE TESTS FOR THIS
+        #     conn = http.client.HTTPConnection('api.positionstack.com')
+        #     params = urllib.parse.urlencode({
+        #         'access_key': self.geo_encode_key,
+        #         'query': postal_code,
+        #         'limit': 1,
+        #     })
+
+        #     conn.request('GET', '/v1/forward?{}'.format(params))
+        #     res = conn.getresponse()
+        #     if not res.status == 200:
+        #         print('Error')
+        #         return "Error getting geo encoding info"
+        #     else:
+        #         data = res.read()
+        #         data = json.loads(data.decode('utf-8'))
+        #         if data['data'] == [[]]:
+        #             data = None
+        #             geo_attempts += 1
+        #             if geo_attempts > 10:
+        #                 print('Error')
+        #                 return "Error getting geo encoding info"
+
+        # state = data['data'][0]['region']
+        # lat = data['data'][0]['latitude']
+        # lon = data['data'][0]['longitude']
 
         # makes a recommendation for each activity that the user likes
         # recs = [self.trail_api_query(lat, lon, state, act)
