@@ -10,7 +10,10 @@
 
 #### Link:
 * http://outty-5000-server.herokuapp.com/
-  
+
+#### Video:
+* [Demo Video](https://drive.google.com/file/d/1x3tSxK-_h4AjtCmMDcYYTFdJL1543QQT/view?usp=sharing)
+
 ### Vision statement: 
 * App: Outdoor activity recommender
 * It is often difficult when you are busy to formulate plans for outdoor activities. Normally you have to check the weather, search online for trails. Each outdoor activity you are considering is usually a separate search. An app that gathers all that information for you and gives you suggestions saves time and effort when you are too busy to figure out what your weekend adventure might be.
